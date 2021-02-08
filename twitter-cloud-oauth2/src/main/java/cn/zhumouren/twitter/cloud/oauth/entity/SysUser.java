@@ -21,6 +21,11 @@ public class SysUser implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
+     * 用户雪花id
+     */
+    private Long id;
+
+    /**
      * 用户名
      */
     private String username;

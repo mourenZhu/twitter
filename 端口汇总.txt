@@ -3,11 +3,11 @@ nacos-mysql : 192.168.3.5:3306
 sentinel : 192.168.3.5:8888
 cloud-gateway : localhost:8080
 cloud-oauth2 : localhost:8088
-cloud-oauth2-mysql : 192.168.3136
------cloud-moment : localhost:8101
------cloud-moment-mysql : 192.168.3.5:3001
-cloud-moment : localhost:8102
-cloud-moment-mysql : 192.168.3.5:3002
+cloud-oauth2-mysql : 192.168.3.5:3136
+
+cloud-tweet-mysql : 192.168.3.5:3011
+
+
 
 cloud-user : localhost:8103
-cloud-user-mysql : 192.168.3.5:3003
+cloud-user-mysql : 192.168.3.5:3012

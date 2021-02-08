@@ -27,6 +27,8 @@
 		<module>twitter-cloud-dependencies</module>
 		<module>twitter-cloud-gateway</module>
 		<module>twitter-cloud-oauth2</module>
+		<module>twitter-cloud-tweet</module>
+		<module>twitter-cloud-user</module>
 	</modules>
 
 

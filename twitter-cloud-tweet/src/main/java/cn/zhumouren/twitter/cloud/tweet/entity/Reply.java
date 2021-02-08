@@ -1,5 +1,6 @@
 package cn.zhumouren.twitter.cloud.tweet.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.time.LocalDateTime;
 import java.io.Serializable;
@@ -20,6 +21,11 @@ import lombok.EqualsAndHashCode;
 public class Reply implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
+    /**
+     * 回复id
+     */
+    private Long id;
 
     /**
      * 父推文id
@@ -70,6 +76,12 @@ public class Reply implements Serializable {
      * 回复更新时间
      */
     private LocalDateTime updated;
+
+    /**
+     * 是否删除，0是没有删除
+     */
+    @TableField(value = "is_deleted")
+    private Integer deleted;
 
 
 }

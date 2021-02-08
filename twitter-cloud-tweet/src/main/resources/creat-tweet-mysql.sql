@@ -10,7 +10,7 @@ create table tweet
     `num_forward` INT UNSIGNED        DEFAULT 0 COMMENT '推文转发数',
     `created`     datetime   NOT NULL DEFAULT (NOW()) COMMENT '推文创建时间',
     `updated`     datetime   NOT NULL DEFAULT (NOW()) COMMENT '推文更新时间',
-    `is_delete`   TINYINT UNSIGNED    DEFAULT 0 COMMENT '是否删除，0是没有删除',
+    `is_deleted`   TINYINT UNSIGNED    DEFAULT 0 COMMENT '是否删除，0是没有删除',
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4 COMMENT ='推文表';
@@ -28,6 +28,7 @@ create table tweet_reply
     `num_forward` INT UNSIGNED        DEFAULT 0 COMMENT '回复转发数',
     `created`     datetime   NOT NULL DEFAULT (NOW()) COMMENT '回复创建时间',
     `updated`     datetime   NOT NULL DEFAULT (NOW()) COMMENT '回复更新时间',
+    `is_deleted`   TINYINT UNSIGNED    DEFAULT 0 COMMENT '是否删除，0是没有删除',
     PRIMARY KEY (`id`),
     KEY (`tweet_id`),
     KEY (`user_id`)

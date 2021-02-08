@@ -2,6 +2,8 @@ package cn.zhumouren.twitter.cloud.tweet.entity;
 
 import java.time.LocalDateTime;
 import java.io.Serializable;
+
+import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -18,6 +20,11 @@ import lombok.EqualsAndHashCode;
 public class Tweet implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
+    /**
+     * 推文id
+     */
+    private Long id;
 
     /**
      * 用户唯一id
@@ -67,7 +74,8 @@ public class Tweet implements Serializable {
     /**
      * 是否删除，0是没有删除
      */
-    private Integer isDelete;
+    @TableField(value = "is_deleted")
+    private Integer deleted;
 
 
 }

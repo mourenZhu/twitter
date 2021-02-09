@@ -1,6 +1,6 @@
 package cn.zhumouren.twitter.cloud.tweet.mapper;
 
-import cn.zhumouren.twitter.cloud.tweet.entity.ReplyPath;
+import cn.zhumouren.twitter.cloud.tweet.entity.Path;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
@@ -9,8 +9,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * </p>
  *
  * @author zhumouren
- * @since 2021-02-08
+ * @since 2021-02-09
  */
-public interface ReplyPathMapper extends BaseMapper<ReplyPath> {
+public interface PathMapper extends BaseMapper<Path> {
 
 }

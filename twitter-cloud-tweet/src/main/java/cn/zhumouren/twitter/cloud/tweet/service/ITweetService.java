@@ -13,4 +13,27 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ITweetService extends IService<Tweet> {
 
+    /**
+     * 提交推文，并需要在path中添加记录
+     * @param content
+     * @return
+     */
+    boolean postTweet(String content, Long uid);
+
+    /**
+     * 提交推文（包括图片），并需要在path添加记录
+     * @param content
+     * @param pics
+     * @return
+     */
+    boolean postTweet(String content, String pics, Long uid);
+
+    /**
+     * 删除推文，但不是真删
+     * @param tweetId
+     * @param uid
+     * @return
+     */
+    boolean deletedTweet(Long tweetId, Long uid);
+
 }

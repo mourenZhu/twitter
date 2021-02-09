@@ -39,6 +39,7 @@ create table tweet_path
 (
     `parent_id` bigint(20) NOT NULL COMMENT '父评论id',
     `child_id`  bigint(20) NOT NULL COMMENT '子评论id',
+    `is_deleted`   TINYINT UNSIGNED    DEFAULT 0 COMMENT '是否删除，0是没有删除',
     PRIMARY KEY (`parent_id`, `child_id`),
     KEY (`parent_id`),
     KEY (`child_id`)

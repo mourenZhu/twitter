@@ -1,5 +1,6 @@
 package cn.zhumouren.twitter.cloud.tweet.entity;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -10,11 +11,12 @@ import lombok.EqualsAndHashCode;
  * </p>
  *
  * @author zhumouren
- * @since 2021-02-08
+ * @since 2021-02-09
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class ReplyPath implements Serializable {
+@TableName("tweet_path")
+public class Path implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

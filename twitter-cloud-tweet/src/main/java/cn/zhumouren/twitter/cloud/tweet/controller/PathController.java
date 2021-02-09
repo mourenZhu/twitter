@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
  * </p>
  *
  * @author zhumouren
- * @since 2021-02-08
+ * @since 2021-02-09
  */
 @RestController
-@RequestMapping("/tweet/reply-path")
-public class ReplyPathController {
+@RequestMapping("/tweet/path")
+public class PathController {
 
 }

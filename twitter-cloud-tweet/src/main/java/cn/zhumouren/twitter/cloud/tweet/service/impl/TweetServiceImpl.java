@@ -28,26 +28,40 @@ public class TweetServiceImpl extends ServiceImpl<TweetMapper, Tweet> implements
     @Autowired
     private PathMapper pathMapper;
 
-    @Override
-    public boolean postTweet(String content, Long uid) {
-        return postTweet(content, "", uid);
-    }
-
     @Transactional
-    @Override
-    public boolean postTweet(String content, String pics, Long uid) {
+    public boolean post(Long parentId, String content, String pics, Long uid) {
         Tweet tweet = new Tweet();
         tweet.setUserId(uid);
         tweet.setContent(content);
         tweet.setPics(pics);
         int isPostTweet = tweetMapper.insert(tweet);
-        int isPostPath = pathMapper.insert(new Path(0L, tweet.getId()));
+        int isPostPath = pathMapper.insert(new Path(parentId, tweet.getId()));
         return SqlHelper.retBool(isPostTweet) && SqlHelper.retBool(isPostPath);
+    }
+
+    @Override
+    public boolean postTweet(String content, Long uid) {
+        return postTweet(content, "", uid);
+    }
+
+    @Override
+    public boolean postTweet(String content, String pics, Long uid) {
+        return post(0L, content, pics, uid);
     }
 
     @Transactional
     @Override
     public boolean deletedTweet(Long tweetId, Long uid) {
         return tweetMapper.deletedTweet(tweetId, uid) && pathMapper.deletedTweetChildPath(tweetId);
+    }
+
+    @Override
+    public boolean postTweetReply(Long parentId, String replyContent, Long uid) {
+        return postTweetReply(parentId, replyContent, "", uid);
+    }
+
+    @Override
+    public boolean postTweetReply(Long parentId, String replyContent, String replyPics, Long uid) {
+        return post(parentId, replyContent, replyPics, uid);
     }
 }

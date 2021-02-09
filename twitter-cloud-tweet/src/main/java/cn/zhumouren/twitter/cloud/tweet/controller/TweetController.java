@@ -1,7 +1,6 @@
 package cn.zhumouren.twitter.cloud.tweet.controller;
 
 
-import cn.zhumouren.twitter.cloud.tweet.entity.Tweet;
 import cn.zhumouren.twitter.cloud.tweet.service.ITweetService;
 import cn.zhumouren.twitter.cloud.tweet.utils.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,11 +35,29 @@ public class TweetController {
         return tweetService.postTweet(content, pics, userId);
     }
 
+    /**
+     * 删除推文
+     *
+     * @param tweetId
+     * @param accessToken
+     * @return
+     */
     @DeleteMapping("/tweet")
     public boolean deletedTweet(@RequestParam("tweet_id") String tweetId,
                                 @RequestHeader("access_token") String accessToken) {
+        Long tId = Long.valueOf(tweetId);
+        Long userId = JwtUtils.getLongByString(accessToken, "uid");
+        return tweetService.deletedTweet(tId, userId);
+    }
 
-        return false;
+    @PostMapping("/tweet/reply")
+    public boolean postTweetReply(@RequestParam("parent_id") String parentId,
+                                  @RequestParam("reply_content") String replyContent,
+                                  @RequestParam("pics") String pics,
+                                  @RequestHeader("access_token") String accessToken) {
+        Long pId = Long.valueOf(parentId);
+        Long userId = JwtUtils.getLongByString(accessToken, "uid");
+        return tweetService.postTweetReply(pId, replyContent, pics, userId);
     }
 
 }

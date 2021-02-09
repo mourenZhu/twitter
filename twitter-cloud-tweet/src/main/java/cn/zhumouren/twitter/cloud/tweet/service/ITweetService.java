@@ -15,6 +15,7 @@ public interface ITweetService extends IService<Tweet> {
 
     /**
      * 提交推文，并需要在path中添加记录
+     *
      * @param content
      * @return
      */
@@ -22,6 +23,7 @@ public interface ITweetService extends IService<Tweet> {
 
     /**
      * 提交推文（包括图片），并需要在path添加记录
+     *
      * @param content
      * @param pics
      * @return
@@ -30,10 +32,32 @@ public interface ITweetService extends IService<Tweet> {
 
     /**
      * 删除推文，但不是真删
+     *
      * @param tweetId
      * @param uid
      * @return
      */
     boolean deletedTweet(Long tweetId, Long uid);
+
+    /**
+     * 推文回复，并在path中添加记录
+     *
+     * @param parentId
+     * @param replyContent
+     * @param uid
+     * @return
+     */
+    boolean postTweetReply(Long parentId, String replyContent, Long uid);
+
+    /**
+     * 推文回复（添加图片），并在path中添加记录
+     *
+     * @param parentId
+     * @param replyContent
+     * @param replyPics
+     * @param uid
+     * @return
+     */
+    boolean postTweetReply(Long parentId, String replyContent, String replyPics, Long uid);
 
 }

@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.zhumouren.twitter.cloud.tweet.mapper.TweetMapper">
+
     <update id="deletedTweet">
         update tweet
         set is_deleted = 1
         where id = #{tweet_id}
           and user_id = #{uid}
     </update>
+
+    <select id="listParentTweet" resultType="list">
+
+    </select>
 </mapper>

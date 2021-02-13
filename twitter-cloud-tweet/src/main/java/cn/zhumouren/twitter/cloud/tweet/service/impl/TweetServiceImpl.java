@@ -5,6 +5,7 @@ import cn.zhumouren.twitter.cloud.tweet.entity.Tweet;
 import cn.zhumouren.twitter.cloud.tweet.mapper.PathMapper;
 import cn.zhumouren.twitter.cloud.tweet.mapper.TweetMapper;
 import cn.zhumouren.twitter.cloud.tweet.service.ITweetService;
+import cn.zhumouren.twitter.cloud.tweet.vo.TweetLinkVO;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.baomidou.mybatisplus.extension.toolkit.SqlHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,5 +64,11 @@ public class TweetServiceImpl extends ServiceImpl<TweetMapper, Tweet> implements
     @Override
     public boolean postTweetReply(Long parentId, String replyContent, String replyPics, Long uid) {
         return post(parentId, replyContent, replyPics, uid);
+    }
+
+    @Override
+    public TweetLinkVO getTweetLinkVO(Long tweetId) {
+
+        return null;
     }
 }

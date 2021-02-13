@@ -3,6 +3,7 @@ package cn.zhumouren.twitter.cloud.tweet.controller;
 
 import cn.zhumouren.twitter.cloud.tweet.service.ITweetService;
 import cn.zhumouren.twitter.cloud.tweet.utils.JwtUtils;
+import cn.zhumouren.twitter.cloud.tweet.vo.TweetLinkVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -50,6 +51,15 @@ public class TweetController {
         return tweetService.deletedTweet(tId, userId);
     }
 
+    /**
+     * 发布推文回复
+     *
+     * @param parentId
+     * @param replyContent
+     * @param pics
+     * @param accessToken
+     * @return
+     */
     @PostMapping("/tweet/reply")
     public boolean postTweetReply(@RequestParam("parent_id") String parentId,
                                   @RequestParam("reply_content") String replyContent,
@@ -58,6 +68,10 @@ public class TweetController {
         Long pId = Long.valueOf(parentId);
         Long userId = JwtUtils.getLongByString(accessToken, "uid");
         return tweetService.postTweetReply(pId, replyContent, pics, userId);
+    }
+
+    public TweetLinkVO getTweetLinkVO(@RequestParam("tweet_id") String tweetId){
+        return null;
     }
 
 }

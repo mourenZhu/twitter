@@ -1,6 +1,7 @@
 package cn.zhumouren.twitter.cloud.tweet.service;
 
 import cn.zhumouren.twitter.cloud.tweet.entity.Tweet;
+import cn.zhumouren.twitter.cloud.tweet.vo.TweetLinkVO;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -59,5 +60,13 @@ public interface ITweetService extends IService<Tweet> {
      * @return
      */
     boolean postTweetReply(Long parentId, String replyContent, String replyPics, Long uid);
+
+    /**
+     * 获得推文链前端展示对象
+     *
+     * @param tweetId
+     * @return
+     */
+    TweetLinkVO getTweetLinkVO(Long tweetId);
 
 }

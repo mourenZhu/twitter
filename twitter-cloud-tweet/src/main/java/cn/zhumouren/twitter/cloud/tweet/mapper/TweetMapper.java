@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * <p>
  * 推文表 Mapper 接口
@@ -23,5 +25,8 @@ public interface TweetMapper extends BaseMapper<Tweet> {
      * @return
      */
     boolean deletedTweet(@Param("tweet_id") Long tweetId, @Param("uid") Long uid);
+
+
+    List<Tweet> listParentTweet();
 
 }

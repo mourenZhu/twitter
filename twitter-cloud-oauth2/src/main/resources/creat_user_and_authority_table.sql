@@ -6,8 +6,8 @@ CREATE TABLE `sys_permission`
     `enname`      varchar(64)  NOT NULL COMMENT '权限英文名称',
     `url`         varchar(255) NOT NULL COMMENT '授权路径',
     `description` varchar(200) DEFAULT NULL COMMENT '备注',
-    `created`     datetime     NOT NULL,
-    `updated`     datetime     NOT NULL,
+    `created`     datetime     NOT NULL DEFAULT (NOW()),
+    `updated`     datetime     NOT NULL DEFAULT (NOW()),
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 100
@@ -20,8 +20,8 @@ CREATE TABLE `sys_role`
     `name`        varchar(64) NOT NULL COMMENT '角色名称',
     `enname`      varchar(64) NOT NULL COMMENT '角色英文名称',
     `description` varchar(200) DEFAULT NULL COMMENT '备注',
-    `created`     datetime    NOT NULL,
-    `updated`     datetime    NOT NULL,
+    `created`     datetime    NOT NULL DEFAULT (NOW()),
+    `updated`     datetime    NOT NULL DEFAULT (NOW()),
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 100
@@ -44,12 +44,12 @@ CREATE TABLE `sys_user`
     `password`                varchar(64) NOT NULL COMMENT '密码，加密存储',
     `phone`                   varchar(20) DEFAULT NULL COMMENT '注册手机号',
     `email`                   varchar(50) DEFAULT NULL COMMENT '注册邮箱',
-    `account_non_expired`     tinyint(1)  NOT NULL COMMENT '账号是否过期',
-    `account_non_locked`      tinyint(1)  NOT NULL COMMENT '账号是否锁定',
-    `credentials_non_expired` tinyint(1)  NOT NULL COMMENT '凭证是否过期',
-    `enabled`                 tinyint(1)  NOT NULL,
-    `created`                 datetime    NOT NULL,
-    `updated`                 datetime    NOT NULL,
+    `account_non_expired`     tinyint(1)  NOT NULL DEFAULT 1 COMMENT '账号是否过期',
+    `account_non_locked`      tinyint(1)  NOT NULL DEFAULT 1 COMMENT '账号是否锁定',
+    `credentials_non_expired` tinyint(1)  NOT NULL DEFAULT 1 COMMENT '凭证是否过期',
+    `enabled`                 tinyint(1)  NOT NULL DEFAULT 1 COMMENT '账号是否可用',
+    `created`                 datetime    NOT NULL DEFAULT (NOW()),
+    `updated`                 datetime    NOT NULL DEFAULT (NOW()),
     PRIMARY KEY (`id`),
     UNIQUE KEY `username` (`username`) USING BTREE,
     UNIQUE KEY `phone` (`phone`) USING BTREE,

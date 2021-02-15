@@ -1,5 +1,6 @@
 package cn.zhumouren.twitter.cloud.oauth.config;
 
+import cn.zhumouren.twitter.cloud.oauth.dto.JwtUserDTO;
 import cn.zhumouren.twitter.cloud.oauth.entity.SysPermission;
 import cn.zhumouren.twitter.cloud.oauth.entity.SysUser;
 import cn.zhumouren.twitter.cloud.oauth.service.ISysPermissionService;
@@ -9,7 +10,6 @@ import org.assertj.core.util.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -44,11 +44,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             });
         }
 
-        return new User(user.getUsername(),
-                user.getPassword(),
+        return new JwtUserDTO(user.getId(), user.getUsername(), user.getPassword(),
                 user.getEnabled(),
                 user.getAccountNonExpired(),
                 user.getCredentialsNonExpired(),
-                user.getAccountNonLocked(), grantedAuthorities);
+                user.getAccountNonLocked(),
+                grantedAuthorities,
+                user.getCreated(), user.getUpdated());
     }
 }

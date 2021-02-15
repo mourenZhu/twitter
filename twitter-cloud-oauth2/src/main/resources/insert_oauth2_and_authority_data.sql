@@ -19,12 +19,6 @@ insert into sys_user_role(user_id, role_id)
 VALUES (1000000000000000001, 100);
 
 
-
-
-
-
-
-insert into ClientDetails(appId, resourceIds, appSecret, scope, grantTypes, redirectUrl, authorities,
-                          access_token_validity, refresh_token_validity, additionalInformation, autoApproveScopes)
-VALUES ('zhumouren', '', '$2a$10$Ff2In2W3534/PMMLrOSa2ef9fWJnH5q92zj2aWtvwZMcTWfElNR16', '', '',
-        'http://192.168.3.3:8080/oauth/code', 'authorization_code,password,refresh_token', '', '', '', '');
+insert into oauth_client_details(client_id, resource_ids, client_secret, scope, authorized_grant_types, web_server_redirect_uri)
+VALUES ('zhumouren', '', '$2a$10$Ff2In2W3534/PMMLrOSa2ef9fWJnH5q92zj2aWtvwZMcTWfElNR16', 'all', 'authorization_code,password,refresh_token',
+        'http://192.168.3.3:8080/oauth/code');

@@ -15,20 +15,20 @@ import java.util.Collection;
 public class JwtUserDTO extends User {
 
     /**
-     * 用户雪花id
+     * 用户雪花id,由于js无法准确接受Long型数据，所以转为String
      */
-    private Long id;
+    private String id;
 
     private LocalDateTime created;
 
     private LocalDateTime updated;
 
-    public JwtUserDTO(Long id, String username, String password, Collection<? extends GrantedAuthority> authorities) {
+    public JwtUserDTO(String id, String username, String password, Collection<? extends GrantedAuthority> authorities) {
         super(username, password, authorities);
         this.id = id;
     }
 
-    public JwtUserDTO(Long id, String username, String password,
+    public JwtUserDTO(String id, String username, String password,
                       boolean enabled, boolean accountNonExpired,
                       boolean credentialsNonExpired, boolean accountNonLocked,
                       Collection<? extends GrantedAuthority> authorities,
@@ -38,11 +38,11 @@ public class JwtUserDTO extends User {
         this.id = id;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

@@ -60,7 +60,6 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     @Bean
     public JwtAccessTokenConverter accessTokenConverter() {
         JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
-
         converter.setSigningKey(jwtConfig.getSigningKey());
         return converter;
     }
@@ -80,11 +79,11 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
 
         TokenEnhancerChain enhancerChain = new TokenEnhancerChain();
-        List<TokenEnhancer> delegates = new ArrayList<>();
+        List<TokenEnhancer> enhancerList = new ArrayList<>();
 
-        delegates.add(jwtTokenEnhancer());
-        delegates.add(accessTokenConverter());
-        enhancerChain.setTokenEnhancers(delegates);
+        enhancerList.add(jwtTokenEnhancer());
+        enhancerList.add(accessTokenConverter());
+        enhancerChain.setTokenEnhancers(enhancerList);
 
         // 设置令牌
         endpoints.tokenStore(jwtTokenStore())

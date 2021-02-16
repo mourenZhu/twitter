@@ -2,6 +2,7 @@ package cn.zhumouren.twitter.cloud.test.oauth2;
 
 import org.junit.Test;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.jwt.Jwt;
 
 /**
  * @Description todo
@@ -16,6 +17,10 @@ public class PasswordTest {
     public void createdPassword(){
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         System.out.println(passwordEncoder.encode("123456"));
+    }
+
+    public void jwtTest(){
+
     }
 
 }

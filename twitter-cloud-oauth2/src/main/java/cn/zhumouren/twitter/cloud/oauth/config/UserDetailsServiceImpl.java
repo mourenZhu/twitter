@@ -44,7 +44,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             });
         }
 
-        return new JwtUserDTO(user.getId(), user.getUsername(), user.getPassword(),
+        return new JwtUserDTO(user.getId().toString(), user.getUsername(), user.getPassword(),
                 user.getEnabled(),
                 user.getAccountNonExpired(),
                 user.getCredentialsNonExpired(),

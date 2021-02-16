@@ -1,8 +1,10 @@
 package cn.zhumouren.twitter.cloud.tweet.controller;
 
 
+import cn.zhumouren.twitter.cloud.tweet.controller.config.ResponseResultBody;
 import cn.zhumouren.twitter.cloud.tweet.service.ITweetService;
 import cn.zhumouren.twitter.cloud.tweet.utils.JwtUtils;
+import cn.zhumouren.twitter.cloud.tweet.vo.PostTweetVO;
 import cn.zhumouren.twitter.cloud.tweet.vo.TweetLinkVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping
+@ResponseResultBody
 public class TweetController {
 
     @Autowired
@@ -25,15 +28,15 @@ public class TweetController {
     /**
      * 提交推文
      *
-     * @param content
+     * @param postTweetVO
      * @param accessToken
      * @return
      */
     @PostMapping("/tweet")
-    public boolean postTweet(@RequestParam("content") String content, @RequestParam("pics") String pics,
+    public boolean postTweet(@RequestBody PostTweetVO postTweetVO,
                              @RequestHeader("access_token") String accessToken) {
         Long userId = JwtUtils.getLongByString(accessToken, "uid");
-        return tweetService.postTweet(content, pics, userId);
+        return tweetService.postTweet(postTweetVO.getContent(), postTweetVO.getPics(), userId);
     }
 
     /**
@@ -70,7 +73,7 @@ public class TweetController {
         return tweetService.postTweetReply(pId, replyContent, pics, userId);
     }
 
-    public TweetLinkVO getTweetLinkVO(@RequestParam("tweet_id") String tweetId){
+    public TweetLinkVO getTweetLinkVO(@RequestParam("tweet_id") String tweetId) {
         return null;
     }
 

@@ -5,6 +5,7 @@ cloud-gateway : localhost:8080
 cloud-oauth2 : localhost:8088
 cloud-oauth2-mysql : 192.168.3.5:3136
 
+cloud-tweet : localhost:8105
 cloud-tweet-mysql : 192.168.3.5:3011
 
 

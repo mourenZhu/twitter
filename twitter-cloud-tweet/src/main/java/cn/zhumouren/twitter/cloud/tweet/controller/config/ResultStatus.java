@@ -8,9 +8,16 @@ import org.springframework.http.HttpStatus;
 @ToString
 @Getter
 public enum ResultStatus {
+
+    UNKNOWN_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, -1, "unknown error！"),
+
     SUCCESS(HttpStatus.OK, 200, "OK"),
+
     BAD_REQUEST(HttpStatus.BAD_REQUEST, 400, "Bad Request"),
+
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, 500, "Internal Server Error"),
+
+    TWEET_NOT_EXIST(HttpStatus.OK, 851, "tweet is not exist！")
     ;
 
     /**

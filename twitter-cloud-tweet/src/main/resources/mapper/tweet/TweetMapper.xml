@@ -9,6 +9,13 @@
           and user_id = #{uid}
     </update>
 
+    <select id="isExistTweet" resultType="boolean">
+        select count(*)
+        from tweet
+        where id = #{tweet_id}
+          and is_deleted = 0
+    </select>
+
     <select id="listParentTweet" resultType="list">
 
     </select>

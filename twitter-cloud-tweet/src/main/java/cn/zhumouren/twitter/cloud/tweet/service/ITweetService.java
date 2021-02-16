@@ -1,6 +1,7 @@
 package cn.zhumouren.twitter.cloud.tweet.service;
 
 import cn.zhumouren.twitter.cloud.tweet.entity.Tweet;
+import cn.zhumouren.twitter.cloud.tweet.service.exception.TweetNotExistException;
 import cn.zhumouren.twitter.cloud.tweet.vo.TweetLinkVO;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -48,7 +49,7 @@ public interface ITweetService extends IService<Tweet> {
      * @param uid
      * @return
      */
-    boolean postTweetReply(Long parentId, String replyContent, Long uid);
+    boolean postTweetReply(Long parentId, String replyContent, Long uid) throws TweetNotExistException;
 
     /**
      * 推文回复（添加图片），并在path中添加记录
@@ -59,7 +60,7 @@ public interface ITweetService extends IService<Tweet> {
      * @param uid
      * @return
      */
-    boolean postTweetReply(Long parentId, String replyContent, String replyPics, Long uid);
+    boolean postTweetReply(Long parentId, String replyContent, String replyPics, Long uid) throws TweetNotExistException;
 
     /**
      * 获得推文链前端展示对象

@@ -3,8 +3,10 @@ package cn.zhumouren.twitter.cloud.tweet.controller;
 
 import cn.zhumouren.twitter.cloud.tweet.controller.config.ResponseResultBody;
 import cn.zhumouren.twitter.cloud.tweet.service.ITweetService;
+import cn.zhumouren.twitter.cloud.tweet.service.exception.TweetNotExistException;
 import cn.zhumouren.twitter.cloud.tweet.utils.JwtUtils;
 import cn.zhumouren.twitter.cloud.tweet.vo.PostTweetVO;
+import cn.zhumouren.twitter.cloud.tweet.vo.ReplyTweetVO;
 import cn.zhumouren.twitter.cloud.tweet.vo.TweetLinkVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -57,24 +59,21 @@ public class TweetController {
     /**
      * 发布推文回复
      *
-     * @param parentId
-     * @param replyContent
-     * @param pics
+     * @param replyTweetVO
      * @param accessToken
      * @return
      */
     @PostMapping("/tweet/reply")
-    public boolean postTweetReply(@RequestParam("parent_id") String parentId,
-                                  @RequestParam("reply_content") String replyContent,
-                                  @RequestParam("pics") String pics,
-                                  @RequestHeader("access_token") String accessToken) {
-        Long pId = Long.valueOf(parentId);
+    public boolean postTweetReply(@RequestBody ReplyTweetVO replyTweetVO,
+                                  @RequestHeader("access_token") String accessToken) throws TweetNotExistException {
+        Long pId = Long.valueOf(replyTweetVO.getParentId());
         Long userId = JwtUtils.getLongByString(accessToken, "uid");
-        return tweetService.postTweetReply(pId, replyContent, pics, userId);
+        return tweetService.postTweetReply(pId, replyTweetVO.getReplyContent(), replyTweetVO.getReplyPics(), userId);
     }
 
     public TweetLinkVO getTweetLinkVO(@RequestParam("tweet_id") String tweetId) {
         return null;
     }
+
 
 }

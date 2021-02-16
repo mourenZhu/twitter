@@ -26,6 +26,12 @@ public interface TweetMapper extends BaseMapper<Tweet> {
      */
     boolean deletedTweet(@Param("tweet_id") Long tweetId, @Param("uid") Long uid);
 
+    /**
+     * 判断推文是否存在，可用于判断是否可以回复
+     * @param tweetId
+     * @return
+     */
+    boolean isExistTweet(@Param("tweet_id") Long tweetId);
 
     List<Tweet> listParentTweet();
 

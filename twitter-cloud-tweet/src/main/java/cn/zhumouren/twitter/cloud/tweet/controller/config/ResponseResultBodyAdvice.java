@@ -1,6 +1,8 @@
 package cn.zhumouren.twitter.cloud.tweet.controller.config;
 
+import cn.zhumouren.twitter.cloud.tweet.constant.JsonResult;
 import cn.zhumouren.twitter.cloud.tweet.service.exception.TweetNotExistException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;
 import org.springframework.core.annotation.AnnotatedElementUtils;
 import org.springframework.http.HttpHeaders;
@@ -26,6 +28,7 @@ import java.lang.annotation.Annotation;
  **/
 
 @RestControllerAdvice
+@Slf4j
 public class ResponseResultBodyAdvice implements ResponseBodyAdvice<Object> {
 
     private static final Class<? extends Annotation> ANNOTATION_TYPE = ResponseResultBody.class;
@@ -58,7 +61,7 @@ public class ResponseResultBodyAdvice implements ResponseBodyAdvice<Object> {
      */
     @ExceptionHandler(Exception.class)
     public final ResponseEntity<JsonResult<?>> exceptionHandler(Exception ex, WebRequest request) {
-//        log.error("ExceptionHandler: {}", ex.getMessage());
+        log.error("ExceptionHandler: {}", ex.getMessage());
         HttpHeaders headers = new HttpHeaders();
         if (ex instanceof TweetNotExistException) {
             return this.handleResultException((TweetNotExistException) ex, headers, request);

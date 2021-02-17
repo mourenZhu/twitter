@@ -2,6 +2,20 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.zhumouren.twitter.cloud.tweet.mapper.TweetMapper">
 
+    <resultMap id="tweet" type="cn.zhumouren.twitter.cloud.tweet.entity.Tweet">
+        <id column="id" property="id"></id>
+        <result column="user_id" property="userId"></result>
+        <result column="content" property="content"></result>
+        <result column="pics" property="pics"></result>
+        <result column="num_likes" property="numLikes"></result>
+        <result column="num_replies" property="numReplies"></result>
+        <result column="num_quote" property="numQuote"></result>
+        <result column="num_forward" property="numForward"></result>
+        <result column="created" property="created"></result>
+        <result column="updated" property="updated"></result>
+        <result column="is_deleted" property="deleted"></result>
+    </resultMap>
+
     <update id="deletedTweet">
         update tweet
         set is_deleted = 1
@@ -16,7 +30,42 @@
           and is_deleted = 0
     </select>
 
-    <select id="listParentTweet" resultType="list">
+    <select id="listParentTweet" resultMap="tweet">
+        SELECT t.id,
+               t.user_id,
+               t.content,
+               t.pics,
+               t.num_likes,
+               t.num_replies,
+               t.num_quote,
+               t.num_forward,
+               t.created,
+               t.updated,
+               t.is_deleted
+        FROM tweet AS t
+                 LEFT JOIN parent_child_tweet AS pct ON t.id = pct.parent_id
+        WHERE pct.child_id = #{tweetId}
+          AND t.is_deleted = 0
+        ORDER BY t.created ASC
+    </select>
 
+    <select id="getChildTweetPage" resultMap="tweet">
+        SELECT t.id,
+               t.user_id,
+               t.content,
+               t.pics,
+               t.num_likes,
+               t.num_replies,
+               t.num_quote,
+               t.num_forward,
+               t.created,
+               t.updated,
+               t.is_deleted
+        FROM tweet AS t
+                 LEFT JOIN parent_child_tweet AS pct ON t.id = pct.child_id
+        WHERE pct.parent_id = #{tweetId}
+          AND pct.level = 1
+          AND t.is_deleted = 0
+        ORDER BY t.created ASC
     </select>
 </mapper>

@@ -1,6 +1,6 @@
 package cn.zhumouren.twitter.cloud.tweet.service.exception;
 
-import cn.zhumouren.twitter.cloud.tweet.controller.config.ResultStatus;
+import cn.zhumouren.twitter.cloud.tweet.constant.ResultStatus;
 import lombok.Getter;
 
 /**

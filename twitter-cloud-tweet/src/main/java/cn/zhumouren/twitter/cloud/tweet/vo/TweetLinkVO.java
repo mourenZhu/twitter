@@ -20,4 +20,10 @@ public class TweetLinkVO {
     private Tweet currentTweet;
 
     private IPage<Tweet> childTweetPage;
+
+    public TweetLinkVO(List<Tweet> parentTweetList, Tweet currentTweet, IPage<Tweet> childTweetPage) {
+        this.parentTweetList = parentTweetList;
+        this.currentTweet = currentTweet;
+        this.childTweetPage = childTweetPage;
+    }
 }

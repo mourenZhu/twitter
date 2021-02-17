@@ -1,13 +1,16 @@
 package cn.zhumouren.twitter.cloud.tweet.controller;
 
 
+import cn.zhumouren.twitter.cloud.tweet.constant.PageConstants;
 import cn.zhumouren.twitter.cloud.tweet.controller.config.ResponseResultBody;
+import cn.zhumouren.twitter.cloud.tweet.entity.Tweet;
 import cn.zhumouren.twitter.cloud.tweet.service.ITweetService;
 import cn.zhumouren.twitter.cloud.tweet.service.exception.TweetNotExistException;
 import cn.zhumouren.twitter.cloud.tweet.utils.JwtUtils;
 import cn.zhumouren.twitter.cloud.tweet.vo.PostTweetVO;
 import cn.zhumouren.twitter.cloud.tweet.vo.ReplyTweetVO;
 import cn.zhumouren.twitter.cloud.tweet.vo.TweetLinkVO;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -71,8 +74,23 @@ public class TweetController {
         return tweetService.postTweetReply(pId, replyTweetVO.getReplyContent(), replyTweetVO.getReplyPics(), userId);
     }
 
-    public TweetLinkVO getTweetLinkVO(@RequestParam("tweet_id") String tweetId) {
-        return null;
+    /**
+     * 获得具体的推文链
+     *
+     * @param tweetId
+     * @param current
+     * @param size
+     * @return
+     */
+    @GetMapping("/status/{tweetId}")
+    public TweetLinkVO getTweetLinkVO(@PathVariable("tweetId") String tweetId,
+                                      @RequestParam(value = "current", required = false) Integer current,
+                                      @RequestParam(value = "size", required = false) Integer size) {
+        Page<Tweet> page = new Page<>();
+        Long tId = Long.valueOf(tweetId);
+        PageConstants.constantPageConfig(page, current, size);
+
+        return tweetService.getTweetLinkVO(tId, page);
     }
 
 

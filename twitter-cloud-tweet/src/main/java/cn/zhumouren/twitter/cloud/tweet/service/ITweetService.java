@@ -3,6 +3,7 @@ package cn.zhumouren.twitter.cloud.tweet.service;
 import cn.zhumouren.twitter.cloud.tweet.entity.Tweet;
 import cn.zhumouren.twitter.cloud.tweet.service.exception.TweetNotExistException;
 import cn.zhumouren.twitter.cloud.tweet.vo.TweetLinkVO;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -70,8 +71,9 @@ public interface ITweetService extends IService<Tweet> {
      * 获得推文链前端展示对象
      *
      * @param tweetId
+     * @param page
      * @return
      */
-    TweetLinkVO getTweetLinkVO(Long tweetId);
+    TweetLinkVO getTweetLinkVO(Long tweetId, Page<Tweet> page);
 
 }

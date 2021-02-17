@@ -7,11 +7,15 @@ import cn.zhumouren.twitter.cloud.tweet.mapper.TweetMapper;
 import cn.zhumouren.twitter.cloud.tweet.service.ITweetService;
 import cn.zhumouren.twitter.cloud.tweet.service.exception.TweetNotExistException;
 import cn.zhumouren.twitter.cloud.tweet.vo.TweetLinkVO;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.baomidou.mybatisplus.extension.toolkit.SqlHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * <p>
@@ -83,8 +87,10 @@ public class TweetServiceImpl extends ServiceImpl<TweetMapper, Tweet> implements
     }
 
     @Override
-    public TweetLinkVO getTweetLinkVO(Long tweetId) {
-
-        return null;
+    public TweetLinkVO getTweetLinkVO(Long tweetId, Page<Tweet> page) {
+        List<Tweet> tweetList = tweetMapper.listParentTweet(tweetId);
+        IPage<Tweet> childTweetPage = tweetMapper.getChildTweetPage(page, tweetId);
+        Tweet currentTweet = tweetList.remove(tweetList.size() - 1);
+        return new TweetLinkVO(tweetList, currentTweet, childTweetPage);
     }
 }

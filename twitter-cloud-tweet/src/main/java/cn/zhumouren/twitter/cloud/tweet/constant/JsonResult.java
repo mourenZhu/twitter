@@ -1,4 +1,4 @@
-package cn.zhumouren.twitter.cloud.tweet.controller.config;
+package cn.zhumouren.twitter.cloud.tweet.constant;
 
 import lombok.Getter;
 import lombok.ToString;

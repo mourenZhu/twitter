@@ -67,14 +67,18 @@ public class ResponseResultBodyAdvice implements ResponseBodyAdvice<Object> {
         return this.handleException(ex, headers, request);
     }
 
-    /** 对TweetNotExistException类返回返回结果的处理 */
+    /**
+     * 对TweetNotExistException类返回返回结果的处理
+     */
     protected ResponseEntity<JsonResult<?>> handleResultException(TweetNotExistException ex, HttpHeaders headers, WebRequest request) {
         JsonResult<?> body = JsonResult.failure(ex.getResultStatus());
         HttpStatus status = ex.getResultStatus().getHttpStatus();
         return this.handleExceptionInternal(ex, body, headers, status, request);
     }
 
-    /** 异常类的统一处理 */
+    /**
+     * 异常类的统一处理
+     */
     protected ResponseEntity<JsonResult<?>> handleException(Exception ex, HttpHeaders headers, WebRequest request) {
         JsonResult<?> body = JsonResult.failure();
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;

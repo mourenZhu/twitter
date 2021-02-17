@@ -19,6 +19,7 @@ public interface ITweetService extends IService<Tweet> {
      * 提交推文，并需要在path中添加记录
      *
      * @param content
+     * @param uid
      * @return
      */
     boolean postTweet(String content, Long uid);
@@ -28,6 +29,7 @@ public interface ITweetService extends IService<Tweet> {
      *
      * @param content
      * @param pics
+     * @param uid
      * @return
      */
     boolean postTweet(String content, String pics, Long uid);
@@ -48,6 +50,7 @@ public interface ITweetService extends IService<Tweet> {
      * @param replyContent
      * @param uid
      * @return
+     * @throws TweetNotExistException
      */
     boolean postTweetReply(Long parentId, String replyContent, Long uid) throws TweetNotExistException;
 
@@ -59,6 +62,7 @@ public interface ITweetService extends IService<Tweet> {
      * @param replyPics
      * @param uid
      * @return
+     * @throws TweetNotExistException
      */
     boolean postTweetReply(Long parentId, String replyContent, String replyPics, Long uid) throws TweetNotExistException;
 

@@ -8,6 +8,9 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 
+/**
+ * @author mourenZhu
+ */
 @Component
 public class AuthoritiesUtils {
 
@@ -35,8 +38,9 @@ public class AuthoritiesUtils {
         Jwt jwt = JwtHelper.decode(token);
         ArrayList<String> jwtList = JwtUtils.getAuthorities(jwt);
         for (String s : jwtList) {
-            if (s.equals(permission))
+            if (s.equals(permission)) {
                 return true;
+            }
         }
         return false;
     }

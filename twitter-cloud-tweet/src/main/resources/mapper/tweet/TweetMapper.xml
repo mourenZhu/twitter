@@ -10,7 +10,7 @@
     </update>
 
     <select id="isExistTweet" resultType="boolean">
-        select count(*)
+        select count(id)
         from tweet
         where id = #{tweet_id}
           and is_deleted = 0

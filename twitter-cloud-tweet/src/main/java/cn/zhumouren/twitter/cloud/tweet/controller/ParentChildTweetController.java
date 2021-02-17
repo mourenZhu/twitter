@@ -7,14 +7,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * <p>
- * 回复闭包路径表 前端控制器
+ * 推文闭包表 前端控制器
  * </p>
  *
  * @author zhumouren
- * @since 2021-02-09
+ * @since 2021-02-17
  */
 @RestController
-@RequestMapping("/tweet/path")
-public class PathController {
+@RequestMapping("/tweet/parent-child-tweet")
+public class ParentChildTweetController {
 
 }

@@ -1,5 +1,6 @@
 package cn.zhumouren.twitter.cloud.tweet.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.time.LocalDateTime;
 import java.io.Serializable;
@@ -36,5 +37,10 @@ public class Forward implements Serializable {
      */
     private LocalDateTime created;
 
+    /**
+     * 是否删除，0是没有删除
+     */
+    @TableField(value = "is_deleted")
+    private boolean deleted;
 
 }

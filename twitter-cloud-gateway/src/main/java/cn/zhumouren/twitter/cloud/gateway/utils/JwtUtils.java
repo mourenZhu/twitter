@@ -7,6 +7,9 @@ import org.springframework.security.jwt.Jwt;
 
 import java.util.ArrayList;
 
+/**
+ * @author mourenZhu
+ */
 public class JwtUtils {
     public static ArrayList<String> getAuthorities(Jwt jwt) {
 

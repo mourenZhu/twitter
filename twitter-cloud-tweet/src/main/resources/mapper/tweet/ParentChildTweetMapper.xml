@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.zhumouren.twitter.cloud.tweet.mapper.ParentChildTweetMapper">
+
+    <update id="deletedTweet">
+        update parent_child_tweet
+        set is_deleted = 1
+        where child_id = #{childId}
+    </update>
+
+    <insert id="postTweetReply">
+        insert into parent_child_tweet(parent_id, child_id, level, is_root) (select parent_id, #{childId}, level + 1, 0
+                                                     from parent_child_tweet
+                                                     where child_id = #{parentId})
+    </insert>
+
+</mapper>

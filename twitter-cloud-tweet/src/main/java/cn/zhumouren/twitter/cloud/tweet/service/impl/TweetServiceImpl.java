@@ -1,8 +1,8 @@
 package cn.zhumouren.twitter.cloud.tweet.service.impl;
 
-import cn.zhumouren.twitter.cloud.tweet.entity.Path;
+import cn.zhumouren.twitter.cloud.tweet.entity.ParentChildTweet;
 import cn.zhumouren.twitter.cloud.tweet.entity.Tweet;
-import cn.zhumouren.twitter.cloud.tweet.mapper.PathMapper;
+import cn.zhumouren.twitter.cloud.tweet.mapper.ParentChildTweetMapper;
 import cn.zhumouren.twitter.cloud.tweet.mapper.TweetMapper;
 import cn.zhumouren.twitter.cloud.tweet.service.ITweetService;
 import cn.zhumouren.twitter.cloud.tweet.service.exception.TweetNotExistException;
@@ -28,17 +28,28 @@ public class TweetServiceImpl extends ServiceImpl<TweetMapper, Tweet> implements
     private TweetMapper tweetMapper;
 
     @Autowired
-    private PathMapper pathMapper;
+    private ParentChildTweetMapper parentChildTweetMapper;
 
-    @Transactional
-    public boolean post(Long parentId, String content, String pics, Long uid) {
+    @Transactional(rollbackFor = Exception.class)
+    public boolean post(String content, String pics, Long uid) {
         Tweet tweet = new Tweet();
         tweet.setUserId(uid);
         tweet.setContent(content);
         tweet.setPics(pics);
         int isPostTweet = tweetMapper.insert(tweet);
-        int isPostPath = pathMapper.insert(new Path(parentId, tweet.getId()));
-        return SqlHelper.retBool(isPostTweet) && SqlHelper.retBool(isPostPath);
+        int isParentChildTweet = parentChildTweetMapper.insert(new ParentChildTweet(tweet.getId(), tweet.getId(), 0, true));
+        return SqlHelper.retBool(isPostTweet) && SqlHelper.retBool(isParentChildTweet);
+    }
+
+    public boolean postReply(Long parentId, String content, String pics, Long uid){
+        Tweet tweet = new Tweet();
+        tweet.setUserId(uid);
+        tweet.setContent(content);
+        tweet.setPics(pics);
+        int isPostTweet = tweetMapper.insert(tweet);
+        boolean isPostTweetReply = parentChildTweetMapper.postTweetReply(parentId, tweet.getId());
+        int isParentChildTweet = parentChildTweetMapper.insert(new ParentChildTweet(tweet.getId(), tweet.getId(), 0, false));
+        return SqlHelper.retBool(isPostTweet) && isPostTweetReply && SqlHelper.retBool(isParentChildTweet);
     }
 
     @Override
@@ -48,13 +59,13 @@ public class TweetServiceImpl extends ServiceImpl<TweetMapper, Tweet> implements
 
     @Override
     public boolean postTweet(String content, String pics, Long uid) {
-        return post(0L, content, pics, uid);
+        return post(content, pics, uid);
     }
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public boolean deletedTweet(Long tweetId, Long uid) {
-        return tweetMapper.deletedTweet(tweetId, uid) && pathMapper.deletedTweetChildPath(tweetId);
+        return tweetMapper.deletedTweet(tweetId, uid) && parentChildTweetMapper.deletedTweet(tweetId);
     }
 
     @Override
@@ -65,7 +76,7 @@ public class TweetServiceImpl extends ServiceImpl<TweetMapper, Tweet> implements
     @Override
     public boolean postTweetReply(Long parentId, String replyContent, String replyPics, Long uid) throws TweetNotExistException {
         if (tweetMapper.isExistTweet(parentId)) {
-            return post(parentId, replyContent, replyPics, uid);
+            return postReply(parentId, replyContent, replyPics, uid);
         } else {
             throw new TweetNotExistException();
         }

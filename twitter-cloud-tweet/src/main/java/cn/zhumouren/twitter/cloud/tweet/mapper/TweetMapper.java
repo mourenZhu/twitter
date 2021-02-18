@@ -54,4 +54,18 @@ public interface TweetMapper extends BaseMapper<Tweet> {
      */
     IPage<Tweet> getChildTweetPage(Page<Tweet> page, @Param("tweetId") Long tweetId);
 
+    /**
+     * 增加推文回复
+     * @param tweetId
+     * @return
+     */
+    boolean addReplyNums(@Param("tweetId") Long tweetId);
+
+    /**
+     * 减少推文回复
+     * @param tweetId
+     * @return
+     */
+    boolean subReplyNums(@Param("tweetId") Long tweetId);
+
 }

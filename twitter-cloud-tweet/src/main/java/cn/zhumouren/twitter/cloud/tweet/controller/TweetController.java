@@ -10,6 +10,7 @@ import cn.zhumouren.twitter.cloud.tweet.utils.JwtUtils;
 import cn.zhumouren.twitter.cloud.tweet.vo.PostTweetVO;
 import cn.zhumouren.twitter.cloud.tweet.vo.ReplyTweetVO;
 import cn.zhumouren.twitter.cloud.tweet.vo.TweetLinkVO;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -89,8 +90,17 @@ public class TweetController {
         Page<Tweet> page = new Page<>();
         Long tId = Long.valueOf(tweetId);
         PageConstants.constantPageConfig(page, current, size);
+        return tweetService.getTweetLinkVO(page, tId);
+    }
 
-        return tweetService.getTweetLinkVO(tId, page);
+    @GetMapping("/{userId}/tweets")
+    public IPage<Tweet> getUserTweetPage(@PathVariable("userId") String userId,
+                                         @RequestParam(value = "current", required = false) Integer current,
+                                         @RequestParam(value = "size", required = false) Integer size) {
+        Page<Tweet> page = new Page<>();
+        PageConstants.constantPageConfig(page, current, size);
+        Long uid = Long.valueOf(userId);
+        return null;
     }
 
 

@@ -38,5 +38,8 @@ public class TweetTest {
         if (null == i){
             System.out.println();
         }
+        if (i == null){
+            System.out.println("???");
+        }
     }
 }

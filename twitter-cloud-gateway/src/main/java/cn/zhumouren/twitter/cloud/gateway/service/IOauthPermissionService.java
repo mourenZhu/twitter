@@ -11,6 +11,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 @FeignClient(name = "server-oauth2", fallback = OauthPermissionServiceFallback.class)
 public interface IOauthPermissionService {
 
+    /**
+     * 用于获得该路径所需要的权限
+     * @param path
+     * @return
+     */
     @GetMapping("/permission/is")
     String getPermissionByPath(@RequestParam("path") String path);
 }

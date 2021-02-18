@@ -45,7 +45,8 @@ public class TweetServiceImpl extends ServiceImpl<TweetMapper, Tweet> implements
         return SqlHelper.retBool(isPostTweet) && SqlHelper.retBool(isParentChildTweet);
     }
 
-    public boolean postReply(Long parentId, String content, String pics, Long uid){
+    @Transactional(rollbackFor = Exception.class)
+    public boolean postReply(Long parentId, String content, String pics, Long uid) {
         Tweet tweet = new Tweet();
         tweet.setUserId(uid);
         tweet.setContent(content);
@@ -53,7 +54,8 @@ public class TweetServiceImpl extends ServiceImpl<TweetMapper, Tweet> implements
         int isPostTweet = tweetMapper.insert(tweet);
         boolean isPostTweetReply = parentChildTweetMapper.postTweetReply(parentId, tweet.getId());
         int isParentChildTweet = parentChildTweetMapper.insert(new ParentChildTweet(tweet.getId(), tweet.getId(), 0, false));
-        return SqlHelper.retBool(isPostTweet) && isPostTweetReply && SqlHelper.retBool(isParentChildTweet);
+        boolean isReplyNums = tweetMapper.addReplyNums(parentId);
+        return SqlHelper.retBool(isPostTweet) && isPostTweetReply && SqlHelper.retBool(isParentChildTweet) && isReplyNums;
     }
 
     @Override
@@ -69,7 +71,12 @@ public class TweetServiceImpl extends ServiceImpl<TweetMapper, Tweet> implements
     @Transactional(rollbackFor = Exception.class)
     @Override
     public boolean deletedTweet(Long tweetId, Long uid) {
-        return tweetMapper.deletedTweet(tweetId, uid) && parentChildTweetMapper.deletedTweet(tweetId);
+        boolean isReplyNums = true;
+        Long parentId = parentChildTweetMapper.getParentId(tweetId, 1);
+        if (null != parentId) {
+            isReplyNums = tweetMapper.subReplyNums(parentId);
+        }
+        return tweetMapper.deletedTweet(tweetId, uid) && parentChildTweetMapper.deletedTweet(tweetId) && isReplyNums;
     }
 
     @Override
@@ -87,10 +94,15 @@ public class TweetServiceImpl extends ServiceImpl<TweetMapper, Tweet> implements
     }
 
     @Override
-    public TweetLinkVO getTweetLinkVO(Long tweetId, Page<Tweet> page) {
+    public TweetLinkVO getTweetLinkVO(Page<Tweet> page, Long tweetId) {
         List<Tweet> tweetList = tweetMapper.listParentTweet(tweetId);
         IPage<Tweet> childTweetPage = tweetMapper.getChildTweetPage(page, tweetId);
         Tweet currentTweet = tweetList.remove(tweetList.size() - 1);
         return new TweetLinkVO(tweetList, currentTweet, childTweetPage);
+    }
+
+    @Override
+    public IPage<Tweet> getUserTweetPage(Page<Tweet> page, Long userId) {
+        return null;
     }
 }

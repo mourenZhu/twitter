@@ -33,4 +33,13 @@ public interface ParentChildTweetMapper extends BaseMapper<ParentChildTweet> {
      */
     boolean postTweetReply(@Param("parentId") Long parentId, @Param("childId") Long childId);
 
+    /**
+     * 通过子id和评论等级获得父id
+     *
+     * @param childId
+     * @param level
+     * @return
+     */
+    Long getParentId(@Param("childId") Long childId, @Param("level") Integer level);
+
 }

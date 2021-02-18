@@ -68,4 +68,16 @@
           AND t.is_deleted = 0
         ORDER BY t.created ASC
     </select>
+
+    <update id="addReplyNums">
+        update tweet
+        set num_replies = num_replies + 1
+        where id = #{tweetId}
+    </update>
+
+    <update id="subReplyNums">
+        update tweet
+        set num_replies = num_replies - 1
+        where id = #{tweetId}
+    </update>
 </mapper>

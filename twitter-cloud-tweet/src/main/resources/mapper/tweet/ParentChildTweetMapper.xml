@@ -10,8 +10,15 @@
 
     <insert id="postTweetReply">
         insert into parent_child_tweet(parent_id, child_id, level, is_root) (select parent_id, #{childId}, level + 1, 0
-                                                     from parent_child_tweet
-                                                     where child_id = #{parentId})
+                                                                             from parent_child_tweet
+                                                                             where child_id = #{parentId})
     </insert>
+
+    <select id="getParentId" resultType="Long">
+        select parent_id
+        from parent_child_tweet
+        where child_id = #{childId}
+          and level = #{level}
+    </select>
 
 </mapper>

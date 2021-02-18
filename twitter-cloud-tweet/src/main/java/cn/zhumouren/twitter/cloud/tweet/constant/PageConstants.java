@@ -15,7 +15,7 @@ public class PageConstants {
 
     private static Integer current = 1;
 
-    private static Integer size = 7;
+    private static Integer size = 20;
 
     public static Page constantPageConfig(Page page, Integer current, Integer size) {
         if (null == current || null == size) {

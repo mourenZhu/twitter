@@ -1,21 +1,21 @@
-package cn.zhumouren.twitter.cloud.oauth;
+package cn.zhumouren.twitter.cloud.timeline;
 
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 
-
 /**
- * @author mourenZhu
- */
+ * @Description todo
+ * @Author mourenZhu
+ * @Date 2021/2/18 14:31
+ * @Version 1.0
+ **/
 @SpringBootApplication
-@MapperScan("cn.zhumouren.twitter.cloud.oauth.mapper")
 @EnableDiscoveryClient
 @EnableFeignClients
-public class OauthApplication {
+public class TimelineApplication {
     public static void main(String[] args) {
-        SpringApplication.run(OauthApplication.class, args);
+        SpringApplication.run(TimelineApplication.class, args);
     }
 }

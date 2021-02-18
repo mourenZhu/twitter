@@ -80,4 +80,22 @@
         set num_replies = num_replies - 1
         where id = #{tweetId}
     </update>
+
+    <select id="getUserTweetPage" resultMap="tweet">
+        SELECT t.id,
+               t.user_id,
+               t.content,
+               t.pics,
+               t.num_likes,
+               t.num_replies,
+               t.num_quote,
+               t.num_forward,
+               t.created,
+               t.updated,
+               t.is_deleted
+        FROM tweet AS t
+                 LEFT JOIN parent_child_tweet AS pct ON t.id = pct.parent_id
+        where t.user_id = #{userId}
+          AND pct.is_root = 1;
+    </select>
 </mapper>

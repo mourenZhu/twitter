@@ -93,6 +93,14 @@ public class TweetController {
         return tweetService.getTweetLinkVO(page, tId);
     }
 
+    /**
+     * 获得用户的推文(不包括回复)
+     *
+     * @param userId
+     * @param current
+     * @param size
+     * @return
+     */
     @GetMapping("/{userId}/tweets")
     public IPage<Tweet> getUserTweetPage(@PathVariable("userId") String userId,
                                          @RequestParam(value = "current", required = false) Integer current,
@@ -100,8 +108,10 @@ public class TweetController {
         Page<Tweet> page = new Page<>();
         PageConstants.constantPageConfig(page, current, size);
         Long uid = Long.valueOf(userId);
-        return null;
+        return tweetService.getUserTweetPage(page, uid);
     }
+
+
 
 
 }

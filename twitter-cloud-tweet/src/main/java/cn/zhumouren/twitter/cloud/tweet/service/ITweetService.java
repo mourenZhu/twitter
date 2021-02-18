@@ -78,7 +78,7 @@ public interface ITweetService extends IService<Tweet> {
     TweetLinkVO getTweetLinkVO(Page<Tweet> page, Long tweetId);
 
     /**
-     * 获得用户的推文
+     * 获得用户的推文，不包括回复
      *
      * @param page
      * @param userId

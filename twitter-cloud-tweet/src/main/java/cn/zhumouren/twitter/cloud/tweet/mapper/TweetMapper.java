@@ -56,6 +56,7 @@ public interface TweetMapper extends BaseMapper<Tweet> {
 
     /**
      * 增加推文回复
+     *
      * @param tweetId
      * @return
      */
@@ -63,9 +64,19 @@ public interface TweetMapper extends BaseMapper<Tweet> {
 
     /**
      * 减少推文回复
+     *
      * @param tweetId
      * @return
      */
     boolean subReplyNums(@Param("tweetId") Long tweetId);
+
+    /**
+     * 获得用户发布的推文（不包括回复）
+     *
+     * @param page
+     * @param userId
+     * @return
+     */
+    IPage<Tweet> getUserTweetPage(Page<Tweet> page,@Param("userId") Long userId);
 
 }

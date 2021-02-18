@@ -103,6 +103,6 @@ public class TweetServiceImpl extends ServiceImpl<TweetMapper, Tweet> implements
 
     @Override
     public IPage<Tweet> getUserTweetPage(Page<Tweet> page, Long userId) {
-        return null;
+        return tweetMapper.getUserTweetPage(page, userId);
     }
 }

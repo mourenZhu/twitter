@@ -8,7 +8,7 @@ import cn.zhumouren.twitter.cloud.tweet.service.ITweetService;
 import cn.zhumouren.twitter.cloud.tweet.service.exception.TweetNotExistException;
 import cn.zhumouren.twitter.cloud.tweet.utils.JwtUtils;
 import cn.zhumouren.twitter.cloud.tweet.vo.PostTweetVO;
-import cn.zhumouren.twitter.cloud.tweet.vo.ReplyTweetVO;
+import cn.zhumouren.twitter.cloud.tweet.vo.PostReplyTweetVO;
 import cn.zhumouren.twitter.cloud.tweet.vo.TweetLinkVO;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -63,16 +63,16 @@ public class TweetController {
     /**
      * 发布推文回复
      *
-     * @param replyTweetVO
+     * @param postReplyTweetVO
      * @param accessToken
      * @return
      */
     @PostMapping("/tweet/reply")
-    public boolean postTweetReply(@RequestBody ReplyTweetVO replyTweetVO,
+    public boolean postTweetReply(@RequestBody PostReplyTweetVO postReplyTweetVO,
                                   @RequestHeader("access_token") String accessToken) throws TweetNotExistException {
-        Long pId = Long.valueOf(replyTweetVO.getParentId());
+        Long pId = Long.valueOf(postReplyTweetVO.getParentId());
         Long userId = JwtUtils.getLongByString(accessToken, "uid");
-        return tweetService.postTweetReply(pId, replyTweetVO.getReplyContent(), replyTweetVO.getReplyPics(), userId);
+        return tweetService.postTweetReply(pId, postReplyTweetVO.getReplyContent(), postReplyTweetVO.getReplyPics(), userId);
     }
 
     /**

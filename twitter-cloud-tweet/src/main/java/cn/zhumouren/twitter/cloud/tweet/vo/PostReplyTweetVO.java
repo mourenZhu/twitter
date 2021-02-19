@@ -9,7 +9,7 @@ import lombok.Data;
  * @Version 1.0
  **/
 @Data
-public class ReplyTweetVO {
+public class PostReplyTweetVO {
 
     private String parentId;
     private String replyContent;

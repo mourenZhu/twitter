@@ -3,6 +3,8 @@ package cn.zhumouren.twitter.cloud.tweet.entity;
 import java.io.Serializable;
 
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -30,11 +32,13 @@ public class ParentChildTweet implements Serializable {
     /**
      * 父评论id
      */
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long parentId;
 
     /**
      * 子评论id
      */
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long childId;
 
     /**

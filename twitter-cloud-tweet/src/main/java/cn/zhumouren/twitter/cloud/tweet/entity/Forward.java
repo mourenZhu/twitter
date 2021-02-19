@@ -4,6 +4,9 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.time.LocalDateTime;
 import java.io.Serializable;
+
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -25,11 +28,13 @@ public class Forward implements Serializable {
     /**
      * 推文id
      */
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long tweetId;
 
     /**
      * 用户唯一id
      */
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long userId;
 
     /**

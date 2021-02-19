@@ -2,6 +2,8 @@ package cn.zhumouren.twitter.cloud.tweet.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -26,11 +28,13 @@ public class Like implements Serializable {
     /**
      * 推文id
      */
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long tweetId;
 
     /**
      * 用户唯一id
      */
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long userId;
 
     /**

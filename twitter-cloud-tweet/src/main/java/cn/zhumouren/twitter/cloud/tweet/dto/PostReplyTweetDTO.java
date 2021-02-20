@@ -1,4 +1,4 @@
-package cn.zhumouren.twitter.cloud.tweet.vo;
+package cn.zhumouren.twitter.cloud.tweet.dto;
 
 import lombok.Data;
 
@@ -9,7 +9,7 @@ import lombok.Data;
  * @Version 1.0
  **/
 @Data
-public class PostReplyTweetVO {
+public class PostReplyTweetDTO {
 
     private String parentId;
     private String replyContent;

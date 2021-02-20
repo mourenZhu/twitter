@@ -1,4 +1,4 @@
-package cn.zhumouren.twitter.cloud.tweet.vo;
+package cn.zhumouren.twitter.cloud.tweet.dto;
 
 import lombok.Data;
 
@@ -10,7 +10,7 @@ import lombok.Data;
  **/
 
 @Data
-public class PostTweetVO {
+public class PostTweetDTO {
 
     private String content;
 

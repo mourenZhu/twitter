@@ -7,8 +7,8 @@ import cn.zhumouren.twitter.cloud.tweet.entity.Tweet;
 import cn.zhumouren.twitter.cloud.tweet.service.ITweetService;
 import cn.zhumouren.twitter.cloud.tweet.service.exception.TweetNotExistException;
 import cn.zhumouren.twitter.cloud.tweet.utils.JwtUtils;
-import cn.zhumouren.twitter.cloud.tweet.vo.PostTweetVO;
-import cn.zhumouren.twitter.cloud.tweet.vo.PostReplyTweetVO;
+import cn.zhumouren.twitter.cloud.tweet.dto.PostTweetDTO;
+import cn.zhumouren.twitter.cloud.tweet.dto.PostReplyTweetDTO;
 import cn.zhumouren.twitter.cloud.tweet.vo.TweetLinkVO;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -34,15 +34,15 @@ public class TweetController {
     /**
      * 提交推文
      *
-     * @param postTweetVO
+     * @param postTweetDTO
      * @param accessToken
      * @return
      */
     @PostMapping("/tweet")
-    public boolean postTweet(@RequestBody PostTweetVO postTweetVO,
+    public boolean postTweet(@RequestBody PostTweetDTO postTweetDTO,
                              @RequestHeader("access_token") String accessToken) {
         Long userId = JwtUtils.getLongByString(accessToken, "uid");
-        return tweetService.postTweet(postTweetVO.getContent(), postTweetVO.getPics(), userId);
+        return tweetService.postTweet(postTweetDTO.getContent(), postTweetDTO.getPics(), userId);
     }
 
     /**
@@ -63,16 +63,16 @@ public class TweetController {
     /**
      * 发布推文回复
      *
-     * @param postReplyTweetVO
+     * @param postReplyTweetDTO
      * @param accessToken
      * @return
      */
     @PostMapping("/tweet/reply")
-    public boolean postTweetReply(@RequestBody PostReplyTweetVO postReplyTweetVO,
+    public boolean postTweetReply(@RequestBody PostReplyTweetDTO postReplyTweetDTO,
                                   @RequestHeader("access_token") String accessToken) throws TweetNotExistException {
-        Long pId = Long.valueOf(postReplyTweetVO.getParentId());
+        Long pId = Long.valueOf(postReplyTweetDTO.getParentId());
         Long userId = JwtUtils.getLongByString(accessToken, "uid");
-        return tweetService.postTweetReply(pId, postReplyTweetVO.getReplyContent(), postReplyTweetVO.getReplyPics(), userId);
+        return tweetService.postTweetReply(pId, postReplyTweetDTO.getReplyContent(), postReplyTweetDTO.getReplyPics(), userId);
     }
 
     /**

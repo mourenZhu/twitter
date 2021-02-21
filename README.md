@@ -54,6 +54,6 @@
 1. 用户详细信息的CRUD `未开发`
 
 ## 参考资料
-1. [如何设计一个twitter] :<https://www.youtube.com/watch?v=wYk0xPP_P_8>
-2. [推文在mysql中存储方式] :<https://nehajirafe.medium.com/data-modeling-designing-facebook-style-comments-with-sql-4cf9e81eb164>
-3. [用redis简单实现twitter] :<https://redis.io/topics/twitter-clone>
+1. [如何设计一个twitter](<https://www.youtube.com/watch?v=wYk0xPP_P_8>) 
+2. [推文在mysql中存储方式](<https://nehajirafe.medium.com/data-modeling-designing-facebook-style-comments-with-sql-4cf9e81eb164>)
+3. [用redis简单实现twitter](<https://redis.io/topics/twitter-clone>)

@@ -9,6 +9,9 @@ import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 
 import java.util.Map;
 
+/**
+ * @author mourenZhu
+ */
 public class JwtTokenEnhancer implements TokenEnhancer {
 
     @Autowired

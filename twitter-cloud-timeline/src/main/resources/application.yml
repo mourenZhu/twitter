@@ -2,6 +2,10 @@
 spring:
   application:
     name: server-tweet
+  redis:
+    host: 192.168.3.5
+    port: 3013
+    password: clear@timeline
   cloud:
     nacos:
       discovery:
@@ -26,9 +30,6 @@ management:
     web:
       exposure:
         include: "*"
-
-mybatis:
-  mapper-locations: classpath:mapper/oauth/*.xml
 
 # 配置日志级别，方别调试
 logging:

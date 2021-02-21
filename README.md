@@ -57,3 +57,4 @@
 1. [如何设计一个twitter](<https://www.youtube.com/watch?v=wYk0xPP_P_8>) 
 2. [推文在mysql中存储方式](<https://nehajirafe.medium.com/data-modeling-designing-facebook-style-comments-with-sql-4cf9e81eb164>)
 3. [用redis简单实现twitter](<https://redis.io/topics/twitter-clone>)
+4. [retiws中关于user和status的小分析](<http://www.blogjava.net/yongboy/archive/2011/04/06/347672.html>)

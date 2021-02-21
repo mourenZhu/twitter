@@ -52,8 +52,3 @@ logging:
     org.springframework.web: INFO
     org.springframework.security.oauth2: INFO
 
-jwt:
-  signingKey: asdkhgzbx12y598@89sy84654.
-  info:
-    web_host: twitter.zhumouren.cn
-    author: mourenZhu

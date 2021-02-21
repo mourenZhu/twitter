@@ -96,6 +96,3 @@ logging:
     org.springframework.security.oauth2: INFO
     org.springframework.cloud.gateway: TRACE
 #    org.springframework.boot.autoconfigure: DEBUG
-
-jwt:
-  signingKey: asdkhgzbx12y598@89sy84654.

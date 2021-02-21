@@ -1,0 +1,38 @@
+# DataSource Config
+spring:
+  application:
+    name: server-tweet
+  cloud:
+    nacos:
+      discovery:
+        # 服务注册中心
+        server-addr: 192.168.3.5:8848
+    # 使用 Sentinel 作为熔断器
+    sentinel:
+      transport:
+        port: 8888
+        dashboard: 192.168.3.5:8888
+
+server:
+  port: 8106
+
+feign:
+  sentinel:
+    enabled: true
+
+management:
+  # 端点检查（健康检查）
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+mybatis:
+  mapper-locations: classpath:mapper/oauth/*.xml
+
+# 配置日志级别，方别调试
+logging:
+  level:
+    root: INFO
+    org.springframework.web: INFO
+    org.springframework.security.oauth2: INFO

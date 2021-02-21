@@ -13,3 +13,4 @@ cloud-user : localhost:8103
 cloud-user-mysql : 192.168.3.5:3012
 
 cloud-timeline : localhost:8106
+cloud-timeline-redis : 192.168.3.5:3013

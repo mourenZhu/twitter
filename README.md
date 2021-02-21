@@ -43,6 +43,7 @@
 1. 用户时间线--user timeline （每个用户自己主页的时间线）`未开发`
    1. 推文、回复、转推可以合并，点赞单独一列
    2. 相互评论的问题
+   3. 在redis中查看详细推文，需要如何去存储。
 
 2. 主页时间线--home timeline （每个用户自己关注的人的时间线）`未开发`
    1. 要把用户的username、昵称等信息与推文信息合并
@@ -51,3 +52,8 @@
 
 ## user模块
 1. 用户详细信息的CRUD `未开发`
+
+## 参考资料
+1. [如何设计一个twitter] :<https://www.youtube.com/watch?v=wYk0xPP_P_8>
+2. [推文在mysql中存储方式] :<https://nehajirafe.medium.com/data-modeling-designing-facebook-style-comments-with-sql-4cf9e81eb164>
+3. [用redis简单实现twitter] :<https://redis.io/topics/twitter-clone>

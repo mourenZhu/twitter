@@ -1,0 +1,58 @@
+# DataSource Config
+spring:
+  application:
+    name: server-tweet
+  cloud:
+    nacos:
+      discovery:
+        # 服务注册中心
+        server-addr: 192.168.3.5:8848
+    # 使用 Sentinel 作为熔断器
+    sentinel:
+      transport:
+        port: 8888
+        dashboard: 192.168.3.5:8888
+  datasource:
+    username: root
+    password: clear@tweet
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.3.5:3011/cloud_tweet?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      minimum-idle: 5
+      idle-timeout: 600000
+      maximum-pool-size: 10
+      auto-commit: true
+      pool-name: MyHikariCP
+      max-lifetime: 1800000
+      connection-timeout: 30000
+      connection-test-query: SELECT 1
+
+server:
+  port: 8105
+
+feign:
+  sentinel:
+    enabled: true
+
+management:
+  # 端点检查（健康检查）
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+mybatis:
+  mapper-locations: classpath:mapper/oauth/*.xml
+
+# 配置日志级别，方别调试
+logging:
+  level:
+    root: INFO
+    org.springframework.web: INFO
+    org.springframework.security.oauth2: INFO
+
+constant:
+  page:
+    current: 1
+    size: 8

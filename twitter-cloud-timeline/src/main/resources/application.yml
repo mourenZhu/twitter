@@ -6,6 +6,9 @@ spring:
     host: 192.168.3.5
     port: 3013
     password: clear@timeline
+    jedis:
+      pool:
+        max-wait: 1000
   cloud:
     nacos:
       discovery:

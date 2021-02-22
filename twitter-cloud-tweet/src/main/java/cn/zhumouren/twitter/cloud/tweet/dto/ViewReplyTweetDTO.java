@@ -1,6 +1,8 @@
 package cn.zhumouren.twitter.cloud.tweet.dto;
 
 import cn.zhumouren.twitter.cloud.tweet.entity.Tweet;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
 
 import java.util.List;
@@ -12,10 +14,18 @@ import java.util.List;
  * @Version 1.0
  **/
 @Data
-public class ViewReplyTweetDTO {
+public class ViewReplyTweetDTO extends Tweet {
 
+    /**
+     * 根推文id
+     */
+    @JsonSerialize(using = ToStringSerializer.class)
+    Long rootParentTweetId;
+
+    /**
+     * 推文回复的用户id
+     */
     List<String> parentTweetUserIdList;
 
-    Tweet tweet;
 
 }

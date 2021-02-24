@@ -1,7 +1,7 @@
 package cn.zhumouren.twitter.cloud.oauth.config;
 
-import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
@@ -14,12 +14,38 @@ import java.util.Map;
  * @Version 1.0
  **/
 @Component
-@Data
-@PropertySource("classpath:config/yml.yml")
+@PropertySource("classpath:config/jwt.properties")
 @ConfigurationProperties(prefix = "jwt")
+@EnableConfigurationProperties({JwtConfig.class})
 public class JwtConfig {
 
     private String signingKey;
 
     private Map<String, Object> info;
+
+    private Integer expires;
+
+    public Integer getExpires() {
+        return expires;
+    }
+
+    public void setExpires(Integer expires) {
+        this.expires = expires;
+    }
+
+    public String getSigningKey() {
+        return signingKey;
+    }
+
+    public void setSigningKey(String signingKey) {
+        this.signingKey = signingKey;
+    }
+
+    public Map<String, Object> getInfo() {
+        return info;
+    }
+
+    public void setInfo(Map<String, Object> info) {
+        this.info = info;
+    }
 }

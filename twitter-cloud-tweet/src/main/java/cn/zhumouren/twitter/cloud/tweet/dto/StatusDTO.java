@@ -6,15 +6,16 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
 
 import java.util.List;
+import java.util.Stack;
 
 /**
- * @Description 把回复切割为一个对象，全部提取后交给timeline服务去处理
+ * @Description 把推文或回复切割为一个对象，全部提取后交给timeline服务去处理
  * @Author mourenZhu
  * @Date 2021/2/19 16:27
  * @Version 1.0
  **/
 @Data
-public class ViewReplyTweetDTO extends Tweet {
+public class StatusDTO extends Tweet {
 
     /**
      * 根推文id
@@ -22,10 +23,13 @@ public class ViewReplyTweetDTO extends Tweet {
     @JsonSerialize(using = ToStringSerializer.class)
     Long rootParentTweetId;
 
+
+//    List<String> parentTweetUserIdList;
+
     /**
      * 推文回复的用户id
      */
-    List<String> parentTweetUserIdList;
+    Stack<String> parentTweetUserIds;
 
 
 }

@@ -16,6 +16,26 @@
         <result column="is_deleted" property="deleted"></result>
     </resultMap>
 
+    <resultMap id="statusMap" type="cn.zhumouren.twitter.cloud.tweet.dto.StatusDTO">
+        <id column="id" property="id"></id>
+        <result column="user_id" property="userId"></result>
+        <result column="content" property="content"></result>
+        <result column="pics" property="pics"></result>
+        <result column="num_likes" property="numLikes"></result>
+        <result column="num_replies" property="numReplies"></result>
+        <result column="num_quote" property="numQuote"></result>
+        <result column="num_forward" property="numForward"></result>
+        <result column="created" property="created"></result>
+        <result column="updated" property="updated"></result>
+        <result column="is_deleted" property="deleted"></result>
+        <result column="root_parent_tweet_id" property="rootParentTweetId"></result>
+        <collection property="parentTweetUserIds" ofType="string" javaType="java.util.Stack">
+            <constructor>
+                <arg column="parent_tweet_user_id"></arg>
+            </constructor>
+        </collection>
+    </resultMap>
+
     <update id="deletedTweet">
         update tweet
         set is_deleted = 1
@@ -96,6 +116,70 @@
         FROM tweet AS t
                  LEFT JOIN parent_child_tweet AS pct ON t.id = pct.parent_id
         where t.user_id = #{userId}
-          AND pct.is_root = 1;
+          AND pct.is_root = 1
+    </select>
+
+    <select id="getUserStatusPage">
+
+    </select>
+
+    <select id="getStatus" resultMap="statusMap">
+        SELECT t.id,
+               t.user_id,
+               t.content,
+               t.pics,
+               t.num_likes,
+               t.num_replies,
+               t.num_quote,
+               t.num_forward,
+               t.created,
+               t.updated,
+               t.is_deleted,
+               pct.parent_id AS root_parent_tweet_id,
+               ptui.parent_tweet_user_id
+        FROM tweet AS t
+                 LEFT JOIN parent_child_tweet AS pct ON t.id = pct.child_id
+                 LEFT JOIN (SELECT t.id, t.user_id AS parent_tweet_user_id
+                            FROM tweet AS t
+                                     LEFT JOIN parent_child_tweet AS pct ON t.id = pct.parent_id
+                            WHERE pct.child_id = #{statusId}
+                              AND pct.`level` &lt;&gt; 0) AS ptui on ptui.id = pct.parent_id
+        WHERE pct.child_id = #{statusId}
+          AND pct.`level` &lt;&gt; 0
+          AND t.is_deleted = 0
+        ORDER BY pct.`level` DESC
+    </select>
+
+    <select id="listStatus" parameterType="list" resultMap="statusMap">
+        SELECT t.id,
+        t.user_id,
+        t.content,
+        t.pics,
+        t.num_likes,
+        t.num_replies,
+        t.num_quote,
+        t.num_forward,
+        t.created,
+        t.updated,
+        t.is_deleted,
+        pct.parent_id AS root_parent_tweet_id,
+        ptui.parent_tweet_user_id
+        FROM tweet AS t
+        LEFT JOIN parent_child_tweet AS pct ON t.id = pct.child_id
+        LEFT JOIN (SELECT t.id, t.user_id AS parent_tweet_user_id
+        FROM tweet AS t
+        LEFT JOIN parent_child_tweet AS pct ON t.id = pct.parent_id
+        WHERE pct.child_id IN
+        <foreach collection="statusIdList" item="statusId" separator="," open="(" close=")" index="">
+            #{statusId}
+        </foreach>
+        AND pct.`level` &lt;&gt; 0) AS ptui on ptui.id = pct.parent_id
+        WHERE pct.child_id IN
+        <foreach collection="statusIdList" item="statusId" separator="," open="(" close=")" index="">
+            #{statusId}
+        </foreach>
+        AND pct.`level` &lt;&gt; 0
+        AND t.is_deleted = 0
+        ORDER BY pct.`level` DESC
     </select>
 </mapper>

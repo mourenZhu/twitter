@@ -9,6 +9,9 @@ import org.springframework.http.converter.HttpMessageConverter;
 
 import java.util.stream.Collectors;
 
+/**
+ * @author mourenZhu
+ */
 @SpringBootConfiguration
 public class HttpMessageConvertersConfig {
 

@@ -1,6 +1,7 @@
 package cn.zhumouren.twitter.cloud.gateway.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
@@ -13,8 +14,9 @@ import java.util.Map;
  * @Version 1.0
  **/
 @Component
-@PropertySource("classpath:config/yml.yml")
+@PropertySource("classpath:config/jwt.properties")
 @ConfigurationProperties(prefix = "jwt")
+@EnableConfigurationProperties({JwtConfig.class})
 public class JwtConfig {
 
     private String signingKey;

@@ -16,5 +16,12 @@ import java.util.List;
  */
 @Repository
 public interface SysPermissionMapper extends BaseMapper<SysPermission> {
+
+    /**
+     * 通过username获取权限
+     *
+     * @param username
+     * @return
+     */
     List<SysPermission> selectByUsername(String username);
 }

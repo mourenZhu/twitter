@@ -18,6 +18,15 @@ VALUES (1000000000000000001, 'admin', '$2a$10$bClI902vYPQpsxkjWKgIEOzGOYRSxh51Ro
 insert into sys_user_role(user_id, role_id)
 VALUES (1000000000000000001, 100);
 
+insert into sys_user(id, username, password)
+VALUES (1000000000000000101, 'user', '$2a$10$5kwurygUmtfXvb73ODwr7ebe7d6Y5XRTk1s1pTgDSjUDud5BYcGdS');
+insert into sys_user_role(user_id, role_id)
+VALUES (1000000000000000101, 101);
+
+insert into sys_user(id, username, password)
+VALUES (1000000000000000102, 'test', '$2a$10$OfnckvTv0AgKRAH.6gJNG.ykcUITpS006noGhhLJnMBIW96S.bVjG');
+insert into sys_user_role(user_id, role_id)
+VALUES (1000000000000000102, 101);
 
 insert into oauth_client_details(client_id, resource_ids, client_secret, scope, authorized_grant_types, web_server_redirect_uri)
 VALUES ('zhumouren', '', '$2a$10$Ff2In2W3534/PMMLrOSa2ef9fWJnH5q92zj2aWtvwZMcTWfElNR16', 'all', 'authorization_code,password,refresh_token',

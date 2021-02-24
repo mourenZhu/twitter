@@ -1,5 +1,6 @@
 package cn.zhumouren.twitter.cloud.tweet.mapper;
 
+import cn.zhumouren.twitter.cloud.tweet.dto.StatusDTO;
 import cn.zhumouren.twitter.cloud.tweet.entity.Tweet;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -77,6 +78,30 @@ public interface TweetMapper extends BaseMapper<Tweet> {
      * @param userId
      * @return
      */
-    IPage<Tweet> getUserTweetPage(Page<Tweet> page,@Param("userId") Long userId);
+    IPage<Tweet> getUserTweetPage(Page<Tweet> page, @Param("userId") Long userId);
+
+    /**
+     * 获得用户的status（包括推文与回复）
+     *
+     * @param page
+     * @param userId
+     * @return
+     */
+    IPage<StatusDTO> getUserStatusPage(Page<Tweet> page, @Param("userId") Long userId);
+
+    /**
+     * 获取单个status
+     *
+     * @param statusId
+     * @return
+     */
+    StatusDTO getStatus(@Param("statusId") Long statusId);
+
+    /**
+     * 获取 list status
+     * @param statusIdList
+     * @return
+     */
+    List<StatusDTO> listStatus(@Param("statusIdList") List<Long> statusIdList);
 
 }

@@ -1,11 +1,14 @@
 package cn.zhumouren.twitter.cloud.tweet.service;
 
+import cn.zhumouren.twitter.cloud.tweet.dto.StatusDTO;
 import cn.zhumouren.twitter.cloud.tweet.entity.Tweet;
 import cn.zhumouren.twitter.cloud.tweet.service.exception.TweetNotExistException;
 import cn.zhumouren.twitter.cloud.tweet.vo.TweetLinkVO;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import java.util.List;
 
 /**
  * <p>
@@ -85,5 +88,31 @@ public interface ITweetService extends IService<Tweet> {
      * @return
      */
     IPage<Tweet> getUserTweetPage(Page<Tweet> page, Long userId);
+
+    /**
+     * 获取用户的status（包括推文与回复）
+     *
+     * @param page
+     * @param userId
+     * @return
+     */
+    IPage<StatusDTO> getUserStatusPage(Page<Tweet> page, Long userId);
+
+    /**
+     * 获取单个status
+     *
+     * @param statusId
+     * @return
+     * @throws TweetNotExistException
+     */
+    StatusDTO getStatus(Long statusId) throws TweetNotExistException;
+
+    /**
+     * 获取list status
+     *
+     * @param statusIdList
+     * @return
+     */
+    List<StatusDTO> listStatus(List<Long> statusIdList);
 
 }

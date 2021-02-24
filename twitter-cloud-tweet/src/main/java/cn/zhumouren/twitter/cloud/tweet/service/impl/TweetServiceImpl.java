@@ -1,5 +1,6 @@
 package cn.zhumouren.twitter.cloud.tweet.service.impl;
 
+import cn.zhumouren.twitter.cloud.tweet.dto.StatusDTO;
 import cn.zhumouren.twitter.cloud.tweet.entity.ParentChildTweet;
 import cn.zhumouren.twitter.cloud.tweet.entity.Tweet;
 import cn.zhumouren.twitter.cloud.tweet.mapper.ParentChildTweetMapper;
@@ -104,5 +105,24 @@ public class TweetServiceImpl extends ServiceImpl<TweetMapper, Tweet> implements
     @Override
     public IPage<Tweet> getUserTweetPage(Page<Tweet> page, Long userId) {
         return tweetMapper.getUserTweetPage(page, userId);
+    }
+
+    @Override
+    public IPage<StatusDTO> getUserStatusPage(Page<Tweet> page, Long userId) {
+        return null;
+    }
+
+    @Override
+    public StatusDTO getStatus(Long statusId)throws TweetNotExistException {
+        if (tweetMapper.isExistTweet(statusId)) {
+            return tweetMapper.getStatus(statusId);
+        } else {
+            throw new TweetNotExistException();
+        }
+    }
+
+    @Override
+    public List<StatusDTO> listStatus(List<Long> statusIdList) {
+        return tweetMapper.listStatus(statusIdList);
     }
 }

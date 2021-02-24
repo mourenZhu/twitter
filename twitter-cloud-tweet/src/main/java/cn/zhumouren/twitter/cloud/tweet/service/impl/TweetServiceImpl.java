@@ -108,8 +108,8 @@ public class TweetServiceImpl extends ServiceImpl<TweetMapper, Tweet> implements
     }
 
     @Override
-    public IPage<StatusDTO> getUserStatusPage(Page<Tweet> page, Long userId) {
-        return null;
+    public List<StatusDTO> listUserStatus(Long userId) {
+        return tweetMapper.listUserStatus(userId);
     }
 
     @Override

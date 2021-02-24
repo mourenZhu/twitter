@@ -92,11 +92,10 @@ public interface ITweetService extends IService<Tweet> {
     /**
      * 获取用户的status（包括推文与回复）
      *
-     * @param page
      * @param userId
      * @return
      */
-    IPage<StatusDTO> getUserStatusPage(Page<Tweet> page, Long userId);
+    List<StatusDTO> listUserStatus(Long userId);
 
     /**
      * 获取单个status

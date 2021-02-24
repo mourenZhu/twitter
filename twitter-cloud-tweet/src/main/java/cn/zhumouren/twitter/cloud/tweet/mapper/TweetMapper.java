@@ -83,11 +83,10 @@ public interface TweetMapper extends BaseMapper<Tweet> {
     /**
      * 获得用户的status（包括推文与回复）
      *
-     * @param page
      * @param userId
      * @return
      */
-    IPage<StatusDTO> getUserStatusPage(Page<Tweet> page, @Param("userId") Long userId);
+    List<StatusDTO> listUserStatus(@Param("userId") Long userId);
 
     /**
      * 获取单个status
@@ -99,6 +98,7 @@ public interface TweetMapper extends BaseMapper<Tweet> {
 
     /**
      * 获取 list status
+     *
      * @param statusIdList
      * @return
      */

@@ -52,7 +52,4 @@ logging:
     org.springframework.web: INFO
     org.springframework.security.oauth2: INFO
 
-constant:
-  page:
-    current: 1
-    size: 8
+

@@ -119,18 +119,12 @@ public class TweetController {
      * 获取用户的status（包括推文与回复）
      *
      * @param userId
-     * @param current
-     * @param size
      * @return
      */
     @GetMapping("/{userId}/status")
-    public IPage<StatusDTO> getUserStatusPage(@PathVariable("userId") String userId,
-                                              @RequestParam(value = "current", required = false) Integer current,
-                                              @RequestParam(value = "size", required = false) Integer size) {
-        Page<StatusDTO> page = new Page<>();
-        PageConstants.constantPageConfig(page, current, size);
+    public List<StatusDTO> listUserStatus(@PathVariable("userId") String userId) {
         Long uid = Long.valueOf(userId);
-        return null;
+        return tweetService.listUserStatus(uid);
     }
 
     /**

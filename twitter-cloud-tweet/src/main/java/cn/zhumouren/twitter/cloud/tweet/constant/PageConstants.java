@@ -2,6 +2,9 @@ package cn.zhumouren.twitter.cloud.tweet.constant;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 /**
@@ -11,6 +14,9 @@ import org.springframework.stereotype.Component;
  * @Version 1.0
  **/
 @Component
+@PropertySource("classpath:config/constant.properties")
+@ConfigurationProperties(prefix = "constant.page")
+@EnableConfigurationProperties({PageConstants.class})
 public class PageConstants {
 
     private static Integer current = 1;
@@ -28,12 +34,10 @@ public class PageConstants {
         return page;
     }
 
-    @Value("${constant.page.current}")
     public void setCurrent(Integer current) {
         PageConstants.current = current;
     }
 
-    @Value("${constant.page.size}")
     public void setSize(Integer size) {
         PageConstants.size = size;
     }

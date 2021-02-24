@@ -119,8 +119,32 @@
           AND pct.is_root = 1
     </select>
 
-    <select id="getUserStatusPage">
-
+    <select id="listUserStatus" resultMap="statusMap">
+        SELECT t.id,
+               t.user_id,
+               t.content,
+               t.pics,
+               t.num_likes,
+               t.num_replies,
+               t.num_quote,
+               t.num_forward,
+               t.created,
+               t.updated,
+               t.is_deleted,
+               pct.parent_id AS root_parent_tweet_id,
+               ptui.parent_tweet_user_id
+        FROM tweet AS t
+                 LEFT JOIN parent_child_tweet AS pct ON t.id = pct.child_id
+                 LEFT JOIN (SELECT t.id, t.user_id AS parent_tweet_user_id
+                            FROM tweet AS t
+                                     LEFT JOIN parent_child_tweet AS pct ON t.id = pct.parent_id
+                            WHERE pct.child_id IN (SELECT id FROM tweet WHERE user_id = #{userId})
+                              AND (pct.`level` &lt;&gt; 0 OR (pct.level = 0 AND pct.is_root = 1))) AS ptui
+                           ON ptui.id = pct.parent_id
+        WHERE pct.child_id IN (SELECT id FROM tweet WHERE user_id = #{userId} AND is_deleted = 0)
+          AND (pct.`level` &lt;&gt; 0 OR (pct.level = 0 AND pct.is_root = 1))
+          AND t.is_deleted = 0
+        ORDER BY pct.`level` DESC
     </select>
 
     <select id="getStatus" resultMap="statusMap">
@@ -143,9 +167,10 @@
                             FROM tweet AS t
                                      LEFT JOIN parent_child_tweet AS pct ON t.id = pct.parent_id
                             WHERE pct.child_id = #{statusId}
-                              AND pct.`level` &lt;&gt; 0) AS ptui on ptui.id = pct.parent_id
+                              AND (pct.`level` &lt;&gt; 0 OR (pct.level = 0 AND pct.is_root = 1))) AS ptui
+                           ON ptui.id = pct.parent_id
         WHERE pct.child_id = #{statusId}
-          AND pct.`level` &lt;&gt; 0
+          AND (pct.`level` &lt;&gt; 0 OR (pct.level = 0 AND pct.is_root = 1))
           AND t.is_deleted = 0
         ORDER BY pct.`level` DESC
     </select>
@@ -173,12 +198,12 @@
         <foreach collection="statusIdList" item="statusId" separator="," open="(" close=")" index="">
             #{statusId}
         </foreach>
-        AND pct.`level` &lt;&gt; 0) AS ptui on ptui.id = pct.parent_id
+        AND (pct.`level` &lt;&gt; 0 OR (pct.level = 0 AND pct.is_root = 1))) AS ptui ON ptui.id = pct.parent_id
         WHERE pct.child_id IN
         <foreach collection="statusIdList" item="statusId" separator="," open="(" close=")" index="">
             #{statusId}
         </foreach>
-        AND pct.`level` &lt;&gt; 0
+        AND (pct.`level` &lt;&gt; 0 OR (pct.level = 0 AND pct.is_root = 1))
         AND t.is_deleted = 0
         ORDER BY pct.`level` DESC
     </select>

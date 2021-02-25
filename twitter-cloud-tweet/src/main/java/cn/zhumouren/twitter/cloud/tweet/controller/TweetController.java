@@ -10,8 +10,8 @@ import cn.zhumouren.twitter.cloud.tweet.entity.Tweet;
 import cn.zhumouren.twitter.cloud.tweet.service.ITweetService;
 import cn.zhumouren.twitter.cloud.tweet.service.exception.TweetNotExistException;
 import cn.zhumouren.twitter.cloud.tweet.utils.JwtUtils;
-import cn.zhumouren.twitter.cloud.tweet.utils.ListUtils;
 import cn.zhumouren.twitter.cloud.tweet.vo.TweetLinkVO;
+import cn.zhumouren.twitter.cloud.utils.list.ListUtils;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -116,12 +116,24 @@ public class TweetController {
     }
 
     /**
+     * 获得用户发布的推文的id
+     *
+     * @param userId
+     * @return
+     */
+    @GetMapping("/{userId}/list/statusId")
+    public List<String> listUserStatusId(@PathVariable("userId") String userId) {
+        Long uid = Long.valueOf(userId);
+        return tweetService.listUserStatusId(uid);
+    }
+
+    /**
      * 获取用户的status（包括推文与回复）
      *
      * @param userId
      * @return
      */
-    @GetMapping("/{userId}/status")
+    @GetMapping("/{userId}/list/status")
     public List<StatusDTO> listUserStatus(@PathVariable("userId") String userId) {
         Long uid = Long.valueOf(userId);
         return tweetService.listUserStatus(uid);

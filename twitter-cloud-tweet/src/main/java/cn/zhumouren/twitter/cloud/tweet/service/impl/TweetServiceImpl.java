@@ -108,6 +108,11 @@ public class TweetServiceImpl extends ServiceImpl<TweetMapper, Tweet> implements
     }
 
     @Override
+    public List<String> listUserStatusId(Long userId) {
+        return tweetMapper.listUserStatusId(userId);
+    }
+
+    @Override
     public List<StatusDTO> listUserStatus(Long userId) {
         return tweetMapper.listUserStatus(userId);
     }

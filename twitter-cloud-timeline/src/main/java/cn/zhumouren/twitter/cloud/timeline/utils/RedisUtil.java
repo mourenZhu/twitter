@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -465,7 +466,6 @@ public class RedisUtil {
      *
      * @param key   键
      * @param value 值
-     * @param time  时间(秒)
      * @return
      */
     public boolean lSet(String key, Object value) {
@@ -489,7 +489,9 @@ public class RedisUtil {
     public boolean lSet(String key, Object value, long time) {
         try {
             redisTemplate.opsForList().rightPush(key, value);
-            if (time > 0) expire(key, time);
+            if (time > 0) {
+                expire(key, time);
+            }
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -500,14 +502,13 @@ public class RedisUtil {
     /**
      * 将list放入缓存
      *
-     * @param key   键
-     * @param value 值
-     * @param time  时间(秒)
+     * @param key    键
+     * @param values 值
      * @return
      */
-    public boolean lSet(String key, List<Object> value) {
+    public boolean lSetAll(String key, List<Object> values) {
         try {
-            redisTemplate.opsForList().rightPushAll(key, value);
+            redisTemplate.opsForList().rightPushAll(key, values.toArray());
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -518,15 +519,17 @@ public class RedisUtil {
     /**
      * 将list放入缓存
      *
-     * @param key   键
-     * @param value 值
-     * @param time  时间(秒)
+     * @param key    键
+     * @param values 值
+     * @param time   时间(秒)
      * @return
      */
-    public boolean lSet(String key, List<Object> value, long time) {
+    public boolean lSetAll(String key, List<Object> values, long time) {
         try {
-            redisTemplate.opsForList().rightPushAll(key, value);
-            if (time > 0) expire(key, time);
+            redisTemplate.opsForList().rightPushAll(key, values.toArray());
+            if (time > 0) {
+                expire(key, time);
+            }
             return true;
         } catch (Exception e) {
             e.printStackTrace();

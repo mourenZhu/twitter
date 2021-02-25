@@ -1,12 +1,11 @@
 package cn.zhumouren.twitter.cloud.tweet.dto;
 
 import cn.zhumouren.twitter.cloud.tweet.entity.Tweet;
+import cn.zhumouren.twitter.cloud.tweet.ser.ToListStringSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
 
 import java.util.List;
-import java.util.Stack;
 
 /**
  * @Description 把推文或回复切割为一个对象，全部提取后交给timeline服务去处理
@@ -18,18 +17,17 @@ import java.util.Stack;
 public class StatusDTO extends Tweet {
 
     /**
-     * 根推文id
+     * 父推文id
      */
-    @JsonSerialize(using = ToStringSerializer.class)
-    Long rootParentTweetId;
+    @JsonSerialize(using = ToListStringSerializer.class)
+    List<Long> parentTweetIds;
 
-
-//    List<String> parentTweetUserIdList;
 
     /**
      * 推文回复的用户id
      */
-    Stack<String> parentTweetUserIds;
+    @JsonSerialize(using = ToListStringSerializer.class)
+    List<Long> parentTweetUserIds;
 
 
 }

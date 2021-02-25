@@ -1,4 +1,4 @@
-package cn.zhumouren.twitter.cloud.tweet.utils;
+package cn.zhumouren.twitter.cloud.utils.list;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @Description todo
  * @Author mourenZhu
- * @Date 2021/2/24 14:59
+ * @Date 2021/2/25 14:21
  * @Version 1.0
  **/
 public class ListUtils {
@@ -16,5 +16,13 @@ public class ListUtils {
             longList.add(Long.valueOf(s));
         }
         return longList;
+    }
+
+    public static List<String> toStringList(List<Long> longList){
+        List<String> stringList = new LinkedList<>();
+        for (Long l : longList){
+            stringList.add(l.toString());
+        }
+        return stringList;
     }
 }

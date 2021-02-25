@@ -81,6 +81,14 @@ public interface TweetMapper extends BaseMapper<Tweet> {
     IPage<Tweet> getUserTweetPage(Page<Tweet> page, @Param("userId") Long userId);
 
     /**
+     * 获得用户发布的推文id
+     *
+     * @param userId
+     * @return
+     */
+    List<String> listUserStatusId(@Param("userId") Long userId);
+
+    /**
      * 获得用户的status（包括推文与回复）
      *
      * @param userId

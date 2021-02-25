@@ -5,7 +5,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -141,8 +140,8 @@ public class RedisUtil {
     /**
      * 递增
      *
-     * @param key 键
-     * @param by  要增加几(大于0)
+     * @param key   键
+     * @param delta 要增加几(大于0)
      * @return
      */
     public long incr(String key, long delta) {
@@ -155,8 +154,8 @@ public class RedisUtil {
     /**
      * 递减
      *
-     * @param key 键
-     * @param by  要减少几(小于0)
+     * @param key   键
+     * @param delta 要减少几(小于0)
      * @return
      */
     public long decr(String key, long delta) {
@@ -462,15 +461,15 @@ public class RedisUtil {
     }
 
     /**
-     * 将list放入缓存
+     * 向左批量插入list
      *
-     * @param key   键
-     * @param value 值
+     * @param key
+     * @param values
      * @return
      */
-    public boolean lSet(String key, Object value) {
+    public boolean lLeftPushAll(String key, List values) {
         try {
-            redisTemplate.opsForList().rightPush(key, value);
+            redisTemplate.opsForList().leftPushAll(key, values.toArray());
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -479,57 +478,15 @@ public class RedisUtil {
     }
 
     /**
-     * 将list放入缓存
+     * 向右批量插入list
      *
-     * @param key   键
-     * @param value 值
-     * @param time  时间(秒)
+     * @param key
+     * @param values
      * @return
      */
-    public boolean lSet(String key, Object value, long time) {
-        try {
-            redisTemplate.opsForList().rightPush(key, value);
-            if (time > 0) {
-                expire(key, time);
-            }
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    /**
-     * 将list放入缓存
-     *
-     * @param key    键
-     * @param values 值
-     * @return
-     */
-    public boolean lSetAll(String key, List<Object> values) {
+    public boolean lRightPushAll(String key, List values){
         try {
             redisTemplate.opsForList().rightPushAll(key, values.toArray());
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    /**
-     * 将list放入缓存
-     *
-     * @param key    键
-     * @param values 值
-     * @param time   时间(秒)
-     * @return
-     */
-    public boolean lSetAll(String key, List<Object> values, long time) {
-        try {
-            redisTemplate.opsForList().rightPushAll(key, values.toArray());
-            if (time > 0) {
-                expire(key, time);
-            }
             return true;
         } catch (Exception e) {
             e.printStackTrace();

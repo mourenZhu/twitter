@@ -35,7 +35,7 @@ public class UserTimelineServiceImpl implements IUserTimelineService {
         if (!isExistUserTimeline(userId)){
             List<Long> statusIdList = tweetService.listUserStatusId(userId);
             String key = RedisUserKeyConstant.getUserPostsKey(userId.toString());
-            return redisUtil.lSetAll(key, Collections.singletonList(statusIdList));
+            return redisUtil.lRightPushAll(key, statusIdList);
         }
         return true;
     }

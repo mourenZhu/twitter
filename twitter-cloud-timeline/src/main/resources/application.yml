@@ -1,7 +1,7 @@
 # DataSource Config
 spring:
   application:
-    name: server-tweet
+    name: server-timeline
   redis:
     host: 192.168.3.5
     port: 3013

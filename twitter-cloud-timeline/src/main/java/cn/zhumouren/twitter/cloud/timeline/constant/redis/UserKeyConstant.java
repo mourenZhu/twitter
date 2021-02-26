@@ -1,4 +1,4 @@
-package cn.zhumouren.twitter.cloud.timeline.constant;
+package cn.zhumouren.twitter.cloud.timeline.constant.redis;
 
 /**
  * @Description 用于记录在redis中key的值
@@ -6,25 +6,31 @@ package cn.zhumouren.twitter.cloud.timeline.constant;
  * @Date 2021/2/25 14:50
  * @Version 1.0
  **/
-public class RedisUserKeyConstant {
+public enum UserKeyConstant {
 
     /**
      * 该值后加user id 可获得用户
      */
-    public final static String USER_KEY = "user:id:";
+    USER_KEY("user:id:"),
 
     /**
      * 该值后加username可获得uid
      */
-    public final static String USER_ID_KEY = "user:username:";
+    USER_ID_KEY("user:username:"),
 
-    public final static String USER_FOLLOWING_KEY = ":following";
+    USER_FOLLOWING_KEY(":following"),
 
-    public final static String USER_FOLLOWERS_KEY = ":followers";
+    USER_FOLLOWERS_KEY(":followers"),
 
-    public final static String USER_POSTS_KEY = ":posts";
+    USER_POSTS_KEY(":posts"),
 
-    public final static String HOME_TIMELINE_KEY = ":timeline";
+    HOME_TIMELINE_KEY(":timeline");
+
+    private final String key;
+
+    UserKeyConstant(String key) {
+        this.key = key;
+    }
 
     /**
      * 通过uid获取该用户对象的key
@@ -33,7 +39,7 @@ public class RedisUserKeyConstant {
      * @return
      */
     public static String getUserKey(String uid) {
-        return USER_KEY + uid;
+        return USER_KEY.key + uid;
     }
 
     /**
@@ -43,7 +49,7 @@ public class RedisUserKeyConstant {
      * @return
      */
     public static String getUserIdKey(String username) {
-        return USER_ID_KEY + username;
+        return USER_ID_KEY.key + username;
     }
 
     /**
@@ -53,7 +59,7 @@ public class RedisUserKeyConstant {
      * @return
      */
     public static String getUserFollowingKey(String uid) {
-        return USER_KEY + uid + USER_FOLLOWING_KEY;
+        return USER_KEY.key + uid + USER_FOLLOWING_KEY.key;
     }
 
     /**
@@ -63,7 +69,7 @@ public class RedisUserKeyConstant {
      * @return
      */
     public static String getUserFollowersKey(String uid) {
-        return USER_KEY + uid + USER_FOLLOWERS_KEY;
+        return USER_KEY.key + uid + USER_FOLLOWERS_KEY.key;
     }
 
     /**
@@ -73,7 +79,7 @@ public class RedisUserKeyConstant {
      * @return
      */
     public static String getUserPostsKey(String uid) {
-        return USER_KEY + uid + USER_POSTS_KEY;
+        return USER_KEY.key + uid + USER_POSTS_KEY.key;
     }
 
     /**
@@ -83,6 +89,6 @@ public class RedisUserKeyConstant {
      * @return
      */
     public static String getHomeTimelineKey(String uid) {
-        return USER_KEY + uid + HOME_TIMELINE_KEY;
+        return USER_KEY.key + uid + HOME_TIMELINE_KEY.key;
     }
 }

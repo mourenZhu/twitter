@@ -1,4 +1,4 @@
-package cn.zhumouren.twitter.cloud.utils.list;
+package cn.zhumouren.twitter.cloud.constant.utils.list;
 
 import java.util.LinkedList;
 import java.util.List;

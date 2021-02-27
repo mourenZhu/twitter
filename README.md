@@ -59,7 +59,7 @@
 3. 用户发布的所有status（这里存储具体的status对象）
    1. 存入status `已完成` `未测试`
    2. 存入status list `已完成` `未测试`
-   3. 查询 list status `未开发` 
+   3. 查询 list status `已完成` `未测试`
    4. 查询 list status vo `未开发`
    5. 查询 status tree `未开发`
    6. 查询 status vo tree `未开发`

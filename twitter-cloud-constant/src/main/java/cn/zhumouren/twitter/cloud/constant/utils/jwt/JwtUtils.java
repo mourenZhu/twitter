@@ -1,4 +1,4 @@
-package cn.zhumouren.twitter.cloud.utils.jwt;
+package cn.zhumouren.twitter.cloud.constant.utils.jwt;
 
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.security.jwt.Jwt;

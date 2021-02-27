@@ -1,6 +1,6 @@
 package cn.zhumouren.twitter.cloud.tweet.ser;
 
-import cn.zhumouren.twitter.cloud.utils.list.ListUtils;
+import cn.zhumouren.twitter.cloud.constant.utils.list.ListUtils;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;

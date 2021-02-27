@@ -1,7 +1,7 @@
 package cn.zhumouren.twitter.cloud.timeline.utils;
 
 import cn.zhumouren.twitter.cloud.timeline.domain.StatusJson;
-import cn.zhumouren.twitter.cloud.utils.list.ListUtils;
+import cn.zhumouren.twitter.cloud.constant.utils.list.ListUtils;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
@@ -17,13 +17,18 @@ import java.util.List;
  **/
 public class StatusJsonUtil {
 
-    public static List<StatusJson> toStatusList(JSONObject jsonObject) {
+    public static StatusJson getStatus(JSONObject jsonObject){
+        StatusJson statusJson = jsonObject.getObject("data", StatusJson.class);
+        return statusJson;
+    }
+
+    public static List<StatusJson> listStatus(JSONObject jsonObject) {
         List data = jsonObject.getObject("data", List.class);
         List<StatusJson> statusJsonList = JSON.parseArray(JSON.toJSONString(data), StatusJson.class);
         return statusJsonList;
     }
 
-    public static List<Long> toStatusIdList(JSONObject jsonObject) {
+    public static List<Long> listStatusId(JSONObject jsonObject) {
         List<String> data = jsonObject.getObject("data", List.class);
         List<Long> statusIdList = ListUtils.toLongList(data);
         return statusIdList;
@@ -40,7 +45,10 @@ public class StatusJsonUtil {
 
     public static Object getStatusFieldValue(String item, StatusJson statusJson) throws NoSuchFieldException, IllegalAccessException {
         Field declaredField = statusJson.getClass().getDeclaredField(item);
-        return declaredField.get(statusJson);
+        declaredField.setAccessible(true);
+        Object o = declaredField.get(statusJson);
+        declaredField.setAccessible(false);
+        return o;
     }
 
 }

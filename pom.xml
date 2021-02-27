@@ -30,7 +30,7 @@
 		<module>twitter-cloud-tweet</module>
 		<module>twitter-cloud-user</module>
 		<module>twitter-cloud-timeline</module>
-        <module>twitter-cloud-utils</module>
+        <module>twitter-cloud-constant</module>
     </modules>
 
 

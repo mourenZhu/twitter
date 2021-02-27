@@ -14,14 +14,36 @@ public interface IStatusService {
      *
      * @param statusJson
      * @return
+     * @throws NoSuchFieldException
+     * @throws IllegalAccessException
      */
-    boolean pushStatus(StatusJson statusJson) throws NoSuchFieldException, IllegalAccessException;
+    boolean pushStatus(StatusJson statusJson);
 
     /**
      * 在redis中批量 push status
      *
      * @param statusJsons
      * @return
+     * @throws NoSuchFieldException
+     * @throws IllegalAccessException
      */
-    boolean pushStatusList(List<StatusJson> statusJsons) throws NoSuchFieldException, IllegalAccessException;
+    boolean pushStatusList(List<StatusJson> statusJsons);
+
+    /**
+     * 通过statusId 获取status json
+     *
+     * @param statusId
+     * @return
+     */
+    StatusJson getStatusJson(Long statusId);
+
+    /**
+     * 获取 list status json
+     *
+     * @param statusIdList
+     * @return
+     */
+    List<StatusJson> listStatusJson(List<Long> statusIdList);
+
+
 }

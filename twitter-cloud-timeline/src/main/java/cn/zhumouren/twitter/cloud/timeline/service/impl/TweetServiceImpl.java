@@ -22,13 +22,20 @@ public class TweetServiceImpl {
 
     public List<Long> listUserStatusId(Long userId){
         JSONObject jsonObject = tweetService.listUserStatusId(userId.toString());
-        List<Long> userStatusIdList = StatusJsonUtil.toStatusIdList(jsonObject);
+        List<Long> userStatusIdList = StatusJsonUtil.listStatusId(jsonObject);
         return userStatusIdList;
+    }
+
+    public StatusJson getStatus(Long statusId){
+        JSONObject jsonObject = tweetService.getStatus(statusId.toString());
+        StatusJson status = StatusJsonUtil.getStatus(jsonObject);
+        return status;
     }
 
     public List<StatusJson> listUserStatusJson(Long userId){
         JSONObject jsonObject = tweetService.listUserStatus(userId.toString());
-        List<StatusJson> statusList = StatusJsonUtil.toStatusList(jsonObject);
+        List<StatusJson> statusList = StatusJsonUtil.listStatus(jsonObject);
         return statusList;
     }
+
 }

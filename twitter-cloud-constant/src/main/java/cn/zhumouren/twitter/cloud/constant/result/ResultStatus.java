@@ -1,16 +1,12 @@
-package cn.zhumouren.twitter.cloud.tweet.constant;
+package cn.zhumouren.twitter.cloud.constant.result;
 
 
-import lombok.Getter;
-import lombok.ToString;
 import org.springframework.http.HttpStatus;
 
 /**
  * @author mourenZhu
  */
 
-@ToString
-@Getter
 public enum ResultStatus {
 
     UNKNOWN_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, -1, "unknown error！"),
@@ -42,4 +38,24 @@ public enum ResultStatus {
         this.message = message;
     }
 
+    public HttpStatus getHttpStatus() {
+        return httpStatus;
+    }
+
+    public Integer getCode() {
+        return code;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    @Override
+    public String toString() {
+        return "ResultStatus{" +
+                "httpStatus=" + httpStatus +
+                ", code=" + code +
+                ", message='" + message + '\'' +
+                '}';
+    }
 }

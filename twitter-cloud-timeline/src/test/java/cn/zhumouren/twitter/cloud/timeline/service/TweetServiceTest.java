@@ -29,6 +29,16 @@ public class TweetServiceTest {
     private TweetServiceImpl tweetService;
 
     @Test
+    public void getStatusJsonTest(){
+        StatusJson status = tweetService.getStatus(1362317196449124354L);
+//        System.out.println("status object =================" + status.toString());
+        JSONObject jsonObject = itweetService.getStatus("1362317196449124354");
+        System.out.println("json object =================" + jsonObject.toJSONString());
+        Object data = jsonObject.getObject("data", Object.class);
+        System.out.println("data ============" + data);
+    }
+
+    @Test
     public void listUserStatusTest() {
         JSONObject jsonObject = itweetService.listUserStatus("1000000000000000001");
         List data = jsonObject.getObject("data", List.class);

@@ -11,7 +11,7 @@ import cn.zhumouren.twitter.cloud.tweet.service.ITweetService;
 import cn.zhumouren.twitter.cloud.tweet.service.exception.TweetNotExistException;
 import cn.zhumouren.twitter.cloud.tweet.utils.JwtUtils;
 import cn.zhumouren.twitter.cloud.tweet.vo.TweetLinkVO;
-import cn.zhumouren.twitter.cloud.utils.list.ListUtils;
+import cn.zhumouren.twitter.cloud.constant.utils.list.ListUtils;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package cn.zhumouren.twitter.cloud.utils;
+package cn.zhumouren.twitter.cloud.constant;
 
 /**
  * @Description todo

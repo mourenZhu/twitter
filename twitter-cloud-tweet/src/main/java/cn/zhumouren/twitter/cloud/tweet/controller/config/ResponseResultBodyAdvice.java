@@ -1,6 +1,6 @@
 package cn.zhumouren.twitter.cloud.tweet.controller.config;
 
-import cn.zhumouren.twitter.cloud.tweet.constant.JsonResult;
+import cn.zhumouren.twitter.cloud.constant.result.JsonResult;
 import cn.zhumouren.twitter.cloud.tweet.service.exception.TweetNotExistException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;

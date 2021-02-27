@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>twitter-cloud-utils</artifactId>
+    <artifactId>twitter-cloud-constant</artifactId>
 
     <properties>
         <maven.compiler.source>15</maven.compiler.source>
@@ -17,6 +17,10 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-jwt</artifactId>
@@ -35,7 +39,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>cn.zhumouren.twitter.cloud.utils.Main</mainClass>
+                    <mainClass>cn.zhumouren.twitter.cloud.constant.Main</mainClass>
                 </configuration>
             </plugin>
         </plugins>

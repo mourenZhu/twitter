@@ -21,6 +21,15 @@ public interface ITweetService {
     JSONObject listUserStatusId(@PathVariable("userId") String uid);
 
     /**
+     * 获取单个status
+     *
+     * @param statusId
+     * @return
+     */
+    @GetMapping("/status/{statusId}")
+    JSONObject getStatus(@PathVariable("statusId") String statusId);
+
+    /**
      * 获得用户的推文
      *
      * @param uid
@@ -28,4 +37,5 @@ public interface ITweetService {
      */
     @GetMapping("/{userId}/list/status")
     JSONObject listUserStatus(@PathVariable("userId") String uid);
+
 }

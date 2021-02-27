@@ -116,7 +116,7 @@
         </dependency>
         <dependency>
             <groupId>cn.zhumouren.twitter</groupId>
-            <artifactId>twitter-cloud-utils</artifactId>
+            <artifactId>twitter-cloud-constant</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 

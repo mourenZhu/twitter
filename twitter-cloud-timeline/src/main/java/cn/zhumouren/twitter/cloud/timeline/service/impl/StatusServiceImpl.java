@@ -1,5 +1,7 @@
 package cn.zhumouren.twitter.cloud.timeline.service.impl;
 
+import cn.zhumouren.twitter.cloud.constant.exception.TweetNotExistException;
+import cn.zhumouren.twitter.cloud.constant.result.ResultStatus;
 import cn.zhumouren.twitter.cloud.timeline.constant.redis.StatusKeyConstant;
 import cn.zhumouren.twitter.cloud.timeline.domain.StatusJson;
 import cn.zhumouren.twitter.cloud.timeline.service.IStatusService;
@@ -57,7 +59,16 @@ public class StatusServiceImpl implements IStatusService {
     @Override
     public StatusJson getStatusJson(Long statusId) {
         if (!redisUtil.hasKey(StatusKeyConstant.getStatusKey(statusId.toString()))) {
-            pushStatus(tweetService.getStatus(statusId));
+            try {
+                pushStatus(tweetService.getStatus(statusId));
+            } catch (TweetNotExistException e) {
+                e.printStackTrace();
+                StatusJson statusJson = new StatusJson();
+                statusJson.setId(statusId);
+                statusJson.setContent(ResultStatus.TWEET_NOT_EXIST.getMessage());
+                statusJson.setDeleted(true);
+                return statusJson;
+            }
         }
         Map<Object, Object> statusMap = redisUtil.hmget(StatusKeyConstant.getStatusKey(statusId.toString()));
         StatusJson statusJson = JSONObject.parseObject(JSONObject.toJSONString(statusMap), StatusJson.class);

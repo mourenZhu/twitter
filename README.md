@@ -57,9 +57,9 @@
    1. 构建用户的home timeline `未开发`
    
 3. 用户发布的所有status（这里存储具体的status对象）
-   1. 存入status `已完成` `未测试`
-   2. 存入status list `已完成` `未测试`
-   3. 查询 list status `已完成` `未测试`
+   1. 存入status `已完成` `已测试`
+   2. 存入status list `已完成` `已测试`
+   3. 查询 list status `已完成` `已测试`
    4. 查询 list status vo `未开发`
    5. 查询 status tree `未开发`
    6. 查询 status vo tree `未开发`
@@ -74,7 +74,9 @@
 
 
 ## user模块
-1. 用户详细信息的CRUD `未开发`
+1. 用户详细信息的CRUD
+   1. 存入 detailUser `开发中`
+   2. 查询 detailUser `未开发`
 
 ## 参考资料
 1. [如何设计一个twitter](<https://www.youtube.com/watch?v=wYk0xPP_P_8>) 

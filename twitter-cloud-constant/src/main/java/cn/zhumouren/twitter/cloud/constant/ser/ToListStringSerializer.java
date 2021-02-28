@@ -1,4 +1,4 @@
-package cn.zhumouren.twitter.cloud.timeline.ser;
+package cn.zhumouren.twitter.cloud.constant.ser;
 
 import cn.zhumouren.twitter.cloud.constant.utils.list.ListUtils;
 import com.fasterxml.jackson.core.JsonGenerator;

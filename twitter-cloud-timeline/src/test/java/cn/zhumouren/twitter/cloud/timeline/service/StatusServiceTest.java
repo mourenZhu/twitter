@@ -30,13 +30,13 @@ public class StatusServiceTest {
     }
 
     @Test
-    public void getStatusTest(){
-        StatusJson statusJson = statusService.getStatusJson(1361936840277454849L);
+    public void getStatusTest() {
+        StatusJson statusJson = statusService.getStatusJson(1362317196449124354L);
         System.out.println(statusJson.toString());
     }
 
     @Test
-    public void listStatusTest(){
+    public void listStatusTest() {
         List<Long> list = new LinkedList<>();
         list.add(1361936840277454849L);
         list.add(1361937053947883522L);
@@ -44,7 +44,7 @@ public class StatusServiceTest {
         list.add(1364474431245770753L);
         list.add(1362317196449124354L);
         List<StatusJson> statusJsonList = statusService.listStatusJson(list);
-        for (StatusJson statusJson : statusJsonList){
+        for (StatusJson statusJson : statusJsonList) {
             System.out.println(statusJson.toString());
         }
     }

@@ -1,21 +1,20 @@
-package cn.zhumouren.twitter.cloud.timeline.domain;
+package cn.zhumouren.twitter.cloud.timeline.vo;
 
 import cn.zhumouren.twitter.cloud.constant.ser.ToListStringSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 /**
- * @Description status json
+ * @Description todo
  * @Author mourenZhu
- * @Date 2021/2/24 22:03
+ * @Date 2021/2/28 1:56
  * @Version 1.0
  **/
 @Data
-public class StatusJson {
+public class StatusVO {
 
     /**
      * 父推文id
@@ -24,22 +23,24 @@ public class StatusJson {
     private List<Long> parentTweetIds;
 
     /**
-     * 推文回复的用户id
+     * 推文回复的用户username
      */
-    @JsonSerialize(using = ToListStringSerializer.class)
-    private List<Long> parentTweetUserIds;
+    private List<String> parentUsernames;
 
     /**
      * 推文id
      */
-    @JsonSerialize(using = ToStringSerializer.class)
     private Long id;
 
     /**
-     * 用户唯一id
+     * username
      */
-    @JsonSerialize(using = ToStringSerializer.class)
-    private Long userId;
+    private String username;
+
+    /**
+     * nickname
+     */
+    private String nickname;
 
     /**
      * 推文内容
@@ -49,7 +50,7 @@ public class StatusJson {
     /**
      * 图片绝对路径
      */
-    private String pics;
+    private List<String> pics;
 
     /**
      * 推文点赞数
@@ -84,5 +85,6 @@ public class StatusJson {
     /**
      * 是否删除，0是没有删除
      */
-    private boolean deleted;
+    private Boolean deleted;
+
 }

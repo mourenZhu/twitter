@@ -1,5 +1,6 @@
 package cn.zhumouren.twitter.cloud.timeline.utils;
 
+import cn.zhumouren.twitter.cloud.constant.exception.TweetNotExistException;
 import cn.zhumouren.twitter.cloud.timeline.domain.StatusJson;
 import cn.zhumouren.twitter.cloud.constant.utils.list.ListUtils;
 import com.alibaba.fastjson.JSON;
@@ -17,8 +18,11 @@ import java.util.List;
  **/
 public class StatusJsonUtil {
 
-    public static StatusJson getStatus(JSONObject jsonObject){
+    public static StatusJson getStatus(JSONObject jsonObject) throws TweetNotExistException {
         StatusJson statusJson = jsonObject.getObject("data", StatusJson.class);
+        if (statusJson == null){
+            throw new TweetNotExistException();
+        }
         return statusJson;
     }
 

@@ -1,5 +1,6 @@
 package cn.zhumouren.twitter.cloud.timeline.service.impl;
 
+import cn.zhumouren.twitter.cloud.constant.exception.TweetNotExistException;
 import cn.zhumouren.twitter.cloud.timeline.domain.StatusJson;
 import cn.zhumouren.twitter.cloud.timeline.service.ITweetService;
 import cn.zhumouren.twitter.cloud.timeline.utils.StatusJsonUtil;
@@ -17,6 +18,7 @@ import java.util.List;
  **/
 @Service
 public class TweetServiceImpl {
+
     @Autowired
     private ITweetService tweetService;
 
@@ -26,7 +28,7 @@ public class TweetServiceImpl {
         return userStatusIdList;
     }
 
-    public StatusJson getStatus(Long statusId){
+    public StatusJson getStatus(Long statusId) throws TweetNotExistException {
         JSONObject jsonObject = tweetService.getStatus(statusId.toString());
         StatusJson status = StatusJsonUtil.getStatus(jsonObject);
         return status;

@@ -1,4 +1,4 @@
-package cn.zhumouren.twitter.cloud.tweet.controller.config;
+package cn.zhumouren.twitter.cloud.constant.result.annotation;
 
 import org.springframework.web.bind.annotation.ResponseBody;
 

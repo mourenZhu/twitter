@@ -1,7 +1,8 @@
-package cn.zhumouren.twitter.cloud.tweet.controller.config;
+package cn.zhumouren.twitter.cloud.tweet.controller.annotation;
 
+import cn.zhumouren.twitter.cloud.constant.exception.TweetNotExistException;
 import cn.zhumouren.twitter.cloud.constant.result.JsonResult;
-import cn.zhumouren.twitter.cloud.tweet.service.exception.TweetNotExistException;
+import cn.zhumouren.twitter.cloud.constant.result.annotation.ResponseResultBody;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;
 import org.springframework.core.annotation.AnnotatedElementUtils;
@@ -30,6 +31,7 @@ import java.lang.annotation.Annotation;
 @RestControllerAdvice
 @Slf4j
 public class ResponseResultBodyAdvice implements ResponseBodyAdvice<Object> {
+
 
     private static final Class<? extends Annotation> ANNOTATION_TYPE = ResponseResultBody.class;
 

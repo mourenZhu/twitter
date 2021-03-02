@@ -2,6 +2,10 @@ insert into sys_permission(id, parent_id, name, enname, url, description)
 values (101, 0, '系统管理', 'System', '/', '超级管理员拥有所有权限');
 
 insert into sys_permission(id, parent_id, name, enname, url, description)
+values (701, 101, '创建详细用户信息', 'postDetailUser', '/server-user/detail_POST', '用户创建后，需要再创建详细的用户信息'),
+       (702, 101, '修改详细用户信息', 'putDetailUser', '/server-user/detail_PUT', '用户用来修改详细信息');
+
+insert into sys_permission(id, parent_id, name, enname, url, description)
 values (801, 101, '发布推文', 'postTweet', '/server-tweet/tweet_POST', '用户来发布推文'),
        (802, 101, '删除推文', 'deletedTweet', '/server-tweet/tweet_DELETE', '用户删除已发布的推文');
 
@@ -10,8 +14,8 @@ insert into sys_role(parent_id, name, enname, description)
 VALUES (0, '超级管理员', 'admin', '超级管理员拥有所有权限'),
        (0, '普通用户', 'user', '普通用户可以做普通用户该做的事');
 
-insert into sys_role_permission(role_id, permission_id) VALUES (100, 101), (100, 801), (100, 802);
-insert into sys_role_permission(role_id, permission_id) VALUES (101, 801), (101, 802);
+insert into sys_role_permission(role_id, permission_id) VALUES (100, 101), (100, 701), (100, 702), (100, 801), (100, 802);
+insert into sys_role_permission(role_id, permission_id) VALUES (101, 701), (101, 702), (101, 801), (101, 802);
 
 insert into sys_user(id, username, password)
 VALUES (1000000000000000001, 'admin', '$2a$10$bClI902vYPQpsxkjWKgIEOzGOYRSxh51Ro0D1gXEfI6AuHzpn2vWa');

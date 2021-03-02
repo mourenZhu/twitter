@@ -2,6 +2,7 @@ package cn.zhumouren.twitter.cloud.oauth.mapper;
 
 import cn.zhumouren.twitter.cloud.oauth.entity.SysPermission;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -24,4 +25,12 @@ public interface SysPermissionMapper extends BaseMapper<SysPermission> {
      * @return
      */
     List<SysPermission> selectByUsername(String username);
+
+    /**
+     * 通过访问路径获得该路径所需要的权限
+     *
+     * @param url
+     * @return
+     */
+    String getUrlPermission(@Param("url") String url);
 }

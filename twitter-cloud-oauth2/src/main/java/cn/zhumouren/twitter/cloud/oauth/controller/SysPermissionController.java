@@ -26,12 +26,7 @@ public class SysPermissionController {
     private ISysPermissionService permissionService;
 
     @GetMapping("/is")
-    public String getPermissionByPath(@RequestParam("path") String path) {
-        QueryWrapper<SysPermission> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("url", path);
-        if (permissionService.getOne(queryWrapper) != null) {
-            return permissionService.getOne(queryWrapper).getEnname();
-        }
-        return "";
+    public String getUrlPermission(@RequestParam("url") String url) {
+        return permissionService.getUrlPermission(url);
     }
 }

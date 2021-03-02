@@ -17,5 +17,5 @@ public interface IOauthPermissionService {
      * @return
      */
     @GetMapping("/permission/is")
-    String getPermissionByPath(@RequestParam("path") String path);
+    String getPermissionByPath(@RequestParam("url") String path);
 }

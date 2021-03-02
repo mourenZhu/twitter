@@ -2,6 +2,8 @@ package cn.zhumouren.twitter.cloud.user.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
+import java.time.LocalDateTime;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -29,6 +31,11 @@ public class Follows implements Serializable {
      * 关注者id
      */
     private Long followsId;
+
+    /**
+     * 用户关注创建时间
+     */
+    private LocalDateTime created;
 
 
 }

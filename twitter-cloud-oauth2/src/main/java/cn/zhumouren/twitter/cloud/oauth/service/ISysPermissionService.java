@@ -15,5 +15,17 @@ import java.util.List;
  */
 public interface ISysPermissionService extends IService<SysPermission> {
 
+    /**
+     * 通过username获取用户的权限
+     * @param username
+     * @return
+     */
     List<SysPermission> selectByUsername(String username);
+
+    /**
+     * 获取访问路径所需要的权限
+     * @param url
+     * @return
+     */
+    String getUrlPermission(String url);
 }

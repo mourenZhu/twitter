@@ -26,4 +26,9 @@ public class SysPermissionServiceImpl extends ServiceImpl<SysPermissionMapper, S
     public List<SysPermission> selectByUsername(String username) {
         return permissionMapper.selectByUsername(username);
     }
+
+    @Override
+    public String getUrlPermission(String url) {
+        return permissionMapper.getUrlPermission(url);
+    }
 }

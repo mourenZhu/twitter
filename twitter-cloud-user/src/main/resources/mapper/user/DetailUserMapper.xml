@@ -2,4 +2,32 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.zhumouren.twitter.cloud.user.mapper.DetailUserMapper">
 
+    <select id="getDetailUserVO" resultType="cn.zhumouren.twitter.cloud.user.vo.DetailUserVO">
+        SELECT id,
+               nickname,
+               photo,
+               header_photo,
+               about,
+               website,
+               location,
+               birthday,
+               following,
+               follows
+        FROM detail_user
+        WHERE id = #{uid}
+    </select>
+
+    <update id="updateDetailUser">
+        UPDATE detail_user
+        SET nickname     = #{duVO.nickname},
+            photo        = #{duVO.photo},
+            header_photo = #{duVO.headerPhoto},
+            about        = #{duVO.about},
+            website      = #{duVO.website},
+            location     = #{duVO.location},
+            birthday     = #{duVO.birthday},
+            updated      = NOW()
+        WHERE id = #{duVO.id}
+    </update>
+
 </mapper>

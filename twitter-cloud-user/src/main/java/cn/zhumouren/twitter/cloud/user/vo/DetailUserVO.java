@@ -1,25 +1,17 @@
-package cn.zhumouren.twitter.cloud.user.entity;
-
-import java.time.LocalDate;
-import java.io.Serializable;
-import java.time.LocalDateTime;
+package cn.zhumouren.twitter.cloud.user.vo;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
+
+import java.time.LocalDate;
 
 /**
- * <p>
- * 用户细节表
- * </p>
- *
- * @author zhumouren
- * @since 2021-02-08
- */
+ * @Description todo
+ * @Author mourenZhu
+ * @Date 2021/3/2 15:59
+ * @Version 1.0
+ **/
 @Data
-@EqualsAndHashCode(callSuper = false)
-public class DetailUser implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+public class DetailUserVO {
 
     /**
      * 用户唯一id
@@ -64,22 +56,10 @@ public class DetailUser implements Serializable {
     /**
      * 关注数量
      */
-    private Integer following = 0;
+    private Integer following;
 
     /**
      * 粉丝数量
      */
-    private Integer follows = 0;
-
-    /**
-     * 用户详细信息创建时间
-     */
-    private LocalDateTime created;
-
-    /**
-     * 用户详细信息更新时间
-     */
-    private LocalDateTime updated;
-
-
+    private Integer follows;
 }

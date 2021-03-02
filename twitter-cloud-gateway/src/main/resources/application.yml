@@ -21,25 +21,30 @@ spring:
       # 配置路由规则
       routes:
         # 采用自定义路由 ID（有固定用法，不同的 id 有不同的功能，详见：https://cloud.spring.io/spring-cloud-gateway/2.0.x/single/spring-cloud-gateway.html#gateway-route-filters）
-#        - id: users
-#          # 采用 LoadBalanceClient 方式请求，以 lb:// 开头，后面的是注册在 Nacos 上的服务名
-#          uri: lb://server-users
-#          # Predicate 翻译过来是“谓词”的意思，必须，主要作用是匹配用户的请求，有很多种用法
-#          predicates:
-#            #
-#            # - Path=/users
-#            # Method 方法谓词，这里是匹配 GET 和 POST 请求
-#            - Method=GET,POST,DELETE
+        #        - id: users
+        #          # 采用 LoadBalanceClient 方式请求，以 lb:// 开头，后面的是注册在 Nacos 上的服务名
+        #          uri: lb://server-users
+        #          # Predicate 翻译过来是“谓词”的意思，必须，主要作用是匹配用户的请求，有很多种用法
+        #          predicates:
+        #            #
+        #            # - Path=/users
+        #            # Method 方法谓词，这里是匹配 GET 和 POST 请求
+        #            - Method=GET,POST,DELETE
         - id: oauth2
           uri: lb://server-oauth2
           predicates:
             - Method=GET,POST
-#            - Path=/server-oauth2/**
+        #            - Path=/server-oauth2/**
         - id: tweet
           uri: lb://server-tweet
           predicates:
             - Method=GET,POST,PUT,DELETE
-#            - Path=/server-tweet/**
+        #            - Path=/server-tweet/**
+        - id: user
+          uri: lb://server-user
+          predicates:
+            - Method=GET,POST,PUT,DELETE
+  #            - Path=/server-user/**
   autoconfigure:
     # TODO: remove when fixed https://github.com/spring-projects/spring-security/issues/6314
     exclude: org.springframework.boot.actuate.autoconfigure.security.reactive.ReactiveManagementWebSecurityAutoConfiguration

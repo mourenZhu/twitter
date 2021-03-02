@@ -75,8 +75,9 @@
 
 ## user模块
 1. 用户详细信息的CRUD
-   1. 存入 detailUser `开发中`
-   2. 查询 detailUser `未开发`
+   1. 存入 detailUser `已完成` `已测试`
+   2. 查询 detailUser `已完成` `已测试`
+   3. 修改 detailUser `已完成` `已测试`
 
 ## 参考资料
 1. [如何设计一个twitter](<https://www.youtube.com/watch?v=wYk0xPP_P_8>) 

@@ -2,6 +2,8 @@ package cn.zhumouren.twitter.cloud.tweet.dto;
 
 import lombok.Data;
 
+import java.util.List;
+
 /**
  * @Description 前端回复推文对象
  * @Author mourenZhu
@@ -13,5 +15,5 @@ public class PostReplyTweetDTO {
 
     private String parentId;
     private String replyContent;
-    private String replyPics;
+    private List<String> replyPics;
 }

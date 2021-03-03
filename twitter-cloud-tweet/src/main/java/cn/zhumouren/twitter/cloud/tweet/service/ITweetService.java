@@ -2,7 +2,6 @@ package cn.zhumouren.twitter.cloud.tweet.service;
 
 import cn.zhumouren.twitter.cloud.tweet.dto.StatusDTO;
 import cn.zhumouren.twitter.cloud.tweet.entity.Tweet;
-import cn.zhumouren.twitter.cloud.tweet.service.exception.TweetNotExistException;
 import cn.zhumouren.twitter.cloud.tweet.vo.TweetLinkVO;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -37,7 +36,7 @@ public interface ITweetService extends IService<Tweet> {
      * @param uid
      * @return
      */
-    boolean postTweet(String content, String pics, Long uid);
+    boolean postTweet(String content, List<String> pics, Long uid);
 
     /**
      * 删除推文，但不是真删
@@ -55,9 +54,8 @@ public interface ITweetService extends IService<Tweet> {
      * @param replyContent
      * @param uid
      * @return
-     * @throws TweetNotExistException
      */
-    boolean postTweetReply(Long parentId, String replyContent, Long uid) throws TweetNotExistException;
+    boolean postTweetReply(Long parentId, String replyContent, Long uid);
 
     /**
      * 推文回复（添加图片），并在path中添加记录
@@ -67,9 +65,8 @@ public interface ITweetService extends IService<Tweet> {
      * @param replyPics
      * @param uid
      * @return
-     * @throws TweetNotExistException
      */
-    boolean postTweetReply(Long parentId, String replyContent, String replyPics, Long uid) throws TweetNotExistException;
+    boolean postTweetReply(Long parentId, String replyContent, List<String> replyPics, Long uid);
 
     /**
      * 获得推文链前端展示对象
@@ -110,9 +107,8 @@ public interface ITweetService extends IService<Tweet> {
      *
      * @param statusId
      * @return
-     * @throws TweetNotExistException
      */
-    StatusDTO getStatus(Long statusId) throws TweetNotExistException;
+    StatusDTO getStatus(Long statusId);
 
     /**
      * 获取list status

@@ -1,6 +1,7 @@
 package cn.zhumouren.twitter.cloud.user.controller;
 
 
+import cn.zhumouren.twitter.cloud.constant.exception.UserNotExistException;
 import cn.zhumouren.twitter.cloud.constant.result.annotation.ResponseResultBody;
 import cn.zhumouren.twitter.cloud.constant.utils.jwt.JwtUtils;
 import cn.zhumouren.twitter.cloud.user.entity.DetailUser;
@@ -34,7 +35,7 @@ public class DetailUserController {
     }
 
     @GetMapping("/{userId}")
-    public DetailUserVO getDetailUserVO(@PathVariable("userId") String userId){
+    public DetailUserVO getDetailUserVO(@PathVariable("userId") String userId) throws UserNotExistException {
         Long uid = Long.valueOf(userId);
         return detailUserService.getDetailUserVO(uid);
     }

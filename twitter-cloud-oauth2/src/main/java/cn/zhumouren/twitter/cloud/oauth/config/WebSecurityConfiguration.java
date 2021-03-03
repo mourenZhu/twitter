@@ -49,7 +49,9 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         // 将 check_token 暴露出去，否则资源服务器访问时报 403 错误
-        web.ignoring().antMatchers("/oauth/check_token", "/permission/is/**");
+        // 我觉得应该还有优化的可能，但现在先不管
+        web.ignoring().antMatchers("/oauth/check_token", "/permission/is/**",
+                "/user/username");
     }
 
 //    @Override

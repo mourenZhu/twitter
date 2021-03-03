@@ -17,6 +17,8 @@ public enum ResultStatus {
 
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, 500, "Internal Server Error"),
 
+    USER_NOT_EXIST(HttpStatus.OK, 751, "user is not exist!"),
+
     TWEET_NOT_EXIST(HttpStatus.OK, 851, "tweet is not exist！");
 
     /**

@@ -1,8 +1,8 @@
-package cn.zhumouren.twitter.cloud.timeline.service.impl;
+package cn.zhumouren.twitter.cloud.timeline.service.client.impl;
 
 import cn.zhumouren.twitter.cloud.constant.exception.TweetNotExistException;
 import cn.zhumouren.twitter.cloud.timeline.domain.StatusJson;
-import cn.zhumouren.twitter.cloud.timeline.service.ITweetService;
+import cn.zhumouren.twitter.cloud.timeline.service.client.ITweetServerTweetClient;
 import cn.zhumouren.twitter.cloud.timeline.utils.StatusJsonUtil;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,25 +17,25 @@ import java.util.List;
  * @Version 1.0
  **/
 @Service
-public class TweetServiceImpl {
+public class TweetServerTweetClientImpl {
 
     @Autowired
-    private ITweetService tweetService;
+    private ITweetServerTweetClient tweetClientService;
 
     public List<Long> listUserStatusId(Long userId){
-        JSONObject jsonObject = tweetService.listUserStatusId(userId.toString());
+        JSONObject jsonObject = tweetClientService.listUserStatusId(userId.toString());
         List<Long> userStatusIdList = StatusJsonUtil.listStatusId(jsonObject);
         return userStatusIdList;
     }
 
     public StatusJson getStatus(Long statusId) throws TweetNotExistException {
-        JSONObject jsonObject = tweetService.getStatus(statusId.toString());
+        JSONObject jsonObject = tweetClientService.getStatus(statusId.toString());
         StatusJson status = StatusJsonUtil.getStatus(jsonObject);
         return status;
     }
 
     public List<StatusJson> listUserStatusJson(Long userId){
-        JSONObject jsonObject = tweetService.listUserStatus(userId.toString());
+        JSONObject jsonObject = tweetClientService.listUserStatus(userId.toString());
         List<StatusJson> statusList = StatusJsonUtil.listStatus(jsonObject);
         return statusList;
     }

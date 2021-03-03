@@ -1,8 +1,9 @@
-package cn.zhumouren.twitter.cloud.timeline.service;
+package cn.zhumouren.twitter.cloud.timeline.service.client;
 
 import cn.zhumouren.twitter.cloud.constant.exception.TweetNotExistException;
 import cn.zhumouren.twitter.cloud.timeline.domain.StatusJson;
-import cn.zhumouren.twitter.cloud.timeline.service.impl.TweetServiceImpl;
+import cn.zhumouren.twitter.cloud.timeline.service.client.ITweetServerTweetClient;
+import cn.zhumouren.twitter.cloud.timeline.service.client.impl.TweetServerTweetClientImpl;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import org.junit.Test;
@@ -24,10 +25,10 @@ import java.util.List;
 public class TweetServiceTest {
 
     @Autowired
-    private ITweetService itweetService;
+    private ITweetServerTweetClient itweetClientTweetServer;
 
     @Autowired
-    private TweetServiceImpl tweetService;
+    private TweetServerTweetClientImpl tweetService;
 
     @Test
     public void getStatusJsonTest(){
@@ -37,7 +38,7 @@ public class TweetServiceTest {
             e.printStackTrace();
         }
 //        System.out.println("status object =================" + status.toString());
-        JSONObject jsonObject = itweetService.getStatus("1362317196449124354");
+        JSONObject jsonObject = itweetClientTweetServer.getStatus("1362317196449124354");
         System.out.println("json object =================" + jsonObject.toJSONString());
         Object data = jsonObject.getObject("data", Object.class);
         System.out.println("data ============" + data);
@@ -45,7 +46,7 @@ public class TweetServiceTest {
 
     @Test
     public void listUserStatusTest() {
-        JSONObject jsonObject = itweetService.listUserStatus("1000000000000000001");
+        JSONObject jsonObject = itweetClientTweetServer.listUserStatus("1000000000000000001");
         List data = jsonObject.getObject("data", List.class);
 
         List<StatusJson> statusJsonList = JSON.parseArray(JSON.toJSONString(data), StatusJson.class);

@@ -1,5 +1,6 @@
 package cn.zhumouren.twitter.cloud.user.service.impl;
 
+import cn.zhumouren.twitter.cloud.constant.exception.UserNotExistException;
 import cn.zhumouren.twitter.cloud.user.entity.DetailUser;
 import cn.zhumouren.twitter.cloud.user.mapper.DetailUserMapper;
 import cn.zhumouren.twitter.cloud.user.service.IDetailUserService;
@@ -23,8 +24,12 @@ public class DetailUserServiceImpl extends ServiceImpl<DetailUserMapper, DetailU
     private DetailUserMapper detailUserMapper;
 
     @Override
-    public DetailUserVO getDetailUserVO(Long uid) {
-        return detailUserMapper.getDetailUserVO(uid);
+    public DetailUserVO getDetailUserVO(Long uid) throws UserNotExistException{
+        DetailUserVO detailUserVO = detailUserMapper.getDetailUserVO(uid);
+        if (detailUserVO == null){
+            throw new UserNotExistException();
+        }
+        return detailUserVO;
     }
 
     @Override

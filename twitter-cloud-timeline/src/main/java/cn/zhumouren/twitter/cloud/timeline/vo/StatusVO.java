@@ -1,6 +1,8 @@
 package cn.zhumouren.twitter.cloud.timeline.vo;
 
 import cn.zhumouren.twitter.cloud.constant.ser.ToListStringSerializer;
+import cn.zhumouren.twitter.cloud.timeline.domain.StatusJson;
+import cn.zhumouren.twitter.cloud.timeline.domain.UserJson;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Data;
 
@@ -15,6 +17,20 @@ import java.util.List;
  **/
 @Data
 public class StatusVO {
+
+    public StatusVO(){}
+
+    public StatusVO(StatusJson statusJson, UserJson userJson){
+        this.parentTweetIds = statusJson.getParentTweetIds();
+
+        this.parentUsernames = null;
+
+        this.id = statusJson.getId();
+        this.username = userJson.getUsername();
+        this.nickname = userJson.getNickname();
+        this.content = statusJson.getContent();
+
+    }
 
     /**
      * 父推文id

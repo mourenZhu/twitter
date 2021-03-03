@@ -1,6 +1,7 @@
 package cn.zhumouren.twitter.cloud.timeline.service;
 
 import cn.zhumouren.twitter.cloud.timeline.domain.StatusJson;
+import cn.zhumouren.twitter.cloud.timeline.vo.StatusVO;
 
 import java.util.List;
 
@@ -45,5 +46,20 @@ public interface IStatusService {
      */
     List<StatusJson> listStatusJson(List<Long> statusIdList);
 
+    /**
+     * 通过statusId 获取status VO
+     *
+     * @param statusId
+     * @return
+     */
+    StatusVO getStatusVO(Long statusId);
+
+    /**
+     * 获取 list status vo
+     *
+     * @param statusIdList
+     * @return
+     */
+    List<StatusJson> listStatusVO(List<Long> statusIdList);
 
 }

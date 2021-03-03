@@ -1,4 +1,4 @@
-package cn.zhumouren.twitter.cloud.timeline.service;
+package cn.zhumouren.twitter.cloud.timeline.service.client;
 
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
  * @author mourenZhu
  */
 @FeignClient(name = "server-tweet")
-public interface ITweetService {
+public interface ITweetServerTweetClient {
 
     /**
      * 获得用户发布推文的id

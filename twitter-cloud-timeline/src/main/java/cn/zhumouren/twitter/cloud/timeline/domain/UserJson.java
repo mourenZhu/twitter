@@ -19,6 +19,11 @@ public class UserJson {
     private Long uid;
 
     /**
+     * 唯一用户名
+     */
+    private String username;
+
+    /**
      * 用户昵称
      */
     private String nickname;

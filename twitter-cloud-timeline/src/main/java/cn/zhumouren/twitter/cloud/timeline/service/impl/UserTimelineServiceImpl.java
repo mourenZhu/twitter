@@ -2,6 +2,7 @@ package cn.zhumouren.twitter.cloud.timeline.service.impl;
 
 import cn.zhumouren.twitter.cloud.timeline.constant.redis.UserKeyConstant;
 import cn.zhumouren.twitter.cloud.timeline.service.IUserTimelineService;
+import cn.zhumouren.twitter.cloud.timeline.service.client.impl.TweetServerTweetClientImpl;
 import cn.zhumouren.twitter.cloud.timeline.utils.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,7 @@ public class UserTimelineServiceImpl implements IUserTimelineService {
     private RedisUtil redisUtil;
 
     @Autowired
-    private TweetServiceImpl tweetService;
+    private TweetServerTweetClientImpl tweetService;
 
 
     @Override

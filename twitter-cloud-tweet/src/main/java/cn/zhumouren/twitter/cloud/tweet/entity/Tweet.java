@@ -8,6 +8,7 @@ import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * <p>
@@ -43,7 +44,7 @@ public class Tweet implements Serializable {
     /**
      * 图片绝对路径
      */
-    private String pics;
+    private List<String> pics;
 
     /**
      * 推文点赞数

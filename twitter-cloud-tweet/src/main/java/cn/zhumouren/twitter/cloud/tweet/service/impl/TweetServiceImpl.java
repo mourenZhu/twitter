@@ -1,12 +1,12 @@
 package cn.zhumouren.twitter.cloud.tweet.service.impl;
 
+import cn.zhumouren.twitter.cloud.constant.exception.TweetNotExistException;
 import cn.zhumouren.twitter.cloud.tweet.dto.StatusDTO;
 import cn.zhumouren.twitter.cloud.tweet.entity.ParentChildTweet;
 import cn.zhumouren.twitter.cloud.tweet.entity.Tweet;
 import cn.zhumouren.twitter.cloud.tweet.mapper.ParentChildTweetMapper;
 import cn.zhumouren.twitter.cloud.tweet.mapper.TweetMapper;
 import cn.zhumouren.twitter.cloud.tweet.service.ITweetService;
-import cn.zhumouren.twitter.cloud.tweet.service.exception.TweetNotExistException;
 import cn.zhumouren.twitter.cloud.tweet.vo.TweetLinkVO;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -36,7 +37,7 @@ public class TweetServiceImpl extends ServiceImpl<TweetMapper, Tweet> implements
     private ParentChildTweetMapper parentChildTweetMapper;
 
     @Transactional(rollbackFor = Exception.class)
-    public boolean post(String content, String pics, Long uid) {
+    public boolean post(String content, List<String> pics, Long uid) {
         Tweet tweet = new Tweet();
         tweet.setUserId(uid);
         tweet.setContent(content);
@@ -47,7 +48,7 @@ public class TweetServiceImpl extends ServiceImpl<TweetMapper, Tweet> implements
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public boolean postReply(Long parentId, String content, String pics, Long uid) {
+    public boolean postReply(Long parentId, String content, List<String> pics, Long uid) {
         Tweet tweet = new Tweet();
         tweet.setUserId(uid);
         tweet.setContent(content);
@@ -61,11 +62,12 @@ public class TweetServiceImpl extends ServiceImpl<TweetMapper, Tweet> implements
 
     @Override
     public boolean postTweet(String content, Long uid) {
-        return postTweet(content, "", uid);
+        List<String> pics = new ArrayList();
+        return postTweet(content, pics, uid);
     }
 
     @Override
-    public boolean postTweet(String content, String pics, Long uid) {
+    public boolean postTweet(String content, List<String> pics, Long uid) {
         return post(content, pics, uid);
     }
 
@@ -82,11 +84,12 @@ public class TweetServiceImpl extends ServiceImpl<TweetMapper, Tweet> implements
 
     @Override
     public boolean postTweetReply(Long parentId, String replyContent, Long uid) throws TweetNotExistException {
-        return postTweetReply(parentId, replyContent, "", uid);
+        List<String> pics = new ArrayList<>();
+        return postTweetReply(parentId, replyContent, pics, uid);
     }
 
     @Override
-    public boolean postTweetReply(Long parentId, String replyContent, String replyPics, Long uid) throws TweetNotExistException {
+    public boolean postTweetReply(Long parentId, String replyContent, List<String> replyPics, Long uid) throws TweetNotExistException {
         if (tweetMapper.isExistTweet(parentId)) {
             return postReply(parentId, replyContent, replyPics, uid);
         } else {

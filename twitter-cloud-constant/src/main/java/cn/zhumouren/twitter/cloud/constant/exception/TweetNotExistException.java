@@ -9,12 +9,12 @@ import cn.zhumouren.twitter.cloud.constant.result.ResultStatus;
  * @Version 1.0
  **/
 
-public class TweetNotExistException extends Exception {
+public class TweetNotExistException extends RuntimeException {
 
     private final ResultStatus resultStatus;
 
     public TweetNotExistException() {
-        super();
+        super(ResultStatus.TWEET_NOT_EXIST.getMessage());
         this.resultStatus = ResultStatus.TWEET_NOT_EXIST;
     }
 

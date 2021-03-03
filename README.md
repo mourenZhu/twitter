@@ -60,7 +60,7 @@
    1. 存入status `已完成` `已测试`
    2. 存入status list `已完成` `已测试`
    3. 查询 list status `已完成` `已测试`
-   4. 查询 list status vo `未开发`
+   4. 查询 list status vo `开发中`
    5. 查询 status tree `未开发`
    6. 查询 status vo tree `未开发`
    

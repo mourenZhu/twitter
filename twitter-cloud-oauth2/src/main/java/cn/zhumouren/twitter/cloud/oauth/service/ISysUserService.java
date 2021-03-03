@@ -13,4 +13,12 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ISysUserService extends IService<SysUser> {
 
+    /**
+     * 通过id获取用户名
+     *
+     * @param uid
+     * @return
+     */
+    String getUsername(Long uid);
+
 }

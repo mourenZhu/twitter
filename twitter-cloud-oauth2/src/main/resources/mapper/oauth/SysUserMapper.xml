@@ -2,4 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.zhumouren.twitter.cloud.oauth.mapper.SysUserMapper">
 
+    <select id="getUsername" resultType="String">
+        SELECT username
+        FROM sys_user
+        WHERE id = #{uid}
+    </select>
+
 </mapper>

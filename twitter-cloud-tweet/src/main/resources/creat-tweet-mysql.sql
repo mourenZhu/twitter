@@ -3,7 +3,7 @@ create table tweet
     `id`          bigint(20) NOT NULL COMMENT 'id',
     `user_id`     bigint(20) NOT NULL COMMENT '用户唯一id',
     `content`     varchar(300) COMMENT '推文内容',
-    `pics`        varchar(500)        DEFAULT NULL COMMENT '图片绝对路径',
+    `pics`        JSON        DEFAULT NULL COMMENT '图片绝对路径',
     `num_likes`   int UNSIGNED        DEFAULT 0 COMMENT '推文点赞数',
     `num_replies` int UNSIGNED        DEFAULT 0 COMMENT '推文回复数',
     `num_quote`   int UNSIGNED        DEFAULT 0 COMMENT '推文引用数',

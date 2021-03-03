@@ -1,13 +1,17 @@
 package cn.zhumouren.twitter.cloud.timeline.service.impl;
 
 import cn.zhumouren.twitter.cloud.constant.exception.TweetNotExistException;
-import cn.zhumouren.twitter.cloud.constant.result.ResultStatus;
 import cn.zhumouren.twitter.cloud.timeline.constant.redis.StatusKeyConstant;
 import cn.zhumouren.twitter.cloud.timeline.domain.StatusJson;
+import cn.zhumouren.twitter.cloud.timeline.domain.UserJson;
 import cn.zhumouren.twitter.cloud.timeline.service.IStatusService;
+import cn.zhumouren.twitter.cloud.timeline.service.IUserService;
+import cn.zhumouren.twitter.cloud.timeline.service.client.impl.TweetServerTweetClientImpl;
 import cn.zhumouren.twitter.cloud.timeline.utils.RedisUtil;
 import cn.zhumouren.twitter.cloud.timeline.utils.StatusJsonUtil;
+import cn.zhumouren.twitter.cloud.timeline.vo.StatusVO;
 import com.alibaba.fastjson.JSONObject;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,13 +26,17 @@ import java.util.Map;
  * @Version 1.0
  **/
 @Service
+@Slf4j
 public class StatusServiceImpl implements IStatusService {
 
     @Autowired
     private RedisUtil redisUtil;
 
     @Autowired
-    private TweetServiceImpl tweetService;
+    private TweetServerTweetClientImpl tweetClient;
+
+    @Autowired
+    private IUserService userService;
 
     @Override
     public boolean pushStatus(StatusJson statusJson) {
@@ -38,9 +46,9 @@ public class StatusServiceImpl implements IStatusService {
                 try {
                     redisUtil.hset(StatusKeyConstant.getStatusKey(statusJson.getId().toString()), s, StatusJsonUtil.getStatusFieldValue(s, statusJson));
                 } catch (NoSuchFieldException e) {
-                    e.printStackTrace();
+                    log.error(e.getMessage());
                 } catch (IllegalAccessException e) {
-                    e.printStackTrace();
+                    log.error(e.getMessage());
                 }
             }
         }
@@ -57,18 +65,9 @@ public class StatusServiceImpl implements IStatusService {
     }
 
     @Override
-    public StatusJson getStatusJson(Long statusId) {
+    public StatusJson getStatusJson(Long statusId) throws TweetNotExistException {
         if (!redisUtil.hasKey(StatusKeyConstant.getStatusKey(statusId.toString()))) {
-            try {
-                pushStatus(tweetService.getStatus(statusId));
-            } catch (TweetNotExistException e) {
-                e.printStackTrace();
-                StatusJson statusJson = new StatusJson();
-                statusJson.setId(statusId);
-                statusJson.setContent(ResultStatus.TWEET_NOT_EXIST.getMessage());
-                statusJson.setDeleted(true);
-                return statusJson;
-            }
+            pushStatus(tweetClient.getStatus(statusId));
         }
         Map<Object, Object> statusMap = redisUtil.hmget(StatusKeyConstant.getStatusKey(statusId.toString()));
         StatusJson statusJson = JSONObject.parseObject(JSONObject.toJSONString(statusMap), StatusJson.class);
@@ -79,8 +78,27 @@ public class StatusServiceImpl implements IStatusService {
     public List<StatusJson> listStatusJson(List<Long> statusIdList) {
         List<StatusJson> statusJsonList = new LinkedList();
         for (Long l : statusIdList) {
-            statusJsonList.add(getStatusJson(l));
+            try {
+                statusJsonList.add(getStatusJson(l));
+            } catch (TweetNotExistException e){
+                log.error(e.getMessage() + "id===" + l);
+            }
         }
         return statusJsonList;
     }
+
+    @Override
+    public StatusVO getStatusVO(Long statusId) throws TweetNotExistException{
+        StatusJson statusJson = getStatusJson(statusId);
+        UserJson user = userService.getUser(statusJson.getId());
+        StatusVO statusVO = new StatusVO();
+        return null;
+    }
+
+    @Override
+    public List<StatusJson> listStatusVO(List<Long> statusIdList) {
+        return null;
+    }
+
+
 }

@@ -1,6 +1,7 @@
 package cn.zhumouren.twitter.cloud.tweet.controller;
 
 
+import cn.zhumouren.twitter.cloud.constant.exception.TweetDeletedException;
 import cn.zhumouren.twitter.cloud.constant.exception.TweetNotExistException;
 import cn.zhumouren.twitter.cloud.constant.result.annotation.ResponseResultBody;
 import cn.zhumouren.twitter.cloud.constant.utils.list.ListUtils;
@@ -146,7 +147,7 @@ public class TweetController {
      * @return
      */
     @GetMapping("/status/{statusId}")
-    public StatusDTO getStatus(@PathVariable("statusId") String statusId) throws TweetNotExistException {
+    public StatusDTO getStatus(@PathVariable("statusId") String statusId) throws TweetNotExistException, TweetDeletedException {
         Long sId = Long.valueOf(statusId);
         return tweetService.getStatus(sId);
     }

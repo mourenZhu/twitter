@@ -1,5 +1,6 @@
 package cn.zhumouren.twitter.cloud.timeline.service;
 
+import cn.zhumouren.twitter.cloud.constant.exception.TweetNotExistException;
 import cn.zhumouren.twitter.cloud.timeline.domain.StatusJson;
 import cn.zhumouren.twitter.cloud.timeline.vo.StatusVO;
 import org.junit.Test;
@@ -25,13 +26,13 @@ public class StatusServiceTest {
     private IStatusService statusService;
 
     @Test
-    public void puStatusTest() {
+    public void puStatusTest() throws TweetNotExistException {
         StatusJson statusJson = statusService.getStatusJson(1364450317210509314L);
         statusService.pushStatus(statusJson);
     }
 
     @Test
-    public void getStatusTest() {
+    public void getStatusTest() throws TweetNotExistException {
         StatusJson statusJson = statusService.getStatusJson(1362317196449124354L);
         System.out.println(statusJson.toString());
     }

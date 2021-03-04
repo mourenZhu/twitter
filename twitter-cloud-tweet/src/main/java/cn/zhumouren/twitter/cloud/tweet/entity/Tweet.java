@@ -84,7 +84,7 @@ public class Tweet implements Serializable {
      * 是否删除，0是没有删除
      */
     @TableField(value = "is_deleted")
-    private boolean deleted;
+    private Boolean deleted;
 
 
 }

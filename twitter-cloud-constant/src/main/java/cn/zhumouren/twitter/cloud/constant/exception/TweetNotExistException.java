@@ -9,7 +9,7 @@ import cn.zhumouren.twitter.cloud.constant.result.ResultStatus;
  * @Version 1.0
  **/
 
-public class TweetNotExistException extends RuntimeException {
+public class TweetNotExistException extends Exception {
 
     private final ResultStatus resultStatus;
 

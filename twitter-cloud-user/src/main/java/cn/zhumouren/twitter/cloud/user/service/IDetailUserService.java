@@ -1,5 +1,6 @@
 package cn.zhumouren.twitter.cloud.user.service;
 
+import cn.zhumouren.twitter.cloud.constant.exception.UserNotExistException;
 import cn.zhumouren.twitter.cloud.user.entity.DetailUser;
 import cn.zhumouren.twitter.cloud.user.vo.DetailUserVO;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -19,7 +20,7 @@ public interface IDetailUserService extends IService<DetailUser> {
      * @param uid
      * @return
      */
-    DetailUserVO getDetailUserVO(Long uid);
+    DetailUserVO getDetailUserVO(Long uid) throws UserNotExistException;
 
     /**
      * 更新用户详细信息

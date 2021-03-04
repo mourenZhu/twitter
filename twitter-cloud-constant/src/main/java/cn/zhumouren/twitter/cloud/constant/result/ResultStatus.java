@@ -19,7 +19,9 @@ public enum ResultStatus {
 
     USER_NOT_EXIST(HttpStatus.OK, 751, "user is not exist!"),
 
-    TWEET_NOT_EXIST(HttpStatus.OK, 851, "tweet is not exist！");
+    TWEET_NOT_EXIST(HttpStatus.OK, 851, "tweet is not exist！"),
+
+    TWEET_DELETED(HttpStatus.OK, 852, "tweet is deleted!");
 
     /**
      * 返回的HTTP状态码,  符合http请求

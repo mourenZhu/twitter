@@ -54,7 +54,6 @@
         select count(id)
         from tweet
         where id = #{tweet_id}
-          and is_deleted = 0
     </select>
 
     <select id="listParentTweet" resultMap="tweet">
@@ -186,7 +185,6 @@
                            ON ptui.id = pct.parent_id
         WHERE pct.child_id = #{statusId}
           AND (pct.`level` &lt;&gt; 0 OR (pct.level = 0 AND pct.is_root = 1))
-          AND t.is_deleted = 0
         ORDER BY pct.`level` DESC
     </select>
 

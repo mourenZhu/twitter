@@ -1,5 +1,7 @@
 package cn.zhumouren.twitter.cloud.tweet.service;
 
+import cn.zhumouren.twitter.cloud.constant.exception.TweetDeletedException;
+import cn.zhumouren.twitter.cloud.constant.exception.TweetNotExistException;
 import cn.zhumouren.twitter.cloud.tweet.dto.StatusDTO;
 import cn.zhumouren.twitter.cloud.tweet.entity.Tweet;
 import cn.zhumouren.twitter.cloud.tweet.vo.TweetLinkVO;
@@ -54,8 +56,9 @@ public interface ITweetService extends IService<Tweet> {
      * @param replyContent
      * @param uid
      * @return
+     * @throws TweetNotExistException
      */
-    boolean postTweetReply(Long parentId, String replyContent, Long uid);
+    boolean postTweetReply(Long parentId, String replyContent, Long uid) throws TweetNotExistException;
 
     /**
      * 推文回复（添加图片），并在path中添加记录
@@ -65,8 +68,9 @@ public interface ITweetService extends IService<Tweet> {
      * @param replyPics
      * @param uid
      * @return
+     * @throws TweetNotExistException
      */
-    boolean postTweetReply(Long parentId, String replyContent, List<String> replyPics, Long uid);
+    boolean postTweetReply(Long parentId, String replyContent, List<String> replyPics, Long uid) throws TweetNotExistException;
 
     /**
      * 获得推文链前端展示对象
@@ -107,8 +111,10 @@ public interface ITweetService extends IService<Tweet> {
      *
      * @param statusId
      * @return
+     * @throws TweetNotExistException
+     * @throws TweetDeletedException
      */
-    StatusDTO getStatus(Long statusId);
+    StatusDTO getStatus(Long statusId) throws TweetNotExistException, TweetDeletedException;
 
     /**
      * 获取list status

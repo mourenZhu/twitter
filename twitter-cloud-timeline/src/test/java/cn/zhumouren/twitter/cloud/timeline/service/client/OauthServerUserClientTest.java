@@ -1,5 +1,6 @@
 package cn.zhumouren.twitter.cloud.timeline.service.client;
 
+import cn.zhumouren.twitter.cloud.constant.exception.UserNotExistException;
 import cn.zhumouren.twitter.cloud.timeline.service.client.impl.OauthServerUserClientImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,7 +22,7 @@ public class OauthServerUserClientTest {
     private OauthServerUserClientImpl oauthServerUserClient;
 
     @Test
-    public void getUsernameTest(){
+    public void getUsernameTest() throws UserNotExistException {
         oauthServerUserClient.getUsername(100000000000000L);
     }
 

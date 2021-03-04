@@ -1,5 +1,6 @@
 package cn.zhumouren.twitter.cloud.tweet.service.impl;
 
+import cn.zhumouren.twitter.cloud.constant.exception.TweetDeletedException;
 import cn.zhumouren.twitter.cloud.constant.exception.TweetNotExistException;
 import cn.zhumouren.twitter.cloud.tweet.dto.StatusDTO;
 import cn.zhumouren.twitter.cloud.tweet.entity.ParentChildTweet;
@@ -121,9 +122,13 @@ public class TweetServiceImpl extends ServiceImpl<TweetMapper, Tweet> implements
     }
 
     @Override
-    public StatusDTO getStatus(Long statusId) throws TweetNotExistException {
+    public StatusDTO getStatus(Long statusId) throws TweetNotExistException, TweetDeletedException {
         if (tweetMapper.isExistTweet(statusId)) {
-            return tweetMapper.getStatus(statusId);
+            StatusDTO status = tweetMapper.getStatus(statusId);
+            if (status.getDeleted()){
+                throw new TweetDeletedException();
+            }
+            return status;
         } else {
             throw new TweetNotExistException();
         }

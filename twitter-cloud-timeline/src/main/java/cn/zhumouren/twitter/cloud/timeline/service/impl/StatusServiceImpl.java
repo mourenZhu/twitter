@@ -1,6 +1,7 @@
 package cn.zhumouren.twitter.cloud.timeline.service.impl;
 
 import cn.zhumouren.twitter.cloud.constant.exception.TweetNotExistException;
+import cn.zhumouren.twitter.cloud.constant.exception.UserNotExistException;
 import cn.zhumouren.twitter.cloud.timeline.constant.redis.StatusKeyConstant;
 import cn.zhumouren.twitter.cloud.timeline.domain.StatusJson;
 import cn.zhumouren.twitter.cloud.timeline.domain.UserJson;
@@ -88,7 +89,7 @@ public class StatusServiceImpl implements IStatusService {
     }
 
     @Override
-    public StatusVO getStatusVO(Long statusId) throws TweetNotExistException {
+    public StatusVO getStatusVO(Long statusId) throws TweetNotExistException, UserNotExistException {
         StatusJson statusJson = getStatusJson(statusId);
         UserJson user = userService.getUser(statusJson.getUserId());
         List<String> parentUsernames = userService.listUsername(statusJson.getParentTweetUserIds());
@@ -104,6 +105,8 @@ public class StatusServiceImpl implements IStatusService {
                 statusVOList.add(getStatusVO(l));
             } catch (TweetNotExistException e) {
                 log.error(e.getMessage() + "id===" + l);
+            } catch (UserNotExistException e) {
+                log.error(e.getMessage());
             }
         }
         return statusVOList;

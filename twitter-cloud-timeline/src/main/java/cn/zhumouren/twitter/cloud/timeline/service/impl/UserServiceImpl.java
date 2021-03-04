@@ -65,7 +65,7 @@ public class UserServiceImpl implements IUserService {
      * @return
      */
     @Override
-    public String getUsername(Long uid) {
+    public String getUsername(Long uid) throws UserNotExistException {
         return getUser(uid).getUsername();
     }
 
@@ -79,7 +79,11 @@ public class UserServiceImpl implements IUserService {
     public List<String> listUsername(List<Long> uidList) {
         List<String> usernameList = new LinkedList<>();
         for (Long l : uidList){
-            usernameList.add(getUser(l).getUsername());
+            try {
+                usernameList.add(getUser(l).getUsername());
+            } catch (UserNotExistException e) {
+                log.error(e.getMessage());
+            }
         }
         return usernameList;
     }

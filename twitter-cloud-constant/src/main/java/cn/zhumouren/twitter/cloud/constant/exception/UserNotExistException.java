@@ -8,7 +8,7 @@ import cn.zhumouren.twitter.cloud.constant.result.ResultStatus;
  * @Date 2021/3/3 14:29
  * @Version 1.0
  **/
-public class UserNotExistException extends RuntimeException{
+public class UserNotExistException extends Exception{
 
     private final ResultStatus resultStatus;
 

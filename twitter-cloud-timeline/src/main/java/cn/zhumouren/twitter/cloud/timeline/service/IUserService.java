@@ -1,5 +1,6 @@
 package cn.zhumouren.twitter.cloud.timeline.service;
 
+import cn.zhumouren.twitter.cloud.constant.exception.UserNotExistException;
 import cn.zhumouren.twitter.cloud.timeline.domain.UserJson;
 
 import java.util.List;
@@ -23,7 +24,7 @@ public interface IUserService {
      * @param uid
      * @return
      */
-    UserJson getUser(Long uid);
+    UserJson getUser(Long uid) throws UserNotExistException;
 
     /**
      * 获取username
@@ -31,7 +32,7 @@ public interface IUserService {
      * @param uid
      * @return
      */
-    String getUsername(Long uid);
+    String getUsername(Long uid) throws UserNotExistException;
 
     /**
      * 获取list username

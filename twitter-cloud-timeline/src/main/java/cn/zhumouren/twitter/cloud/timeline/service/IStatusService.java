@@ -1,5 +1,7 @@
 package cn.zhumouren.twitter.cloud.timeline.service;
 
+import cn.zhumouren.twitter.cloud.constant.exception.TweetNotExistException;
+import cn.zhumouren.twitter.cloud.constant.exception.UserNotExistException;
 import cn.zhumouren.twitter.cloud.timeline.domain.StatusJson;
 import cn.zhumouren.twitter.cloud.timeline.vo.StatusVO;
 
@@ -35,8 +37,9 @@ public interface IStatusService {
      *
      * @param statusId
      * @return
+     * @throws TweetNotExistException
      */
-    StatusJson getStatusJson(Long statusId);
+    StatusJson getStatusJson(Long statusId) throws TweetNotExistException;
 
     /**
      * 获取 list status json
@@ -51,8 +54,9 @@ public interface IStatusService {
      *
      * @param statusId
      * @return
+     * @throws TweetNotExistException
      */
-    StatusVO getStatusVO(Long statusId);
+    StatusVO getStatusVO(Long statusId) throws TweetNotExistException, UserNotExistException;
 
     /**
      * 获取 list status vo

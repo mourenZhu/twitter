@@ -1,5 +1,6 @@
 package cn.zhumouren.twitter.cloud.tweet.controller.annotation;
 
+import cn.zhumouren.twitter.cloud.constant.exception.TweetDeletedException;
 import cn.zhumouren.twitter.cloud.constant.exception.TweetNotExistException;
 import cn.zhumouren.twitter.cloud.constant.result.JsonResult;
 import cn.zhumouren.twitter.cloud.constant.result.annotation.ResponseResultBody;
@@ -65,10 +66,13 @@ public class ResponseResultBodyAdvice implements ResponseBodyAdvice<Object> {
     public final ResponseEntity<JsonResult<?>> exceptionHandler(Exception ex, WebRequest request) {
         log.error("ExceptionHandler: {}", ex.getMessage());
         HttpHeaders headers = new HttpHeaders();
+
         if (ex instanceof TweetNotExistException) {
             return this.handleResultException((TweetNotExistException) ex, headers, request);
         }
-        // TODO: 2019/10/05 galaxy 这里可以自定义其他的异常拦截
+        if (ex instanceof TweetDeletedException){
+            return this.handleResultException((TweetDeletedException) ex, headers, request);
+        }
         return this.handleException(ex, headers, request);
     }
 
@@ -76,6 +80,20 @@ public class ResponseResultBodyAdvice implements ResponseBodyAdvice<Object> {
      * 对TweetNotExistException类返回返回结果的处理
      */
     protected ResponseEntity<JsonResult<?>> handleResultException(TweetNotExistException ex, HttpHeaders headers, WebRequest request) {
+        JsonResult<?> body = JsonResult.failure(ex.getResultStatus());
+        HttpStatus status = ex.getResultStatus().getHttpStatus();
+        return this.handleExceptionInternal(ex, body, headers, status, request);
+    }
+
+    /**
+     * 对TweetDeletedException类返回返回结果的处理
+     *
+     * @param ex
+     * @param headers
+     * @param request
+     * @return
+     */
+    protected ResponseEntity<JsonResult<?>> handleResultException(TweetDeletedException ex, HttpHeaders headers, WebRequest request) {
         JsonResult<?> body = JsonResult.failure(ex.getResultStatus());
         HttpStatus status = ex.getResultStatus().getHttpStatus();
         return this.handleExceptionInternal(ex, body, headers, status, request);

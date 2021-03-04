@@ -1,8 +1,8 @@
 package cn.zhumouren.twitter.cloud.timeline.service.client;
 
+import cn.zhumouren.twitter.cloud.constant.exception.TweetDeletedException;
 import cn.zhumouren.twitter.cloud.constant.exception.TweetNotExistException;
 import cn.zhumouren.twitter.cloud.timeline.domain.StatusJson;
-import cn.zhumouren.twitter.cloud.timeline.service.client.ITweetServerTweetClient;
 import cn.zhumouren.twitter.cloud.timeline.service.client.impl.TweetServerTweetClientImpl;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -31,10 +31,10 @@ public class TweetServiceTest {
     private TweetServerTweetClientImpl tweetService;
 
     @Test
-    public void getStatusJsonTest(){
+    public void getStatusJsonTest() {
         try {
             StatusJson status = tweetService.getStatus(1362317196449124354L);
-        } catch (TweetNotExistException e) {
+        } catch (TweetNotExistException | TweetDeletedException e) {
             e.printStackTrace();
         }
 //        System.out.println("status object =================" + status.toString());
@@ -50,7 +50,7 @@ public class TweetServiceTest {
         List data = jsonObject.getObject("data", List.class);
 
         List<StatusJson> statusJsonList = JSON.parseArray(JSON.toJSONString(data), StatusJson.class);
-        for (StatusJson statusJson : statusJsonList){
+        for (StatusJson statusJson : statusJsonList) {
             System.out.println(statusJson.toString());
         }
     }
@@ -58,7 +58,7 @@ public class TweetServiceTest {
     @Test
     public void listUserStatusIdTest() {
         List<Long> longList = tweetService.listUserStatusId(1000000000000000001L);
-        for (Long l : longList){
+        for (Long l : longList) {
             System.out.println(l);
         }
     }

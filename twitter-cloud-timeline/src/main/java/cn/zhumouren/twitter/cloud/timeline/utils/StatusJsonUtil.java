@@ -1,8 +1,9 @@
 package cn.zhumouren.twitter.cloud.timeline.utils;
 
+import cn.zhumouren.twitter.cloud.constant.exception.TweetDeletedException;
 import cn.zhumouren.twitter.cloud.constant.exception.TweetNotExistException;
-import cn.zhumouren.twitter.cloud.timeline.domain.StatusJson;
 import cn.zhumouren.twitter.cloud.constant.utils.list.ListUtils;
+import cn.zhumouren.twitter.cloud.timeline.domain.StatusJson;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
@@ -18,10 +19,14 @@ import java.util.List;
  **/
 public class StatusJsonUtil {
 
-    public static StatusJson getStatus(JSONObject jsonObject) throws TweetNotExistException {
+    public static StatusJson getStatus(JSONObject jsonObject) throws TweetNotExistException, TweetDeletedException {
         StatusJson statusJson = jsonObject.getObject("data", StatusJson.class);
-        if (statusJson == null){
-            throw new TweetNotExistException();
+        Integer code = jsonObject.getInteger("code");
+        switch (code) {
+            case 851:
+                throw new TweetNotExistException();
+            case 852:
+                throw new TweetDeletedException();
         }
         return statusJson;
     }

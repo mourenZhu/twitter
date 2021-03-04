@@ -1,5 +1,6 @@
 package cn.zhumouren.twitter.cloud.timeline.service.impl;
 
+import cn.zhumouren.twitter.cloud.constant.exception.TweetDeletedException;
 import cn.zhumouren.twitter.cloud.constant.exception.TweetNotExistException;
 import cn.zhumouren.twitter.cloud.constant.exception.UserNotExistException;
 import cn.zhumouren.twitter.cloud.timeline.constant.redis.StatusKeyConstant;
@@ -66,7 +67,7 @@ public class StatusServiceImpl implements IStatusService {
     }
 
     @Override
-    public StatusJson getStatusJson(Long statusId) throws TweetNotExistException {
+    public StatusJson getStatusJson(Long statusId) throws TweetNotExistException, TweetDeletedException {
         if (!redisUtil.hasKey(StatusKeyConstant.getStatusKey(statusId.toString()))) {
             pushStatus(tweetClient.getStatus(statusId));
         }
@@ -75,13 +76,19 @@ public class StatusServiceImpl implements IStatusService {
         return statusJson;
     }
 
+    /**
+     * 推文不存在或推文已删除的不会出现在list中
+     *
+     * @param statusIdList
+     * @return
+     */
     @Override
     public List<StatusJson> listStatusJson(List<Long> statusIdList) {
         List<StatusJson> statusJsonList = new LinkedList();
         for (Long l : statusIdList) {
             try {
                 statusJsonList.add(getStatusJson(l));
-            } catch (TweetNotExistException e) {
+            } catch (TweetNotExistException | TweetDeletedException e) {
                 log.error(e.getMessage() + "id===" + l);
             }
         }
@@ -89,7 +96,7 @@ public class StatusServiceImpl implements IStatusService {
     }
 
     @Override
-    public StatusVO getStatusVO(Long statusId) throws TweetNotExistException, UserNotExistException {
+    public StatusVO getStatusVO(Long statusId) throws TweetNotExistException, UserNotExistException, TweetDeletedException {
         StatusJson statusJson = getStatusJson(statusId);
         UserJson user = userService.getUser(statusJson.getUserId());
         List<String> parentUsernames = userService.listUsername(statusJson.getParentTweetUserIds());
@@ -97,6 +104,12 @@ public class StatusServiceImpl implements IStatusService {
         return statusVO;
     }
 
+    /**
+     * 推文不存在或推文已删除的不会出现在list中
+     *
+     * @param statusIdList
+     * @return
+     */
     @Override
     public List<StatusVO> listStatusVO(List<Long> statusIdList) {
         List<StatusVO> statusVOList = new LinkedList<>();
@@ -106,6 +119,8 @@ public class StatusServiceImpl implements IStatusService {
             } catch (TweetNotExistException e) {
                 log.error(e.getMessage() + "id===" + l);
             } catch (UserNotExistException e) {
+                log.error(e.getMessage());
+            } catch (TweetDeletedException e) {
                 log.error(e.getMessage());
             }
         }

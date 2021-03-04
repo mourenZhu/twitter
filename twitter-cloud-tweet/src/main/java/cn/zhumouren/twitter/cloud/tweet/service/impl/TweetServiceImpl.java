@@ -111,6 +111,12 @@ public class TweetServiceImpl extends ServiceImpl<TweetMapper, Tweet> implements
         return tweetMapper.getUserTweetPage(page, userId);
     }
 
+    /**
+     * 用户删除的推文不会出现在list中
+     *
+     * @param userId
+     * @return
+     */
     @Override
     public List<String> listUserStatusId(Long userId) {
         return tweetMapper.listUserStatusId(userId);
@@ -125,7 +131,7 @@ public class TweetServiceImpl extends ServiceImpl<TweetMapper, Tweet> implements
     public StatusDTO getStatus(Long statusId) throws TweetNotExistException, TweetDeletedException {
         if (tweetMapper.isExistTweet(statusId)) {
             StatusDTO status = tweetMapper.getStatus(statusId);
-            if (status.getDeleted()){
+            if (status.getDeleted()) {
                 throw new TweetDeletedException();
             }
             return status;

@@ -81,7 +81,7 @@ public interface TweetMapper extends BaseMapper<Tweet> {
     IPage<Tweet> getUserTweetPage(Page<Tweet> page, @Param("userId") Long userId);
 
     /**
-     * 获得用户发布的推文id
+     * 获得用户发布的推文id,用户删除过的推文不会出现在list中
      *
      * @param userId
      * @return

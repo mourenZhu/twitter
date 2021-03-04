@@ -1,6 +1,8 @@
 package cn.zhumouren.twitter.cloud.tweet.entity;
 
+import cn.zhumouren.twitter.cloud.tweet.handler.mybatis.ListTypeHandler;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
@@ -20,6 +22,7 @@ import java.util.List;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
+@TableName(autoResultMap = true)
 public class Tweet implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -44,6 +47,7 @@ public class Tweet implements Serializable {
     /**
      * 图片绝对路径
      */
+    @TableField(typeHandler = ListTypeHandler.class)
     private List<String> pics;
 
     /**

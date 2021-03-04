@@ -18,89 +18,82 @@ import java.util.List;
 @Data
 public class StatusVO {
 
-    public StatusVO(){}
-
-    public StatusVO(StatusJson statusJson, UserJson userJson){
-        this.parentTweetIds = statusJson.getParentTweetIds();
-
-        this.parentUsernames = null;
-
-        this.id = statusJson.getId();
-        this.username = userJson.getUsername();
-        this.nickname = userJson.getNickname();
-        this.content = statusJson.getContent();
-
-    }
-
     /**
      * 父推文id
      */
     @JsonSerialize(using = ToListStringSerializer.class)
     private List<Long> parentTweetIds;
-
     /**
      * 推文回复的用户username
      */
     private List<String> parentUsernames;
-
     /**
      * 推文id
      */
     private Long id;
-
     /**
      * username
      */
     private String username;
-
     /**
      * nickname
      */
     private String nickname;
-
     /**
      * 推文内容
      */
     private String content;
-
     /**
      * 图片绝对路径
      */
     private List<String> pics;
-
     /**
      * 推文点赞数
      */
     private Integer numLikes;
-
     /**
      * 推文回复数
      */
     private Integer numReplies;
-
     /**
      * 推文引用数
      */
     private Integer numQuote;
-
     /**
      * 推文转发数
      */
     private Integer numForward;
-
     /**
      * 推文创建时间
      */
     private LocalDateTime created;
-
     /**
      * 推文更新时间
      */
     private LocalDateTime updated;
-
     /**
      * 是否删除，0是没有删除
      */
     private Boolean deleted;
+
+    public StatusVO() {
+    }
+
+    public StatusVO(StatusJson statusJson, UserJson userJson, List<String> parentUsernames) {
+        this.parentTweetIds = statusJson.getParentTweetIds();
+        this.parentUsernames = parentUsernames;
+        this.id = statusJson.getId();
+        this.username = userJson.getUsername();
+        this.nickname = userJson.getNickname();
+        this.content = statusJson.getContent();
+        this.pics = statusJson.getPics();
+        this.numLikes = statusJson.getNumLikes();
+        this.numReplies = statusJson.getNumReplies();
+        this.numQuote = statusJson.getNumQuote();
+        this.numForward = statusJson.getNumForward();
+        this.created = statusJson.getCreated();
+        this.updated = statusJson.getUpdated();
+        this.deleted = statusJson.getDeleted();
+    }
 
 }

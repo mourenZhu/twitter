@@ -80,7 +80,7 @@ public class StatusServiceImpl implements IStatusService {
         for (Long l : statusIdList) {
             try {
                 statusJsonList.add(getStatusJson(l));
-            } catch (TweetNotExistException e){
+            } catch (TweetNotExistException e) {
                 log.error(e.getMessage() + "id===" + l);
             }
         }
@@ -88,17 +88,25 @@ public class StatusServiceImpl implements IStatusService {
     }
 
     @Override
-    public StatusVO getStatusVO(Long statusId) throws TweetNotExistException{
+    public StatusVO getStatusVO(Long statusId) throws TweetNotExistException {
         StatusJson statusJson = getStatusJson(statusId);
-        UserJson user = userService.getUser(statusJson.getId());
-        StatusVO statusVO = new StatusVO();
-        return null;
+        UserJson user = userService.getUser(statusJson.getUserId());
+        List<String> parentUsernames = userService.listUsername(statusJson.getParentTweetUserIds());
+        StatusVO statusVO = new StatusVO(statusJson, user, parentUsernames);
+        return statusVO;
     }
 
     @Override
-    public List<StatusJson> listStatusVO(List<Long> statusIdList) {
-        return null;
+    public List<StatusVO> listStatusVO(List<Long> statusIdList) {
+        List<StatusVO> statusVOList = new LinkedList<>();
+        for (Long l : statusIdList) {
+            try {
+                statusVOList.add(getStatusVO(l));
+            } catch (TweetNotExistException e) {
+                log.error(e.getMessage() + "id===" + l);
+            }
+        }
+        return statusVOList;
     }
-
 
 }

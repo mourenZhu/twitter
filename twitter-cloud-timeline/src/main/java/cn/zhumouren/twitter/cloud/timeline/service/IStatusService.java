@@ -60,6 +60,6 @@ public interface IStatusService {
      * @param statusIdList
      * @return
      */
-    List<StatusJson> listStatusVO(List<Long> statusIdList);
+    List<StatusVO> listStatusVO(List<Long> statusIdList);
 
 }

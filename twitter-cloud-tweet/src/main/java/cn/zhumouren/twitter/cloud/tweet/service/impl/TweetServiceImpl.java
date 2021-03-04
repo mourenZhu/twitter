@@ -121,7 +121,7 @@ public class TweetServiceImpl extends ServiceImpl<TweetMapper, Tweet> implements
     }
 
     @Override
-    public StatusDTO getStatus(Long statusId)throws TweetNotExistException {
+    public StatusDTO getStatus(Long statusId) throws TweetNotExistException {
         if (tweetMapper.isExistTweet(statusId)) {
             return tweetMapper.getStatus(statusId);
         } else {

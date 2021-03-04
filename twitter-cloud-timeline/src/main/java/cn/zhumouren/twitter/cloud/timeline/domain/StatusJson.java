@@ -49,7 +49,7 @@ public class StatusJson {
     /**
      * 图片绝对路径
      */
-    private String pics;
+    private List<String> pics;
 
     /**
      * 推文点赞数
@@ -84,5 +84,5 @@ public class StatusJson {
     /**
      * 是否删除，0是没有删除
      */
-    private boolean deleted;
+    private Boolean deleted;
 }

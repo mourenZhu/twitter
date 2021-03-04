@@ -1,6 +1,7 @@
 package cn.zhumouren.twitter.cloud.timeline.service;
 
 import cn.zhumouren.twitter.cloud.timeline.domain.StatusJson;
+import cn.zhumouren.twitter.cloud.timeline.vo.StatusVO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +47,20 @@ public class StatusServiceTest {
         List<StatusJson> statusJsonList = statusService.listStatusJson(list);
         for (StatusJson statusJson : statusJsonList) {
             System.out.println(statusJson.toString());
+        }
+    }
+
+    @Test
+    public void listStatusVOTest() {
+        List<Long> list = new LinkedList<>();
+        list.add(1361936840277454849L);
+        list.add(1361937053947883522L);
+        list.add(1361936996511084545L);
+        list.add(1364474431245770753L);
+        list.add(1362317196449124354L);
+        List<StatusVO> statusVOList = statusService.listStatusVO(list);
+        for (StatusVO statusVO : statusVOList){
+            System.out.println(statusVO.toString());
         }
     }
 }

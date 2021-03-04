@@ -16,7 +16,7 @@ public class UserJson {
     /**
      * 用户唯一id
      */
-    private Long uid;
+    private Long id;
 
     /**
      * 唯一用户名

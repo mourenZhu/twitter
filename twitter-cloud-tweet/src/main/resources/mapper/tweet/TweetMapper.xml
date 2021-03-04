@@ -6,7 +6,8 @@
         <id column="id" property="id"></id>
         <result column="user_id" property="userId"></result>
         <result column="content" property="content"></result>
-        <result column="pics" property="pics" jdbcType="json"></result>
+        <result column="pics" property="pics"
+                typeHandler="cn.zhumouren.twitter.cloud.tweet.handler.mybatis.ListTypeHandler"></result>
         <result column="num_likes" property="numLikes"></result>
         <result column="num_replies" property="numReplies"></result>
         <result column="num_quote" property="numQuote"></result>
@@ -20,7 +21,8 @@
         <id column="id" property="id"></id>
         <result column="user_id" property="userId"></result>
         <result column="content" property="content"></result>
-        <result column="pics" property="pics" jdbcType="json"></result>
+        <result column="pics" property="pics"
+                typeHandler="cn.zhumouren.twitter.cloud.tweet.handler.mybatis.ListTypeHandler"></result>
         <result column="num_likes" property="numLikes"></result>
         <result column="num_replies" property="numReplies"></result>
         <result column="num_quote" property="numQuote"></result>

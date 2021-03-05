@@ -43,6 +43,11 @@ public class StatusJsonUtil {
         return statusIdList;
     }
 
+    public static List<Long> listStatusChildId(JSONObject jsonObject) {
+        List<String> data = jsonObject.getObject("data", List.class);
+        return ListUtils.toLongList(data);
+    }
+
     public static List<String> listStatusField() {
         List<String> list = new LinkedList<>();
         Field[] declaredFields = StatusJson.class.getDeclaredFields();

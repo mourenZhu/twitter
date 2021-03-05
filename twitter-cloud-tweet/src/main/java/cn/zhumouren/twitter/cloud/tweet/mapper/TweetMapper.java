@@ -112,4 +112,12 @@ public interface TweetMapper extends BaseMapper<Tweet> {
      */
     List<StatusDTO> listStatus(@Param("statusIdList") List<Long> statusIdList);
 
+    /**
+     * 获取当前推文的子推文id
+     *
+     * @param statusId
+     * @return
+     */
+    List<Long> listStatusChildId(Long statusId);
+
 }

@@ -27,4 +27,9 @@ public class JwtUtils {
         JSONObject jsonObject = JSONObject.parseObject(jwt.getClaims());
         return jsonObject.getInteger(param);
     }
+
+    public static Long getLong(Jwt jwt, String param){
+        JSONObject jsonObject = JSONObject.parseObject(jwt.getClaims());
+        return jsonObject.getLong(param);
+    }
 }

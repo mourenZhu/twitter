@@ -144,4 +144,9 @@ public class TweetServiceImpl extends ServiceImpl<TweetMapper, Tweet> implements
     public List<StatusDTO> listStatus(List<Long> statusIdList) {
         return tweetMapper.listStatus(statusIdList);
     }
+
+    @Override
+    public List<Long> listStatusChildId(Long statusId) {
+        return tweetMapper.listStatusChildId(statusId);
+    }
 }

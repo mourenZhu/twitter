@@ -31,7 +31,8 @@
     6. 查看某个用户发布的status `已完成` `已测试`
     7. 获取单个status `已完成` `已测试`
     8. 获取 list status `已完成` `已测试`
-    8. 获取 list user status id `已完成` `已测试`
+    9. 获取 list user status id `已完成` `已测试`
+   10. 获取 list child status  id `已完成` `已测试`
 2. 点赞
     1. 点赞推文（推文点赞数+1）`未开发`
     2. 查看该推文有哪些用户点赞`未开发`
@@ -66,7 +67,7 @@
     5. 查询 status vo `已完成` `已测试`
     6. 查询 list status vo `已完成` `已测试`
     7. 查询 status tree `未开发`
-    8. 查询 status vo tree `开发中`
+    8. 查询 status vo tree `已完成` `已测试`
 
 4. 每个用户的具体对象
     1. 存入user `已完成` `已测试`

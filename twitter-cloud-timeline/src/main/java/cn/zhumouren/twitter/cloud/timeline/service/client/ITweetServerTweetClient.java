@@ -38,4 +38,13 @@ public interface ITweetServerTweetClient {
     @GetMapping("/{userId}/list/status")
     JSONObject listUserStatus(@PathVariable("userId") String uid);
 
+    /**
+     * 获取当前推文的子推文id
+     *
+     * @param statusId
+     * @return
+     */
+    @GetMapping("/list/{statusId}/childId")
+    JSONObject listStatusChildId(@PathVariable("statusId") String statusId);
+
 }

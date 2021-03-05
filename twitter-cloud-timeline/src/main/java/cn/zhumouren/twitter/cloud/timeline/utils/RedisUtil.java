@@ -478,15 +478,58 @@ public class RedisUtil {
     }
 
     /**
+     * 向左批量插入list
+     *
+     * @param key
+     * @param values
+     * @param time
+     * @return
+     */
+    public boolean lLeftPushAll(String key, List values, long time) {
+        try {
+            redisTemplate.opsForList().leftPushAll(key, values.toArray());
+            if (time > 0) {
+                expire(key, time);
+            }
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
+    /**
      * 向右批量插入list
      *
      * @param key
      * @param values
      * @return
      */
-    public boolean lRightPushAll(String key, List values){
+    public boolean lRightPushAll(String key, List values) {
         try {
             redisTemplate.opsForList().rightPushAll(key, values.toArray());
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    /**
+     * 向右批量插入list
+     *
+     * @param key
+     * @param values
+     * @param time
+     * @return
+     */
+    public boolean lRightPushAll(String key, List values, long time) {
+        try {
+            redisTemplate.opsForList().rightPushAll(key, values.toArray());
+            if (time > 0) {
+                expire(key, time);
+            }
             return true;
         } catch (Exception e) {
             e.printStackTrace();

@@ -165,4 +165,18 @@ public class TweetController {
     }
 
 
+    /**
+     * 获取当前推文的子推文id
+     *
+     * @param statusId
+     * @return
+     */
+    @GetMapping("/list/{statusId}/childId")
+    public List<String> listStatusChildId(@PathVariable("statusId") String statusId) {
+        Long sid = Long.valueOf(statusId);
+        List<Long> longList = tweetService.listStatusChildId(sid);
+        return ListUtils.toStringList(longList);
+    }
+
+
 }

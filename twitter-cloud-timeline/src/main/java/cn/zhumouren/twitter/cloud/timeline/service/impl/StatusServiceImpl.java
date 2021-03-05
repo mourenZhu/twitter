@@ -3,6 +3,7 @@ package cn.zhumouren.twitter.cloud.timeline.service.impl;
 import cn.zhumouren.twitter.cloud.constant.exception.TweetDeletedException;
 import cn.zhumouren.twitter.cloud.constant.exception.TweetNotExistException;
 import cn.zhumouren.twitter.cloud.constant.exception.UserNotExistException;
+import cn.zhumouren.twitter.cloud.timeline.constant.redis.ExpireConstant;
 import cn.zhumouren.twitter.cloud.timeline.constant.redis.StatusKeyConstant;
 import cn.zhumouren.twitter.cloud.timeline.domain.StatusJson;
 import cn.zhumouren.twitter.cloud.timeline.domain.UserJson;
@@ -11,6 +12,8 @@ import cn.zhumouren.twitter.cloud.timeline.service.IUserService;
 import cn.zhumouren.twitter.cloud.timeline.service.client.impl.TweetServerTweetClientImpl;
 import cn.zhumouren.twitter.cloud.timeline.utils.RedisUtil;
 import cn.zhumouren.twitter.cloud.timeline.utils.StatusJsonUtil;
+import cn.zhumouren.twitter.cloud.timeline.vo.ErrorStatusVO;
+import cn.zhumouren.twitter.cloud.timeline.vo.StatusLinkVO;
 import cn.zhumouren.twitter.cloud.timeline.vo.StatusVO;
 import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
@@ -40,21 +43,60 @@ public class StatusServiceImpl implements IStatusService {
     @Autowired
     private IUserService userService;
 
+    @Autowired
+    private ExpireConstant expireConstant;
+
     @Override
     public boolean pushStatus(StatusJson statusJson) {
         if (!redisUtil.hasKey(statusJson.getId().toString())) {
             List<String> itemList = StatusJsonUtil.listStatusField();
             for (String s : itemList) {
                 try {
-                    redisUtil.hset(StatusKeyConstant.getStatusKey(statusJson.getId().toString()), s, StatusJsonUtil.getStatusFieldValue(s, statusJson));
+                    String key = StatusKeyConstant.getStatusKey(statusJson.getId().toString());
+                    Object value = StatusJsonUtil.getStatusFieldValue(s, statusJson);
+                    redisUtil.hset(key, s, value, expireConstant.getStatusTime());
                 } catch (NoSuchFieldException e) {
                     log.error(e.getMessage());
                 } catch (IllegalAccessException e) {
                     log.error(e.getMessage());
                 }
             }
+            pushStatusChildId(statusJson.getId());
         }
         return true;
+    }
+
+    /**
+     * 提交推文子推文id
+     *
+     * @param statusId
+     * @return
+     */
+    private boolean pushStatusChildId(Long statusId) {
+        String key = StatusKeyConstant.getStatusChildIdKey(statusId.toString());
+        List<Long> values = tweetClient.listStatusChildId(statusId);
+        if (values.size() > 0){
+            return redisUtil.lLeftPushAll(key, values,expireConstant.getStatusTime());
+        }
+        return false;
+    }
+
+    /**
+     * 获取推文子推文id
+     * @param statusId
+     * @return
+     */
+    private List<Long> listStatusChildId(Long statusId) {
+        List<Long> statusChildIdList = new LinkedList<>();
+        String key = StatusKeyConstant.getStatusChildIdKey(statusId.toString());
+        if (!redisUtil.hasKey(key)){
+            pushStatusChildId(statusId);
+        }
+        List<Object> objects = redisUtil.lGet(key, 0, redisUtil.lGetListSize(key));
+        for (Object o : objects){
+            statusChildIdList.add((Long) o);
+        }
+        return statusChildIdList;
     }
 
     @Override
@@ -73,6 +115,9 @@ public class StatusServiceImpl implements IStatusService {
         }
         Map<Object, Object> statusMap = redisUtil.hmget(StatusKeyConstant.getStatusKey(statusId.toString()));
         StatusJson statusJson = JSONObject.parseObject(JSONObject.toJSONString(statusMap), StatusJson.class);
+        if (statusJson.getDeleted()) {
+            throw new TweetDeletedException();
+        }
         return statusJson;
     }
 
@@ -125,6 +170,37 @@ public class StatusServiceImpl implements IStatusService {
             }
         }
         return statusVOList;
+    }
+
+    @Override
+    public StatusLinkVO getStatusLinkVO(Long statusId) throws TweetNotExistException, UserNotExistException, TweetDeletedException {
+
+        StatusVO currentStatusVO = getStatusVO(statusId);
+        List<Long> parentTweetIds = currentStatusVO.getParentTweetIds();
+        List<ErrorStatusVO> parentStatusVOList = listErrorStatusVO(parentTweetIds);
+        List<StatusVO> childStatusVOList = listStatusVO(listStatusChildId(statusId));
+        StatusLinkVO statusLinkVO = new StatusLinkVO(parentStatusVOList, currentStatusVO, childStatusVOList);
+        return statusLinkVO;
+    }
+
+    private List<ErrorStatusVO> listErrorStatusVO(List<Long> list) {
+        List<ErrorStatusVO> errorStatusVOList = new LinkedList<>();
+        for (Long l : list) {
+            try {
+                StatusVO statusVO = getStatusVO(l);
+                errorStatusVOList.add(new ErrorStatusVO(statusVO));
+            } catch (TweetNotExistException e) {
+                log.error(e.getMessage());
+                errorStatusVOList.add(new ErrorStatusVO(l, e.getResultStatus().getCode(), e.getMessage()));
+            } catch (UserNotExistException e) {
+                log.error(e.getMessage());
+                errorStatusVOList.add(new ErrorStatusVO(l, e.getResultStatus().getCode(), e.getMessage()));
+            } catch (TweetDeletedException e) {
+                log.error(e.getMessage());
+                errorStatusVOList.add(new ErrorStatusVO(l, e.getResultStatus().getCode(), e.getMessage()));
+            }
+        }
+        return errorStatusVOList;
     }
 
 }

@@ -50,7 +50,7 @@ public class AuthoritiesUtils {
     public static boolean isExp(String token) {
         Jwt jwt = JwtHelper.decode(token);
         Long nowTime = System.currentTimeMillis() / 1000;
-        Integer jwtTime = JwtUtils.getInteger(jwt, "exp");
+        Long jwtTime = JwtUtils.getLong(jwt, "exp");
         return nowTime < jwtTime;
     }
 }

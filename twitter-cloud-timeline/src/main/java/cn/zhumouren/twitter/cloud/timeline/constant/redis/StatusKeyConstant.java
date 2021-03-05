@@ -10,7 +10,7 @@ public enum StatusKeyConstant {
 
     STATUS_KEY("status:id:"),
 
-    STATUS_TREE_ID_KEY("status:tree:");
+    STATUS_CHILD_ID_KEY(":child");
 
     private final String key;
 
@@ -28,8 +28,8 @@ public enum StatusKeyConstant {
         return STATUS_KEY.key + statusId;
     }
 
-    public static String getStatusTreeIdKey(String statusId) {
-        return STATUS_TREE_ID_KEY.key + statusId;
+    public static String getStatusChildIdKey(String statusId) {
+        return getStatusKey(statusId) + STATUS_CHILD_ID_KEY.key;
     }
 
 }

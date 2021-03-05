@@ -79,6 +79,23 @@ public class StatusVO {
     public StatusVO() {
     }
 
+    public StatusVO(StatusVO statusVO){
+        this.parentTweetIds = statusVO.getParentTweetIds();
+        this.parentUsernames = statusVO.parentUsernames;
+        this.id = statusVO.getId();
+        this.username = statusVO.getUsername();
+        this.nickname = statusVO.getNickname();
+        this.content = statusVO.getContent();
+        this.pics = statusVO.getPics();
+        this.numLikes = statusVO.getNumLikes();
+        this.numReplies = statusVO.getNumReplies();
+        this.numQuote = statusVO.getNumQuote();
+        this.numForward = statusVO.getNumForward();
+        this.created = statusVO.getCreated();
+        this.updated = statusVO.getUpdated();
+        this.deleted = statusVO.getDeleted();
+    }
+
     public StatusVO(StatusJson statusJson, UserJson userJson, List<String> parentUsernames) {
         this.parentTweetIds = statusJson.getParentTweetIds();
         this.parentUsernames = parentUsernames;

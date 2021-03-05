@@ -1,7 +1,10 @@
 package cn.zhumouren.twitter.cloud.timeline.service;
 
+import cn.zhumouren.twitter.cloud.constant.exception.TweetDeletedException;
 import cn.zhumouren.twitter.cloud.constant.exception.TweetNotExistException;
+import cn.zhumouren.twitter.cloud.constant.exception.UserNotExistException;
 import cn.zhumouren.twitter.cloud.timeline.domain.StatusJson;
+import cn.zhumouren.twitter.cloud.timeline.vo.StatusLinkVO;
 import cn.zhumouren.twitter.cloud.timeline.vo.StatusVO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,13 +29,13 @@ public class StatusServiceTest {
     private IStatusService statusService;
 
     @Test
-    public void puStatusTest() throws TweetNotExistException {
+    public void puStatusTest() throws TweetNotExistException, TweetDeletedException {
         StatusJson statusJson = statusService.getStatusJson(1364450317210509314L);
         statusService.pushStatus(statusJson);
     }
 
     @Test
-    public void getStatusTest() throws TweetNotExistException {
+    public void getStatusTest() throws TweetNotExistException, TweetDeletedException {
         StatusJson statusJson = statusService.getStatusJson(1362317196449124354L);
         System.out.println(statusJson.toString());
     }
@@ -63,5 +66,11 @@ public class StatusServiceTest {
         for (StatusVO statusVO : statusVOList){
             System.out.println(statusVO.toString());
         }
+    }
+
+    @Test
+    public void getStatusLinkVOTest() throws TweetNotExistException, UserNotExistException, TweetDeletedException {
+        StatusLinkVO statusLinkVO = statusService.getStatusLinkVO(1361936853988634625L);
+        System.out.println(statusLinkVO.toString());
     }
 }

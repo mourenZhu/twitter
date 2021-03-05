@@ -220,4 +220,12 @@
         AND t.is_deleted = 0
         ORDER BY pct.`level` DESC
     </select>
+
+    <select id="listStatusChildId" resultType="Long">
+        SELECT child_id
+        FROM parent_child_tweet
+        WHERE parent_id = #{statusId}
+          AND level = 1
+          AND is_deleted = 0
+    </select>
 </mapper>

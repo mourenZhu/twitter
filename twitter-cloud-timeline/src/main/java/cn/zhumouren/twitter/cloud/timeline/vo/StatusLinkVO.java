@@ -13,10 +13,15 @@ import java.util.List;
 @Data
 public class StatusLinkVO {
 
-    private List<StatusVO> parentStatusVOList;
+    private List<ErrorStatusVO> parentStatusVOList;
 
     private StatusVO currentStatusVO;
 
     private List<StatusVO> childStatusVOList;
 
+    public StatusLinkVO(List<ErrorStatusVO> parentStatusVOList, StatusVO currentStatusVO, List<StatusVO> childStatusVOList) {
+        this.parentStatusVOList = parentStatusVOList;
+        this.currentStatusVO = currentStatusVO;
+        this.childStatusVOList = childStatusVOList;
+    }
 }

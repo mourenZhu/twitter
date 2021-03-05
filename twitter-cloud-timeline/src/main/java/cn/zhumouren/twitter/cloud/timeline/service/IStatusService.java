@@ -4,6 +4,7 @@ import cn.zhumouren.twitter.cloud.constant.exception.TweetDeletedException;
 import cn.zhumouren.twitter.cloud.constant.exception.TweetNotExistException;
 import cn.zhumouren.twitter.cloud.constant.exception.UserNotExistException;
 import cn.zhumouren.twitter.cloud.timeline.domain.StatusJson;
+import cn.zhumouren.twitter.cloud.timeline.vo.StatusLinkVO;
 import cn.zhumouren.twitter.cloud.timeline.vo.StatusVO;
 
 import java.util.List;
@@ -69,5 +70,13 @@ public interface IStatusService {
      * @return
      */
     List<StatusVO> listStatusVO(List<Long> statusIdList);
+
+    /**
+     * 获取详细的推文链
+     *
+     * @param statusId
+     * @return
+     */
+    StatusLinkVO getStatusLinkVO(Long statusId) throws TweetNotExistException, UserNotExistException, TweetDeletedException;
 
 }

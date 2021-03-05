@@ -124,4 +124,12 @@ public interface ITweetService extends IService<Tweet> {
      */
     List<StatusDTO> listStatus(List<Long> statusIdList);
 
+    /**
+     * 获取推文子推文id
+     *
+     * @param statusId
+     * @return
+     */
+    List<Long> listStatusChildId(Long statusId);
+
 }

@@ -74,7 +74,7 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
         response.setStatusCode(httpStatus);
 
 
-        if (httpStatus.value() == 403) {
+        if (httpStatus.value() == HttpStatus.FORBIDDEN.value()) {
             response.getHeaders().set("Location", "/error?state=403");
         }
 

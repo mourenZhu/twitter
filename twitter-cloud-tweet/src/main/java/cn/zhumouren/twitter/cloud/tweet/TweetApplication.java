@@ -5,6 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 /**
  * @Description todo
@@ -17,6 +18,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @EnableDiscoveryClient
 @EnableFeignClients
 @MapperScan("cn.zhumouren.twitter.cloud.tweet.mapper")
+@EnableAspectJAutoProxy(proxyTargetClass = true)
 public class TweetApplication {
     public static void main(String[] args) {
         SpringApplication.run(TweetApplication.class, args);

@@ -19,9 +19,17 @@ public enum ResultStatus {
 
     USER_NOT_EXIST(HttpStatus.OK, 751, "user is not exist!"),
 
+    TWEET_NOT_EXIST_OR_DELETED(HttpStatus.OK, 850, "tweet is not exist or deleted！"),
+
     TWEET_NOT_EXIST(HttpStatus.OK, 851, "tweet is not exist！"),
 
-    TWEET_DELETED(HttpStatus.OK, 852, "tweet is deleted!");
+    TWEET_DELETED(HttpStatus.OK, 852, "tweet is deleted!"),
+
+    LIKE_NOT_EXIST(HttpStatus.OK, 861, "tweet like is not exist!"),
+
+    QUOTE_NOT_EXIST(HttpStatus.OK, 862, "tweet quote is not exist!"),
+
+    FORWARD_NOT_EXIST(HttpStatus.OK, 863, "tweet forward is not exist!");
 
     /**
      * 返回的HTTP状态码,  符合http请求

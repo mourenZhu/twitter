@@ -3,7 +3,7 @@ package cn.zhumouren.twitter.cloud.constant.exception;
 import cn.zhumouren.twitter.cloud.constant.result.ResultStatus;
 
 /**
- * @Description todo
+ * @Description 推文已删除
  * @Author mourenZhu
  * @Date 2021/3/4 21:40
  * @Version 1.0

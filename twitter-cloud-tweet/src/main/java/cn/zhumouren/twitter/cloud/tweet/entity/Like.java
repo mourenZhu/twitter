@@ -43,6 +43,11 @@ public class Like implements Serializable {
     private LocalDateTime created;
 
     /**
+     * 点赞更新时间
+     */
+    private LocalDateTime updated;
+
+    /**
      * 是否删除，0是没有删除
      */
     @TableField(value = "is_deleted")

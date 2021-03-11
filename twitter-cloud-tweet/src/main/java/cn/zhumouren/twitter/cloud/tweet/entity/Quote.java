@@ -2,6 +2,7 @@ package cn.zhumouren.twitter.cloud.tweet.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
+
 import java.time.LocalDateTime;
 import java.io.Serializable;
 
@@ -47,6 +48,11 @@ public class Quote implements Serializable {
      * 引用创建时间
      */
     private LocalDateTime created;
+
+    /**
+     * 引用更新时间
+     */
+    private LocalDateTime updated;
 
     /**
      * 是否删除，0是没有删除

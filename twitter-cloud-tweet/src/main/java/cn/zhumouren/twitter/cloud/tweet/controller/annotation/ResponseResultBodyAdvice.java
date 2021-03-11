@@ -1,7 +1,9 @@
 package cn.zhumouren.twitter.cloud.tweet.controller.annotation;
 
+import cn.zhumouren.twitter.cloud.constant.exception.ForwardNotExistException;
 import cn.zhumouren.twitter.cloud.constant.exception.TweetDeletedException;
 import cn.zhumouren.twitter.cloud.constant.exception.TweetNotExistException;
+import cn.zhumouren.twitter.cloud.constant.exception.TweetNotExistOrDeletedException;
 import cn.zhumouren.twitter.cloud.constant.result.JsonResult;
 import cn.zhumouren.twitter.cloud.constant.result.annotation.ResponseResultBody;
 import lombok.extern.slf4j.Slf4j;
@@ -67,17 +69,45 @@ public class ResponseResultBodyAdvice implements ResponseBodyAdvice<Object> {
         log.error("ExceptionHandler: {}", ex.getMessage());
         HttpHeaders headers = new HttpHeaders();
 
+        if (ex instanceof TweetNotExistOrDeletedException) {
+            return this.handleResultException((TweetNotExistOrDeletedException) ex, headers, request);
+        }
+
         if (ex instanceof TweetNotExistException) {
             return this.handleResultException((TweetNotExistException) ex, headers, request);
         }
-        if (ex instanceof TweetDeletedException){
+
+        if (ex instanceof TweetDeletedException) {
             return this.handleResultException((TweetDeletedException) ex, headers, request);
+        }
+
+        if (ex instanceof ForwardNotExistException) {
+            return this.handleResultException((ForwardNotExistException) ex, headers, request);
         }
         return this.handleException(ex, headers, request);
     }
 
     /**
+     * 对TweetNotExistOrDeletedException类返回返回结果的处理
+     *
+     * @param ex
+     * @param headers
+     * @param request
+     * @return
+     */
+    protected ResponseEntity<JsonResult<?>> handleResultException(TweetNotExistOrDeletedException ex, HttpHeaders headers, WebRequest request) {
+        JsonResult<?> body = JsonResult.failure(ex.getResultStatus());
+        HttpStatus status = ex.getResultStatus().getHttpStatus();
+        return this.handleExceptionInternal(ex, body, headers, status, request);
+    }
+
+    /**
      * 对TweetNotExistException类返回返回结果的处理
+     *
+     * @param ex
+     * @param headers
+     * @param request
+     * @return
      */
     protected ResponseEntity<JsonResult<?>> handleResultException(TweetNotExistException ex, HttpHeaders headers, WebRequest request) {
         JsonResult<?> body = JsonResult.failure(ex.getResultStatus());
@@ -94,6 +124,20 @@ public class ResponseResultBodyAdvice implements ResponseBodyAdvice<Object> {
      * @return
      */
     protected ResponseEntity<JsonResult<?>> handleResultException(TweetDeletedException ex, HttpHeaders headers, WebRequest request) {
+        JsonResult<?> body = JsonResult.failure(ex.getResultStatus());
+        HttpStatus status = ex.getResultStatus().getHttpStatus();
+        return this.handleExceptionInternal(ex, body, headers, status, request);
+    }
+
+    /**
+     * 对ForwardNotExistException类返回返回结果的处理
+     *
+     * @param ex
+     * @param headers
+     * @param request
+     * @return
+     */
+    protected ResponseEntity<JsonResult<?>> handleResultException(ForwardNotExistException ex, HttpHeaders headers, WebRequest request) {
         JsonResult<?> body = JsonResult.failure(ex.getResultStatus());
         HttpStatus status = ex.getResultStatus().getHttpStatus();
         return this.handleExceptionInternal(ex, body, headers, status, request);

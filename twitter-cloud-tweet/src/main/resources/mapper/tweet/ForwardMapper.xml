@@ -2,4 +2,27 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.zhumouren.twitter.cloud.tweet.mapper.ForwardMapper">
 
+    <insert id="insertForward">
+        INSERT INTO tweet_forward (tweet_id, user_id)
+        SELECT #{tweetId}, #{userId}
+        FROM DUAL
+        WHERE (NOT EXISTS(SELECT 1
+                          FROM tweet_forward
+                          WHERE (tweet_id = #{tweetId} AND user_id = #{userId} AND is_deleted = 0))
+            AND EXISTS(SELECT 1
+                       FROM tweet
+                       WHERE id = #{tweetId}
+                         AND is_deleted = 0))
+    </insert>
+
+    <update id="deleteForward">
+        UPDATE tweet_forward
+        SET is_deleted = 1,
+            updated    = NOW()
+        WHERE tweet_id = #{tweetId}
+          AND user_id = #{userId}
+        ORDER BY updated DESC
+        LIMIT 1
+    </update>
+
 </mapper>

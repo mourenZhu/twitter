@@ -99,12 +99,28 @@
         update tweet
         set num_replies = num_replies + 1
         where id = #{tweetId}
+          AND is_deleted = 0
     </update>
 
     <update id="subReplyNums">
         update tweet
         set num_replies = num_replies - 1
         where id = #{tweetId}
+          AND is_deleted = 0
+    </update>
+
+    <update id="addFieldNums">
+        UPDATE tweet
+        SET ${fieldName.name} = ${fieldName.name} + 1
+        WHERE id = #{tweetId}
+          AND is_deleted = 0
+    </update>
+
+    <update id="subFieldNums">
+        UPDATE tweet
+        SET ${fieldName.name} = ${fieldName.name} - 1
+        WHERE id = #{tweetId}
+          AND is_deleted = 0
     </update>
 
     <select id="getUserTweetPage" resultMap="tweet">

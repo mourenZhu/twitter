@@ -38,9 +38,14 @@ public class Forward implements Serializable {
     private Long userId;
 
     /**
-     * 引用创建时间
+     * 转发创建时间
      */
     private LocalDateTime created;
+
+    /**
+     * 转发更新时间
+     */
+    private LocalDateTime updated;
 
     /**
      * 是否删除，0是没有删除

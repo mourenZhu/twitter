@@ -56,20 +56,42 @@ public interface TweetMapper extends BaseMapper<Tweet> {
     IPage<Tweet> getChildTweetPage(Page<Tweet> page, @Param("tweetId") Long tweetId);
 
     /**
-     * 增加推文回复
+     * 增加推文回复。
+     * 推荐使用下面的addFieldNums
      *
      * @param tweetId
      * @return
      */
+    @Deprecated
     boolean addReplyNums(@Param("tweetId") Long tweetId);
 
     /**
      * 减少推文回复
+     * 推荐使用下面的subFieldNums
      *
      * @param tweetId
      * @return
      */
+    @Deprecated
     boolean subReplyNums(@Param("tweetId") Long tweetId);
+
+    /**
+     * 给某一个字段的数增加(例如点赞数、转发数)
+     *
+     * @param fieldName
+     * @param tweetId
+     * @return
+     */
+    boolean addFieldNums(@Param("fieldName") DatabaseTweetNumFieldName fieldName, @Param("tweetId") Long tweetId);
+
+    /**
+     * 给某一个字段的数减少(例如点赞数、转发数)
+     *
+     * @param fieldName
+     * @param tweetId
+     * @return
+     */
+    boolean subFieldNums(@Param("fieldName") DatabaseTweetNumFieldName fieldName, @Param("tweetId") Long tweetId);
 
     /**
      * 获得用户发布的推文（不包括回复）

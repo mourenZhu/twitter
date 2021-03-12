@@ -16,7 +16,7 @@ spring:
     username: root
     password: clear@user
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://192.168.3.5:3012/cloud_user?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+    url: jdbc:mysql://192.168.3.5:3012/cloud_user?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai
     type: com.zaxxer.hikari.HikariDataSource
     hikari:
       minimum-idle: 5

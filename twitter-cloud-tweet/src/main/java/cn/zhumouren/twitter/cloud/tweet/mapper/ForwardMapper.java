@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * <p>
  * 推文转发表 Mapper 接口
@@ -33,5 +35,13 @@ public interface ForwardMapper extends BaseMapper<Forward> {
      * @return
      */
     int deleteForward(@Param("tweetId") Long tweetId, @Param("userId") Long userId);
+
+    /**
+     * 获取forward对象
+     *
+     * @param userId
+     * @return
+     */
+    List<Forward> listForwardByUser(@Param("userId") Long userId);
 
 }

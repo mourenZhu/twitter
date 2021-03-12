@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * <p>
  * 推文转发表 服务实现类
@@ -48,5 +50,10 @@ public class ForwardServiceImpl extends ServiceImpl<ForwardMapper, Forward> impl
             return true;
         }
         throw new ForwardNotExistException();
+    }
+
+    @Override
+    public List<Forward> listForwardByUser(Long userId) {
+        return forwardMapper.listForwardByUser(userId);
     }
 }

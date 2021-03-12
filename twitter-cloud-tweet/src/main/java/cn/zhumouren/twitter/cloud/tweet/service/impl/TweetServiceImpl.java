@@ -2,9 +2,14 @@ package cn.zhumouren.twitter.cloud.tweet.service.impl;
 
 import cn.zhumouren.twitter.cloud.constant.exception.TweetDeletedException;
 import cn.zhumouren.twitter.cloud.constant.exception.TweetNotExistException;
+import cn.zhumouren.twitter.cloud.constant.utils.clazz.FieldUtils;
+import cn.zhumouren.twitter.cloud.tweet.constant.ClickType;
+import cn.zhumouren.twitter.cloud.tweet.dto.ClickStatusDTO;
 import cn.zhumouren.twitter.cloud.tweet.dto.StatusDTO;
+import cn.zhumouren.twitter.cloud.tweet.entity.Forward;
 import cn.zhumouren.twitter.cloud.tweet.entity.ParentChildTweet;
 import cn.zhumouren.twitter.cloud.tweet.entity.Tweet;
+import cn.zhumouren.twitter.cloud.tweet.mapper.ForwardMapper;
 import cn.zhumouren.twitter.cloud.tweet.mapper.ParentChildTweetMapper;
 import cn.zhumouren.twitter.cloud.tweet.mapper.TweetMapper;
 import cn.zhumouren.twitter.cloud.tweet.service.ITweetService;
@@ -18,7 +23,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -36,6 +45,9 @@ public class TweetServiceImpl extends ServiceImpl<TweetMapper, Tweet> implements
 
     @Autowired
     private ParentChildTweetMapper parentChildTweetMapper;
+
+    @Autowired
+    private ForwardMapper forwardMapper;
 
     @Transactional(rollbackFor = Exception.class)
     public boolean post(String content, List<String> pics, Long uid) {
@@ -124,8 +136,51 @@ public class TweetServiceImpl extends ServiceImpl<TweetMapper, Tweet> implements
 
     @Override
     public List<StatusDTO> listUserStatus(Long userId) {
-        return tweetMapper.listUserStatus(userId);
+        List<StatusDTO> statusDTOS = tweetMapper.listUserStatus(userId);
+        List<Forward> forwards = forwardMapper.listForwardByUser(userId);
+        List<ClickStatusDTO> clickStatusDTOList = listClickStatus(forwards);
+        statusDTOS.addAll(clickStatusDTOList);
+        return statusDTOS;
     }
+
+    /**
+     * 先通过forward获取clickStatus对象
+     *
+     * @param forwards
+     * @return
+     */
+    private List<ClickStatusDTO> listClickStatus(List<Forward> forwards) {
+        List<ClickStatusDTO> clickStatusDTOList = new LinkedList<>();
+
+        List<Long> statusIdList = new ArrayList<>();
+
+        Map<Long, Forward> forwardsMap = forwards.stream().collect(Collectors
+                .toMap(Forward::getTweetId, Function.identity(), (key1, key2) -> key2));
+
+        for (Forward forward : forwards) {
+            statusIdList.add(forward.getTweetId());
+        }
+
+        List<StatusDTO> statusDTOS = listStatus(statusIdList);
+
+        for (StatusDTO statusDTO : statusDTOS) {
+            Forward forward = forwardsMap.get(statusDTO.getId());
+            ClickStatusDTO clickStatusDTO = new ClickStatusDTO();
+            try {
+                FieldUtils.fatherValueCopyToSonValue(statusDTO, clickStatusDTO);
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (NoSuchFieldException e) {
+                e.printStackTrace();
+            }
+            clickStatusDTO.setClickType(ClickType.FORWARD);
+            clickStatusDTO.setClickUserId(forward.getUserId());
+            clickStatusDTO.setClickTime(forward.getCreated());
+            clickStatusDTOList.add(clickStatusDTO);
+        }
+        return clickStatusDTOList;
+    }
+
 
     @Override
     public StatusDTO getStatus(Long statusId) throws TweetNotExistException, TweetDeletedException {

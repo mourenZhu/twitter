@@ -5,6 +5,8 @@ import cn.zhumouren.twitter.cloud.constant.exception.TweetNotExistOrDeletedExcep
 import cn.zhumouren.twitter.cloud.tweet.entity.Forward;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
+
 /**
  * <p>
  * 推文转发表 服务类
@@ -34,5 +36,13 @@ public interface IForwardService extends IService<Forward> {
      * @throws ForwardNotExistException
      */
     boolean deleteForward(Long tweetId, Long userId) throws ForwardNotExistException;
+
+    /**
+     * 获取转发对象
+     *
+     * @param userId
+     * @return
+     */
+    List<Forward> listForwardByUser(Long userId);
 
 }

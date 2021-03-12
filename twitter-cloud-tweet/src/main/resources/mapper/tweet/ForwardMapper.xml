@@ -25,4 +25,12 @@
         LIMIT 1
     </update>
 
+    <select id="listForwardByUser" resultType="cn.zhumouren.twitter.cloud.tweet.entity.Forward">
+        SELECT tweet_id, user_id, created, updated, is_deleted
+        FROM tweet_forward
+        WHERE user_id = #{userId}
+          AND is_deleted = 0
+        ORDER BY created DESC
+    </select>
+
 </mapper>

@@ -29,5 +29,4 @@ public class SysRolePermission implements Serializable {
      */
     private Long permissionId;
 
-
 }

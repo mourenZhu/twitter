@@ -39,7 +39,6 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     @Autowired
     private JwtConfig jwtConfig;
 
-
     @Bean
     @Primary
     @ConfigurationProperties(prefix = "spring.datasource")
@@ -93,7 +92,6 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
                 .accessTokenConverter(accessTokenConverter())
                 .tokenEnhancer(enhancerChain)
                 .userDetailsService(userDetailsService);
-
 
 //         配置TokenServices参数
         DefaultTokenServices tokenServices = new DefaultTokenServices();

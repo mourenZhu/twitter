@@ -16,9 +16,9 @@ values (801, 101, '发布推文', 'postTweet', '/server-tweet/tweet_POST', '用�
 
 
 
-insert into sys_role(parent_id, name, enname, description)
-VALUES (0, '超级管理员', 'admin', '超级管理员拥有所有权限'),
-       (0, '普通用户', 'user', '普通用户可以做普通用户该做的事');
+insert into sys_role(id, parent_id, name, enname, description)
+VALUES (100, 0, '超级管理员', 'admin', '超级管理员拥有所有权限'),
+       (101, 0, '普通用户', 'user', '普通用户可以做普通用户该做的事');
 
 insert into sys_role_permission(role_id, permission_id)
 VALUES (100, 101),

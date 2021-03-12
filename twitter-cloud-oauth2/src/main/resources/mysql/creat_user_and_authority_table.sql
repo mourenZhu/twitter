@@ -29,12 +29,10 @@ CREATE TABLE `sys_role`
 
 CREATE TABLE `sys_role_permission`
 (
-    `id`            bigint(20) NOT NULL AUTO_INCREMENT,
     `role_id`       bigint(20) NOT NULL COMMENT '角色 ID',
     `permission_id` bigint(20) NOT NULL COMMENT '权限 ID',
-    PRIMARY KEY (`id`)
+    PRIMARY KEY (`role_id`, `permission_id`)
 ) ENGINE = InnoDB
-  AUTO_INCREMENT = 100
   DEFAULT CHARSET = utf8 COMMENT ='角色权限表';
 
 CREATE TABLE `sys_user`
@@ -59,10 +57,8 @@ CREATE TABLE `sys_user`
 
 CREATE TABLE `sys_user_role`
 (
-    `id`       bigint(20)  NOT NULL AUTO_INCREMENT,
-    `username` varchar(50) NOT NULL COMMENT '用户 ID',
+    `user_id` bigint(20) NOT NULL COMMENT '用户 ID',
     `role_id`  bigint(20)  NOT NULL COMMENT '角色 ID',
-    PRIMARY KEY (`id`)
+    PRIMARY KEY (`user_id`)
 ) ENGINE = InnoDB
-  AUTO_INCREMENT = 100
   DEFAULT CHARSET = utf8 COMMENT ='用户角色表';

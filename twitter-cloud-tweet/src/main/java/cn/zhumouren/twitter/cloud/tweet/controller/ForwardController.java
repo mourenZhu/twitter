@@ -5,9 +5,12 @@ import cn.zhumouren.twitter.cloud.constant.exception.ForwardNotExistException;
 import cn.zhumouren.twitter.cloud.constant.exception.TweetNotExistOrDeletedException;
 import cn.zhumouren.twitter.cloud.constant.result.annotation.ResponseResultBody;
 import cn.zhumouren.twitter.cloud.constant.utils.jwt.JwtUtils;
+import cn.zhumouren.twitter.cloud.tweet.entity.Forward;
 import cn.zhumouren.twitter.cloud.tweet.service.IForwardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * <p>
@@ -18,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
  * @since 2021-02-08
  */
 @RestController
-@RequestMapping("/tweet")
+@RequestMapping
 @ResponseResultBody
 public class ForwardController {
 
@@ -32,7 +35,7 @@ public class ForwardController {
      * @param accessToken
      * @return
      */
-    @PostMapping("/forward")
+    @PostMapping("/tweet/forward")
     public boolean postForward(@RequestParam("tweetId") String tweetId,
                                @RequestHeader("access_token") String accessToken) throws TweetNotExistOrDeletedException {
         Long tId = Long.valueOf(tweetId);
@@ -47,11 +50,23 @@ public class ForwardController {
      * @param accessToken
      * @return
      */
-    @DeleteMapping("/forward")
+    @DeleteMapping("/tweet/forward")
     public boolean deleteForward(@RequestParam("tweetId") String tweetId,
                                  @RequestHeader("access_token") String accessToken) throws ForwardNotExistException {
         Long tId = Long.valueOf(tweetId);
         Long userId = JwtUtils.getLongByString(accessToken, "uid");
         return forwardService.deleteForward(tId, userId);
+    }
+
+    /**
+     * 获取用户的转发
+     *
+     * @param userId
+     * @return
+     */
+    @GetMapping("/{userId}/list/forward")
+    public List<Forward> listUserForward(@PathVariable("userId") String userId) {
+        Long uid = Long.valueOf(userId);
+        return forwardService.listForwardByUser(uid);
     }
 }

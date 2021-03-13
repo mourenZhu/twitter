@@ -22,10 +22,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.time.ZoneOffset;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -140,7 +138,27 @@ public class TweetServiceImpl extends ServiceImpl<TweetMapper, Tweet> implements
         List<Forward> forwards = forwardMapper.listForwardByUser(userId);
         List<ClickStatusDTO> clickStatusDTOList = listClickStatus(forwards);
         statusDTOS.addAll(clickStatusDTOList);
+        statusListSort(statusDTOS);
         return statusDTOS;
+    }
+
+    private void statusListSort(List<StatusDTO> statusDTOS) {
+        Collections.sort(statusDTOS, new Comparator<StatusDTO>() {
+            @Override
+            public int compare(StatusDTO o1, StatusDTO o2) {
+
+                long l1 = o1.getCreated().toEpochSecond(ZoneOffset.of("+8"));
+                long l2 = o2.getCreated().toEpochSecond(ZoneOffset.of("+8"));
+
+                if (o1.getClass() == ClickStatusDTO.class) {
+                    l1 = ((ClickStatusDTO) o1).getClickTime().toEpochSecond(ZoneOffset.of("+8"));
+                }
+                if (o2.getClass() == ClickStatusDTO.class) {
+                    l2 = ((ClickStatusDTO) o2).getClickTime().toEpochSecond(ZoneOffset.of("+8"));
+                }
+                return (int) (l2 - l1);
+            }
+        });
     }
 
     /**

@@ -69,4 +69,10 @@ public class ForwardController {
         Long uid = Long.valueOf(userId);
         return forwardService.listForwardByUser(uid);
     }
+
+    @GetMapping("/{status}/forward/list/userId")
+    public List<Long> listForwardUserId(@PathVariable("status") String statusId) {
+        Long sId = Long.valueOf(statusId);
+        return forwardService.listForwardUserId(sId);
+    }
 }

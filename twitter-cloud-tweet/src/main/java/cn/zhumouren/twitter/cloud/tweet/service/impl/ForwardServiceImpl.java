@@ -35,7 +35,7 @@ public class ForwardServiceImpl extends ServiceImpl<ForwardMapper, Forward> impl
     @Transactional(rollbackFor = Exception.class)
     public boolean postForward(Long tweetId, Long userId) throws TweetNotExistOrDeletedException {
         boolean b = forwardMapper.insertForward(tweetId, userId);
-        if (b){
+        if (b) {
             tweetMapper.addFieldNums(DatabaseTweetNumFieldName.NUM_FORWARD, tweetId);
             return true;
         }
@@ -45,7 +45,7 @@ public class ForwardServiceImpl extends ServiceImpl<ForwardMapper, Forward> impl
     @Override
     public boolean deleteForward(Long tweetId, Long userId) throws ForwardNotExistException {
         int b = forwardMapper.deleteForward(tweetId, userId);
-        if (b > 0){
+        if (b > 0) {
             tweetMapper.subFieldNums(DatabaseTweetNumFieldName.NUM_FORWARD, tweetId);
             return true;
         }
@@ -55,5 +55,10 @@ public class ForwardServiceImpl extends ServiceImpl<ForwardMapper, Forward> impl
     @Override
     public List<Forward> listForwardByUser(Long userId) {
         return forwardMapper.listForwardByUser(userId);
+    }
+
+    @Override
+    public List<Long> listForwardUserId(Long status) {
+        return forwardMapper.listForwardUserId(status);
     }
 }

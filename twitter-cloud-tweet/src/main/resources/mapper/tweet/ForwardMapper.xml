@@ -33,4 +33,11 @@
         ORDER BY created DESC
     </select>
 
+    <select id="listForwardUserId" resultType="Long">
+        SELECT user_id
+        FROM tweet_forward
+        WHERE tweet_id = #{tweetId}
+          AND is_deleted = 0
+    </select>
+
 </mapper>

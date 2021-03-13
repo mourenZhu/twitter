@@ -44,4 +44,12 @@ public interface ForwardMapper extends BaseMapper<Forward> {
      */
     List<Forward> listForwardByUser(@Param("userId") Long userId);
 
+    /**
+     * 获取推文的所有转发者id
+     *
+     * @param tweetId
+     * @return
+     */
+    List<Long> listForwardUserId(@Param("tweetId") Long tweetId);
+
 }

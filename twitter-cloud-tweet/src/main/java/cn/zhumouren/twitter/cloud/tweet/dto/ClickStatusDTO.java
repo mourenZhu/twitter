@@ -1,7 +1,6 @@
 package cn.zhumouren.twitter.cloud.tweet.dto;
 
 import cn.zhumouren.twitter.cloud.tweet.constant.ClickType;
-import cn.zhumouren.twitter.cloud.tweet.entity.Forward;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -13,7 +12,7 @@ import java.time.LocalDateTime;
  * @Version 1.0
  **/
 @Data
-public class ClickStatusDTO extends StatusDTO{
+public class ClickStatusDTO extends StatusDTO {
 
     private Long clickUserId;
 
@@ -21,6 +20,7 @@ public class ClickStatusDTO extends StatusDTO{
 
     private LocalDateTime clickTime;
 
-    public ClickStatusDTO() {}
+    public ClickStatusDTO() {
+    }
 
 }

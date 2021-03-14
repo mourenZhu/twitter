@@ -58,7 +58,7 @@ public class ForwardServiceImpl extends ServiceImpl<ForwardMapper, Forward> impl
     }
 
     @Override
-    public List<Long> listForwardUserId(Long status) {
-        return forwardMapper.listForwardUserId(status);
+    public List<Long> listForwardUserId(Long statusId) {
+        return forwardMapper.listForwardUserId(statusId);
     }
 }

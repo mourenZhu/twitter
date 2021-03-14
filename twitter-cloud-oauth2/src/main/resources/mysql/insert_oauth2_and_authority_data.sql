@@ -12,7 +12,8 @@ values (801, 101, '发布推文', 'postTweet', '/server-tweet/tweet_POST', '用�
        (804, 101, '点赞推文', 'postLike', '/server-tweet/tweet/like_POST', '用户点赞推文'),
        (805, 101, '取消点赞', 'deleteLike', '/server-tweet/tweet/like_DELETE', '用户取消点赞'),
        (806, 101, '转发推文', 'postForward', '/server-tweet/tweet/forward_POST', '用户转发推文'),
-       (807, 101, '取消转发', 'deleteForward', '/server-tweet/tweet/forward_DELETE', '用户取消转发');
+       (807, 101, '取消转发', 'deleteForward', '/server-tweet/tweet/forward_DELETE', '用户取消转发'),
+       (808, 101, '引用推文', 'postQuote', '/server-tweet/tweet/quote_POST', '用户转发推文');
 
 
 
@@ -30,7 +31,8 @@ VALUES (100, 101),
        (100, 804),
        (100, 805),
        (100, 806),
-       (100, 807);
+       (100, 807),
+       (100, 808);
 insert into sys_role_permission(role_id, permission_id)
 VALUES (101, 701),
        (101, 702),
@@ -40,7 +42,8 @@ VALUES (101, 701),
        (101, 804),
        (101, 805),
        (101, 806),
-       (101, 807);
+       (101, 807),
+       (101, 808);
 
 insert into sys_user(id, username, password)
 VALUES (1000000000000000001, 'admin', '$2a$10$bClI902vYPQpsxkjWKgIEOzGOYRSxh51Ro0D1gXEfI6AuHzpn2vWa');

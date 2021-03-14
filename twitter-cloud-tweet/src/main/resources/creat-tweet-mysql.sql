@@ -4,6 +4,7 @@ create table tweet
     `user_id`     bigint(20) NOT NULL COMMENT '用户唯一id',
     `content`     varchar(300) COMMENT '推文内容',
     `pics`        JSON                DEFAULT NULL COMMENT '图片绝对路径',
+    `quoted_id`   bigint(20) COMMENT '引用的推文id',
     `num_likes`   int UNSIGNED        DEFAULT 0 COMMENT '推文点赞数',
     `num_replies` int UNSIGNED        DEFAULT 0 COMMENT '推文回复数',
     `num_quote`   int UNSIGNED        DEFAULT 0 COMMENT '推文引用数',
@@ -41,22 +42,6 @@ create table tweet_like
     key (`user_id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8 COMMENT ='推文点赞表';
-
-
-
-create table tweet_quote
-(
-    `parent_id`  bigint(20) NOT NULL COMMENT '父推文id',
-    `child_id`   bigint(20) NOT NULL COMMENT '子推文id',
-    `user_id`    bigint(20) NOT NULL COMMENT '用户唯一id',
-    `created`    datetime   NOT NULL DEFAULT (NOW()) COMMENT '引用创建时间',
-    `updated`    datetime   NOT NULL DEFAULT (NOW()) COMMENT '引用更新时间',
-    `is_deleted` TINYINT UNSIGNED    DEFAULT 0 COMMENT '是否删除，0是没有删除',
-    PRIMARY KEY (`parent_id`, `child_id`, `user_id`)
-) ENGINE = InnoDB
-  DEFAULT CHARSET = utf8 COMMENT ='推文引用表';
-
-
 
 create table tweet_forward
 (

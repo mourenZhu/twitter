@@ -48,9 +48,9 @@ public interface IForwardService extends IService<Forward> {
     /**
      * 获取此推文的所有转发者id
      *
-     * @param status
+     * @param statusId
      * @return
      */
-    List<Long> listForwardUserId(Long status);
+    List<Long> listForwardUserId(Long statusId);
 
 }

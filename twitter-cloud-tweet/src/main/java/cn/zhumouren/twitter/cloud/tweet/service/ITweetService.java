@@ -73,6 +73,18 @@ public interface ITweetService extends IService<Tweet> {
     boolean postTweetReply(Long parentId, String replyContent, List<String> replyPics, Long uid) throws TweetNotExistException;
 
     /**
+     * 提交引用
+     *
+     * @param userId
+     * @param quotedTweetId
+     * @param content
+     * @param pics
+     * @return
+     * @throws TweetNotExistException
+     */
+    boolean postTweetQuote(Long userId, Long quotedTweetId, String content, List<String> pics) throws TweetNotExistException;
+
+    /**
      * 获得推文链前端展示对象
      *
      * @param page
@@ -115,6 +127,14 @@ public interface ITweetService extends IService<Tweet> {
      * @throws TweetDeletedException
      */
     StatusDTO getStatus(Long statusId) throws TweetNotExistException, TweetDeletedException;
+
+    /**
+     * 获取该推文的引用用户id
+     *
+     * @param statusId
+     * @return
+     */
+    List<Long> listStatusQuoteUserId(Long statusId);
 
     /**
      * 获取list status

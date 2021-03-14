@@ -5,6 +5,7 @@ import cn.zhumouren.twitter.cloud.constant.exception.ForwardNotExistException;
 import cn.zhumouren.twitter.cloud.constant.exception.TweetNotExistOrDeletedException;
 import cn.zhumouren.twitter.cloud.constant.result.annotation.ResponseResultBody;
 import cn.zhumouren.twitter.cloud.constant.utils.jwt.JwtUtils;
+import cn.zhumouren.twitter.cloud.constant.utils.list.ListUtils;
 import cn.zhumouren.twitter.cloud.tweet.entity.Forward;
 import cn.zhumouren.twitter.cloud.tweet.service.IForwardService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,9 +71,9 @@ public class ForwardController {
         return forwardService.listForwardByUser(uid);
     }
 
-    @GetMapping("/{status}/forward/list/userId")
-    public List<Long> listForwardUserId(@PathVariable("status") String statusId) {
+    @GetMapping("/status/{statusId}/forward/list/userId")
+    public List<String> listForwardUserId(@PathVariable("statusId") String statusId) {
         Long sId = Long.valueOf(statusId);
-        return forwardService.listForwardUserId(sId);
+        return ListUtils.toStringList(forwardService.listForwardUserId(sId));
     }
 }

@@ -38,53 +38,63 @@ public class Tweet implements Serializable {
      */
     @JsonSerialize(using = ToStringSerializer.class)
     private Long userId;
-
     /**
      * 推文内容
      */
     private String content;
-
     /**
      * 图片绝对路径
      */
     @TableField(typeHandler = ListTypeHandler.class)
     private List<String> pics;
-
+    /**
+     * 引用的推文id
+     */
+    @JsonSerialize(using = ToStringSerializer.class)
+    private Long quotedId;
     /**
      * 推文点赞数
      */
     private Integer numLikes;
-
     /**
      * 推文回复数
      */
     private Integer numReplies;
-
     /**
      * 推文引用数
      */
     private Integer numQuote;
-
     /**
      * 推文转发数
      */
     private Integer numForward;
-
     /**
      * 推文创建时间
      */
     private LocalDateTime created;
-
     /**
      * 推文更新时间
      */
     private LocalDateTime updated;
-
     /**
      * 是否删除，0是没有删除
      */
     @TableField(value = "is_deleted")
     private Boolean deleted;
 
+    public Tweet() {
+    }
 
+    public Tweet(Long userId, String content, List<String> pics) {
+        this.userId = userId;
+        this.content = content;
+        this.pics = pics;
+    }
+
+    public Tweet(Long userId, String content, List<String> pics, Long quotedId) {
+        this.userId = userId;
+        this.content = content;
+        this.pics = pics;
+        this.quotedId = quotedId;
+    }
 }

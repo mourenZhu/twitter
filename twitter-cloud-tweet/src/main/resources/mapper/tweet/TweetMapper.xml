@@ -8,6 +8,7 @@
         <result column="content" property="content"></result>
         <result column="pics" property="pics"
                 typeHandler="cn.zhumouren.twitter.cloud.tweet.handler.mybatis.ListTypeHandler"></result>
+        <result column="quoted_id" property="quotedId"></result>
         <result column="num_likes" property="numLikes"></result>
         <result column="num_replies" property="numReplies"></result>
         <result column="num_quote" property="numQuote"></result>
@@ -23,6 +24,7 @@
         <result column="content" property="content"></result>
         <result column="pics" property="pics"
                 typeHandler="cn.zhumouren.twitter.cloud.tweet.handler.mybatis.ListTypeHandler"></result>
+        <result column="quoted_id" property="quotedId"></result>
         <result column="num_likes" property="numLikes"></result>
         <result column="num_replies" property="numReplies"></result>
         <result column="num_quote" property="numQuote"></result>
@@ -61,6 +63,7 @@
                t.user_id,
                t.content,
                t.pics,
+               t.quoted_id,
                t.num_likes,
                t.num_replies,
                t.num_quote,
@@ -80,6 +83,7 @@
                t.user_id,
                t.content,
                t.pics,
+               t.quoted_id,
                t.num_likes,
                t.num_replies,
                t.num_quote,
@@ -128,6 +132,7 @@
                t.user_id,
                t.content,
                t.pics,
+               t.quoted_id,
                t.num_likes,
                t.num_replies,
                t.num_quote,
@@ -154,6 +159,7 @@
                t.user_id,
                t.content,
                t.pics,
+               t.quoted_id,
                t.num_likes,
                t.num_replies,
                t.num_quote,
@@ -182,6 +188,7 @@
                t.user_id,
                t.content,
                t.pics,
+               t.quoted_id,
                t.num_likes,
                t.num_replies,
                t.num_quote,
@@ -209,6 +216,7 @@
         t.user_id,
         t.content,
         t.pics,
+        t.quoted_id,
         t.num_likes,
         t.num_replies,
         t.num_quote,

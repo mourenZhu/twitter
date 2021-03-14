@@ -9,9 +9,7 @@ import cn.zhumouren.twitter.cloud.tweet.dto.StatusDTO;
 import cn.zhumouren.twitter.cloud.tweet.entity.Forward;
 import cn.zhumouren.twitter.cloud.tweet.entity.ParentChildTweet;
 import cn.zhumouren.twitter.cloud.tweet.entity.Tweet;
-import cn.zhumouren.twitter.cloud.tweet.mapper.ForwardMapper;
-import cn.zhumouren.twitter.cloud.tweet.mapper.ParentChildTweetMapper;
-import cn.zhumouren.twitter.cloud.tweet.mapper.TweetMapper;
+import cn.zhumouren.twitter.cloud.tweet.mapper.*;
 import cn.zhumouren.twitter.cloud.tweet.service.ITweetService;
 import cn.zhumouren.twitter.cloud.tweet.vo.TweetLinkVO;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -67,8 +65,18 @@ public class TweetServiceImpl extends ServiceImpl<TweetMapper, Tweet> implements
         int isPostTweet = tweetMapper.insert(tweet);
         boolean isPostTweetReply = parentChildTweetMapper.postTweetReply(parentId, tweet.getId());
         int isParentChildTweet = parentChildTweetMapper.insert(new ParentChildTweet(tweet.getId(), tweet.getId(), 0, false));
-        boolean isReplyNums = tweetMapper.addReplyNums(parentId);
+        boolean isReplyNums = tweetMapper.addFieldNums(DatabaseTweetNumFieldName.NUM_REPLIES, parentId);
         return SqlHelper.retBool(isPostTweet) && isPostTweetReply && SqlHelper.retBool(isParentChildTweet) && isReplyNums;
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public boolean postQuote(Long userId, Long quotedTweetId, String content, List<String> pics) {
+        boolean b = true;
+        Tweet tweet = new Tweet(userId, content, pics, quotedTweetId);
+        b &= SqlHelper.retBool(tweetMapper.insert(tweet));
+        b &= SqlHelper.retBool(parentChildTweetMapper.insert(new ParentChildTweet(tweet.getId(), tweet.getId(), 0, true)));
+        b &= tweetMapper.addFieldNums(DatabaseTweetNumFieldName.NUM_QUOTE, quotedTweetId);
+        return b;
     }
 
     @Override
@@ -85,12 +93,14 @@ public class TweetServiceImpl extends ServiceImpl<TweetMapper, Tweet> implements
     @Transactional(rollbackFor = Exception.class)
     @Override
     public boolean deletedTweet(Long tweetId, Long uid) {
-        boolean isReplyNums = true;
+        boolean b = true;
+        Tweet tweet = tweetMapper.selectById(tweetId);
         Long parentId = parentChildTweetMapper.getParentId(tweetId, 1);
         if (null != parentId) {
-            isReplyNums = tweetMapper.subReplyNums(parentId);
+            b &= tweetMapper.subFieldNums(DatabaseTweetNumFieldName.NUM_REPLIES, parentId);
         }
-        return tweetMapper.deletedTweet(tweetId, uid) && parentChildTweetMapper.deletedTweet(tweetId) && isReplyNums;
+        b &= tweetMapper.subFieldNums(DatabaseTweetNumFieldName.NUM_QUOTE, tweet.getQuotedId());
+        return tweetMapper.deletedTweet(tweetId, uid) && parentChildTweetMapper.deletedTweet(tweetId) && b;
     }
 
     @Override
@@ -103,6 +113,15 @@ public class TweetServiceImpl extends ServiceImpl<TweetMapper, Tweet> implements
     public boolean postTweetReply(Long parentId, String replyContent, List<String> replyPics, Long uid) throws TweetNotExistException {
         if (tweetMapper.isExistTweet(parentId)) {
             return postReply(parentId, replyContent, replyPics, uid);
+        } else {
+            throw new TweetNotExistException();
+        }
+    }
+
+    @Override
+    public boolean postTweetQuote(Long userId, Long quotedTweetId, String content, List<String> pics) throws TweetNotExistException {
+        if (tweetMapper.isExistTweet(quotedTweetId)) {
+            return postQuote(userId, quotedTweetId, content, pics);
         } else {
             throw new TweetNotExistException();
         }
@@ -211,6 +230,11 @@ public class TweetServiceImpl extends ServiceImpl<TweetMapper, Tweet> implements
         } else {
             throw new TweetNotExistException();
         }
+    }
+
+    @Override
+    public List<Long> listStatusQuoteUserId(Long statusId) {
+        return null;
     }
 
     @Override

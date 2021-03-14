@@ -7,6 +7,7 @@ import cn.zhumouren.twitter.cloud.constant.result.annotation.ResponseResultBody;
 import cn.zhumouren.twitter.cloud.constant.utils.jwt.JwtUtils;
 import cn.zhumouren.twitter.cloud.constant.utils.list.ListUtils;
 import cn.zhumouren.twitter.cloud.tweet.constant.PageConstants;
+import cn.zhumouren.twitter.cloud.tweet.dto.PostQuoteTweetDTO;
 import cn.zhumouren.twitter.cloud.tweet.dto.PostReplyTweetDTO;
 import cn.zhumouren.twitter.cloud.tweet.dto.PostTweetDTO;
 import cn.zhumouren.twitter.cloud.tweet.dto.StatusDTO;
@@ -81,6 +82,21 @@ public class TweetController {
     }
 
     /**
+     * 发布引用推文
+     *
+     * @param postQuoteTweetDTO
+     * @param accessToken
+     * @return
+     */
+    @PostMapping("/tweet/quote")
+    public boolean postQuote(@RequestBody PostQuoteTweetDTO postQuoteTweetDTO,
+                             @RequestHeader("access_token") String accessToken) throws TweetNotExistException {
+        Long quotedId = Long.valueOf(postQuoteTweetDTO.getQuotedTweetId());
+        Long userId = JwtUtils.getLongByString(accessToken, "uid");
+        return tweetService.postTweetQuote(userId, quotedId, postQuoteTweetDTO.getContent(), postQuoteTweetDTO.getPics());
+    }
+
+    /**
      * 获得具体的推文链
      *
      * @param tweetId
@@ -150,6 +166,11 @@ public class TweetController {
     public StatusDTO getStatus(@PathVariable("statusId") String statusId) throws TweetNotExistException, TweetDeletedException {
         Long sId = Long.valueOf(statusId);
         return tweetService.getStatus(sId);
+    }
+
+    @GetMapping("/status/{statusId}/quote/list/userId")
+    public List<String> listStatusQuoteUserId(@PathVariable("statusId") String statusId) {
+        return null;
     }
 
     /**

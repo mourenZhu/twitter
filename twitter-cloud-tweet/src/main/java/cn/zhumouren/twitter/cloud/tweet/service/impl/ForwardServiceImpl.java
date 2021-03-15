@@ -1,7 +1,7 @@
 package cn.zhumouren.twitter.cloud.tweet.service.impl;
 
 import cn.zhumouren.twitter.cloud.constant.exception.ForwardNotExistException;
-import cn.zhumouren.twitter.cloud.constant.exception.TweetNotExistOrDeletedException;
+import cn.zhumouren.twitter.cloud.constant.exception.NotInsertForwardException;
 import cn.zhumouren.twitter.cloud.tweet.entity.Forward;
 import cn.zhumouren.twitter.cloud.tweet.mapper.DatabaseTweetNumFieldName;
 import cn.zhumouren.twitter.cloud.tweet.mapper.ForwardMapper;
@@ -33,21 +33,21 @@ public class ForwardServiceImpl extends ServiceImpl<ForwardMapper, Forward> impl
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public boolean postForward(Long tweetId, Long userId) throws TweetNotExistOrDeletedException {
+    public boolean postForward(Long tweetId, Long userId) throws NotInsertForwardException {
         boolean b = forwardMapper.insertForward(tweetId, userId);
         if (b) {
-            tweetMapper.addFieldNums(DatabaseTweetNumFieldName.NUM_FORWARD, tweetId);
-            return true;
+            b = tweetMapper.addFieldNums(DatabaseTweetNumFieldName.NUM_FORWARD, tweetId);
+            return b;
         }
-        throw new TweetNotExistOrDeletedException("tweet is not exist or deleted or already forward！");
+        throw new NotInsertForwardException();
     }
 
     @Override
     public boolean deleteForward(Long tweetId, Long userId) throws ForwardNotExistException {
-        int b = forwardMapper.deleteForward(tweetId, userId);
-        if (b > 0) {
-            tweetMapper.subFieldNums(DatabaseTweetNumFieldName.NUM_FORWARD, tweetId);
-            return true;
+        int i = forwardMapper.deleteForward(tweetId, userId);
+        if (i > 0) {
+            boolean b = tweetMapper.subFieldNums(DatabaseTweetNumFieldName.NUM_FORWARD, tweetId);
+            return b;
         }
         throw new ForwardNotExistException();
     }

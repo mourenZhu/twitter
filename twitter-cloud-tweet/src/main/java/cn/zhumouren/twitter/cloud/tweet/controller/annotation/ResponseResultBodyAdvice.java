@@ -1,9 +1,6 @@
 package cn.zhumouren.twitter.cloud.tweet.controller.annotation;
 
-import cn.zhumouren.twitter.cloud.constant.exception.ForwardNotExistException;
-import cn.zhumouren.twitter.cloud.constant.exception.TweetDeletedException;
-import cn.zhumouren.twitter.cloud.constant.exception.TweetNotExistException;
-import cn.zhumouren.twitter.cloud.constant.exception.TweetNotExistOrDeletedException;
+import cn.zhumouren.twitter.cloud.constant.exception.*;
 import cn.zhumouren.twitter.cloud.constant.result.JsonResult;
 import cn.zhumouren.twitter.cloud.constant.result.annotation.ResponseResultBody;
 import lombok.extern.slf4j.Slf4j;
@@ -81,8 +78,20 @@ public class ResponseResultBodyAdvice implements ResponseBodyAdvice<Object> {
             return this.handleResultException((TweetDeletedException) ex, headers, request);
         }
 
+        if (ex instanceof NotInsertLikeException) {
+            return this.handleResultException((NotInsertLikeException) ex, headers, request);
+        }
+
+        if (ex instanceof LikeNotExistException) {
+            return this.handleResultException((LikeNotExistException) ex, headers, request);
+        }
+
         if (ex instanceof ForwardNotExistException) {
             return this.handleResultException((ForwardNotExistException) ex, headers, request);
+        }
+
+        if (ex instanceof NotInsertForwardException) {
+            return this.handleResultException((NotInsertForwardException) ex, headers, request);
         }
         return this.handleException(ex, headers, request);
     }
@@ -124,6 +133,48 @@ public class ResponseResultBodyAdvice implements ResponseBodyAdvice<Object> {
      * @return
      */
     protected ResponseEntity<JsonResult<?>> handleResultException(TweetDeletedException ex, HttpHeaders headers, WebRequest request) {
+        JsonResult<?> body = JsonResult.failure(ex.getResultStatus());
+        HttpStatus status = ex.getResultStatus().getHttpStatus();
+        return this.handleExceptionInternal(ex, body, headers, status, request);
+    }
+
+    /**
+     * 对NotInsertLikeException类返回返回结果的处理
+     *
+     * @param ex
+     * @param headers
+     * @param request
+     * @return
+     */
+    protected ResponseEntity<JsonResult<?>> handleResultException(NotInsertLikeException ex, HttpHeaders headers, WebRequest request) {
+        JsonResult<?> body = JsonResult.failure(ex.getResultStatus());
+        HttpStatus status = ex.getResultStatus().getHttpStatus();
+        return this.handleExceptionInternal(ex, body, headers, status, request);
+    }
+
+    /**
+     * 对LikeNotExistException类返回返回结果的处理
+     *
+     * @param ex
+     * @param headers
+     * @param request
+     * @return
+     */
+    protected ResponseEntity<JsonResult<?>> handleResultException(LikeNotExistException ex, HttpHeaders headers, WebRequest request) {
+        JsonResult<?> body = JsonResult.failure(ex.getResultStatus());
+        HttpStatus status = ex.getResultStatus().getHttpStatus();
+        return this.handleExceptionInternal(ex, body, headers, status, request);
+    }
+
+    /**
+     * 对NotInsertForwardException类返回返回结果的处理
+     *
+     * @param ex
+     * @param headers
+     * @param request
+     * @return
+     */
+    protected ResponseEntity<JsonResult<?>> handleResultException(NotInsertForwardException ex, HttpHeaders headers, WebRequest request) {
         JsonResult<?> body = JsonResult.failure(ex.getResultStatus());
         HttpStatus status = ex.getResultStatus().getHttpStatus();
         return this.handleExceptionInternal(ex, body, headers, status, request);

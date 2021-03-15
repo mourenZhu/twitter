@@ -2,7 +2,7 @@ package cn.zhumouren.twitter.cloud.tweet.controller;
 
 
 import cn.zhumouren.twitter.cloud.constant.exception.ForwardNotExistException;
-import cn.zhumouren.twitter.cloud.constant.exception.TweetNotExistOrDeletedException;
+import cn.zhumouren.twitter.cloud.constant.exception.NotInsertForwardException;
 import cn.zhumouren.twitter.cloud.constant.result.annotation.ResponseResultBody;
 import cn.zhumouren.twitter.cloud.constant.utils.jwt.JwtUtils;
 import cn.zhumouren.twitter.cloud.constant.utils.list.ListUtils;
@@ -38,7 +38,7 @@ public class ForwardController {
      */
     @PostMapping("/tweet/forward")
     public boolean postForward(@RequestParam("tweetId") String tweetId,
-                               @RequestHeader("access_token") String accessToken) throws TweetNotExistOrDeletedException {
+                               @RequestHeader("access_token") String accessToken) throws NotInsertForwardException {
         Long tId = Long.valueOf(tweetId);
         Long userId = JwtUtils.getLongByString(accessToken, "uid");
         return forwardService.postForward(tId, userId);
@@ -71,6 +71,12 @@ public class ForwardController {
         return forwardService.listForwardByUser(uid);
     }
 
+    /**
+     * 获取转发了该推文的用户id
+     *
+     * @param statusId
+     * @return
+     */
     @GetMapping("/status/{statusId}/forward/list/userId")
     public List<String> listForwardUserId(@PathVariable("statusId") String statusId) {
         Long sId = Long.valueOf(statusId);

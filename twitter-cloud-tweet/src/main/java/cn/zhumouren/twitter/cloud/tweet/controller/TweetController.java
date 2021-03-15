@@ -168,6 +168,10 @@ public class TweetController {
         return tweetService.getStatus(sId);
     }
 
+    /**
+     * @param statusId
+     * @return
+     */
     @GetMapping("/status/{statusId}/quote/list/userId")
     public List<String> listStatusQuoteUserId(@PathVariable("statusId") String statusId) {
         return null;

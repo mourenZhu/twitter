@@ -1,7 +1,7 @@
 package cn.zhumouren.twitter.cloud.tweet.service;
 
 import cn.zhumouren.twitter.cloud.constant.exception.ForwardNotExistException;
-import cn.zhumouren.twitter.cloud.constant.exception.TweetNotExistOrDeletedException;
+import cn.zhumouren.twitter.cloud.constant.exception.NotInsertForwardException;
 import cn.zhumouren.twitter.cloud.tweet.entity.Forward;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -23,9 +23,9 @@ public interface IForwardService extends IService<Forward> {
      * @param tweetId
      * @param userId
      * @return
-     * @throws TweetNotExistOrDeletedException
+     * @throws NotInsertForwardException
      */
-    boolean postForward(Long tweetId, Long userId) throws TweetNotExistOrDeletedException;
+    boolean postForward(Long tweetId, Long userId) throws NotInsertForwardException;
 
     /**
      * 取消转发

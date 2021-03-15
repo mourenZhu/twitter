@@ -27,9 +27,14 @@ public enum ResultStatus {
 
     LIKE_NOT_EXIST(HttpStatus.OK, 861, "tweet like is not exist!"),
 
-    QUOTE_NOT_EXIST(HttpStatus.OK, 862, "tweet quote is not exist!"),
+    NOT_INSERT_LIKE(HttpStatus.OK, 862, "not insert like, check tweet and like!"),
 
-    FORWARD_NOT_EXIST(HttpStatus.OK, 863, "tweet forward is not exist!");
+    QUOTE_NOT_EXIST(HttpStatus.OK, 863, "tweet quote is not exist!"),
+
+    FORWARD_NOT_EXIST(HttpStatus.OK, 865, "tweet forward is not exist!"),
+
+    NOT_INSERT_FORWARD(HttpStatus.OK, 866, "not insert forward, check tweet and forward!");
+
 
     /**
      * 返回的HTTP状态码,  符合http请求

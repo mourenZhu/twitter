@@ -3,7 +3,7 @@ package cn.zhumouren.twitter.cloud.timeline.service;
 /**
  * @author mourenZhu
  */
-public interface IUserTimelineService {
+public interface IUserPostsService {
 
     /**
      * redis用户时间线是否存在
@@ -14,10 +14,21 @@ public interface IUserTimelineService {
     boolean isExistUserTimeline(Long userId);
 
     /**
-     * 构建用户的时间线
+     * 构建用户的发布内容
      *
      * @param userId
      * @return
      */
-    boolean creatUserTimeline(Long userId);
+    boolean creatUserPosts(Long userId);
+
+    /**
+     * 构建用户转发
+     *
+     * @param userId
+     * @return
+     */
+    boolean creatUserForwards(Long userId);
+
+
+
 }

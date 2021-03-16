@@ -17,7 +17,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class UserTimelineServiceTest {
 
     @Autowired
-    private IUserTimelineService userTimelineService;
+    private IUserPostsService userTimelineService;
 
     @Test
     public void creatUserTimelineTest(){

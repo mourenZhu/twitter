@@ -9,6 +9,7 @@ import cn.zhumouren.twitter.cloud.timeline.domain.StatusJson;
 import cn.zhumouren.twitter.cloud.timeline.domain.UserJson;
 import cn.zhumouren.twitter.cloud.timeline.service.IStatusService;
 import cn.zhumouren.twitter.cloud.timeline.service.IUserService;
+import cn.zhumouren.twitter.cloud.timeline.service.client.impl.TweetServerForwardClientImpl;
 import cn.zhumouren.twitter.cloud.timeline.service.client.impl.TweetServerTweetClientImpl;
 import cn.zhumouren.twitter.cloud.timeline.utils.RedisUtil;
 import cn.zhumouren.twitter.cloud.timeline.utils.StatusJsonUtil;
@@ -41,6 +42,9 @@ public class StatusServiceImpl implements IStatusService {
     private TweetServerTweetClientImpl tweetClient;
 
     @Autowired
+    private TweetServerForwardClientImpl forwardClient;
+
+    @Autowired
     private IUserService userService;
 
     @Autowired
@@ -62,6 +66,7 @@ public class StatusServiceImpl implements IStatusService {
                 }
             }
             pushStatusChildId(statusJson.getId());
+            pushForwardUserid(statusJson.getId());
         }
         return true;
     }
@@ -75,25 +80,41 @@ public class StatusServiceImpl implements IStatusService {
     private boolean pushStatusChildId(Long statusId) {
         String key = StatusKeyConstant.getStatusChildIdKey(statusId.toString());
         List<Long> values = tweetClient.listStatusChildId(statusId);
-        if (values.size() > 0){
-            return redisUtil.lLeftPushAll(key, values,expireConstant.getStatusTime());
+        if (values.size() > 0) {
+            return redisUtil.lLeftPushAll(key, values, expireConstant.getStatusTime());
+        }
+        return false;
+    }
+
+    /**
+     * 提交推文转发的user id
+     *
+     * @param statusId
+     * @return
+     */
+    private boolean pushForwardUserid(Long statusId) {
+        String key = StatusKeyConstant.getForwardUidKey(statusId.toString());
+        List<Long> values = forwardClient.listForwardUserId(statusId);
+        if (values.size() > 0) {
+            return redisUtil.lLeftPushAll(key, values, expireConstant.getStatusTime());
         }
         return false;
     }
 
     /**
      * 获取推文子推文id
+     *
      * @param statusId
      * @return
      */
     private List<Long> listStatusChildId(Long statusId) {
         List<Long> statusChildIdList = new LinkedList<>();
         String key = StatusKeyConstant.getStatusChildIdKey(statusId.toString());
-        if (!redisUtil.hasKey(key)){
+        if (!redisUtil.hasKey(key)) {
             pushStatusChildId(statusId);
         }
         List<Object> objects = redisUtil.lGet(key, 0, redisUtil.lGetListSize(key));
-        for (Object o : objects){
+        for (Object o : objects) {
             statusChildIdList.add((Long) o);
         }
         return statusChildIdList;

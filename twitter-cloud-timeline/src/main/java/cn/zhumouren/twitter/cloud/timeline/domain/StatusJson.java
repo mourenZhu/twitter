@@ -52,6 +52,12 @@ public class StatusJson {
     private List<String> pics;
 
     /**
+     * 被引用推文id
+     */
+    @JsonSerialize(using = ToStringSerializer.class)
+    private Long quoted_id;
+
+    /**
      * 推文点赞数
      */
     private Integer numLikes;

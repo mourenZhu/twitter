@@ -76,6 +76,9 @@ public interface IStatusService {
      *
      * @param statusId
      * @return
+     * @throws TweetNotExistException
+     * @throws UserNotExistException
+     * @throws TweetDeletedException
      */
     StatusLinkVO getStatusLinkVO(Long statusId) throws TweetNotExistException, UserNotExistException, TweetDeletedException;
 

@@ -24,6 +24,8 @@ public enum UserKeyConstant {
 
     USER_POSTS_KEY(":posts"),
 
+    USER_FORWARD_KEY(":forward"),
+
     HOME_TIMELINE_KEY(":timeline");
 
     private final String key;
@@ -80,6 +82,16 @@ public enum UserKeyConstant {
      */
     public static String getUserPostsKey(String uid) {
         return USER_KEY.key + uid + USER_POSTS_KEY.key;
+    }
+
+    /**
+     * 获取用户的转发
+     *
+     * @param uid
+     * @return
+     */
+    public static String getUserForwardKey(String uid) {
+        return USER_KEY.key + uid + USER_FORWARD_KEY;
     }
 
     /**

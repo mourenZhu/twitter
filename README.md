@@ -70,6 +70,10 @@
     6. 查询 list status vo `已完成` `已测试`
     7. 查询 status tree `未开发`
     8. 查询 status vo tree `已完成` `已测试`
+    9. 在 status 中存入 forward uid `已完成` `未测试`
+    10. 在 user forward中存入 forward `已完成` `未测试`
+    11. 把用户的转发插入user posts中 `未开发`
+    12. 查询 status forward uid `未开发`
 
 4. 每个用户的具体对象
     1. 存入user `已完成` `已测试`

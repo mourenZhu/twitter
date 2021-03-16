@@ -10,7 +10,9 @@ public enum StatusKeyConstant {
 
     STATUS_KEY("status:id:"),
 
-    STATUS_CHILD_ID_KEY(":child");
+    STATUS_CHILD_ID_KEY(":child"),
+
+    STATUS_FORWARD_UID_KEY(":forward:uid");
 
     private final String key;
 
@@ -28,8 +30,25 @@ public enum StatusKeyConstant {
         return STATUS_KEY.key + statusId;
     }
 
+    /**
+     * 获取推文的子推文id key
+     *
+     * @param statusId
+     * @return
+     */
     public static String getStatusChildIdKey(String statusId) {
         return getStatusKey(statusId) + STATUS_CHILD_ID_KEY.key;
     }
+
+    /**
+     * 获取推文的转发用户id key
+     *
+     * @param statusId
+     * @return
+     */
+    public static String getForwardUidKey(String statusId) {
+        return getStatusKey(statusId) + STATUS_FORWARD_UID_KEY;
+    }
+
 
 }
